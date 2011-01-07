@@ -1,3 +1,5 @@
+require 'blazing/config'
+
 class Blazing::CLI < Thor
 
   desc 'setup TARGET', 'bootstrap blazing setup and do a first deploy'
