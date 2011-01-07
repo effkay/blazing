@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+
+class Blazing < Thor
+
+  desc 'bootstrap blazing setup and do a first deploy'
+  def setup
+    
+  end
+
+  desc 'deploy project with blazing'
+  def deploy
+    
+  end
+
+end
+
+Blazing.start
