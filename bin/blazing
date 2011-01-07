@@ -1,17 +1,6 @@
 #!/usr/bin/env ruby
 
-class Blazing < Thor
+require 'rubygems'
+require 'thor'
 
-  desc 'bootstrap blazing setup and do a first deploy'
-  def setup
-    
-  end
-
-  desc 'deploy project with blazing'
-  def deploy
-    
-  end
-
-end
-
-Blazing.start
+require 'lib/blazing/cli'
