@@ -2,8 +2,6 @@
 
 require 'rubygems'
 require 'thor'
-
 require 'blazing'
-require 'blazing/cli'
 
 Blazing::CLI.start
