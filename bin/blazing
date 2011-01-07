@@ -3,4 +3,7 @@
 require 'rubygems'
 require 'thor'
 
-require 'lib/blazing/cli'
+require 'blazing'
+require 'blazing/cli'
+
+Blazing::CLI.start

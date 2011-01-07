@@ -15,5 +15,3 @@ class Blazing::CLI < Thor
   end
 
 end
-
-Blazing.start
