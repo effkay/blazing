@@ -1,5 +1,5 @@
 module Blazing
-  autoload :Base
-  autoload :CLI
-  autoload :Version
+  autoload :Base, 'blazing/base'
+  autoload :CLI, 'blazing/cli'
+  autoload :Version, 'blazing/version'
 end
