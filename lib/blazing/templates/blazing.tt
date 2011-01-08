@@ -1,0 +1,21 @@
+#
+#  blazing config file  -- generated on <%= Time.now %>
+#
+
+# global configuration
+target :global do
+
+  recipes [:rvm, :bundler, :maintenance_page]
+  deploy_to '<%= username %>@<%= hostname %>:<%= path %>'
+  
+  # default_target :somethingelsethandefault
+  # sync dirs
+
+end
+
+# Above sample setup is for deploying on a single host. Below is how a multi stage/multi host setup might look like
+# target specific configuration, overrides global configuration
+# target :sometarget do
+#   ...  
+#
+# end
