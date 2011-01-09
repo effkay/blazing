@@ -1,0 +1,11 @@
+== Yet another deployment utility
+
+But why? Well, Capistrano was bloated for our use-cases, to much stuff bolted on. Inploy looked really interesting, but does not have multistage support from what I could tell. So I did what any reasonable developer would do and befell to the "Not Invented here syndrome". 
+
+Top Design goals, ideas:
+ 
+  - deploy is just a push to another remote. all that must be done is triggered by pre and post receveie git hooks.
+  - initial setup done by ruby script
+  - the stuff that gets executed is defined in recipes, which are handled kind of like chef recipes with vendor branches
+
+Also, I just wanted to play around with instance_eval and such :-)
