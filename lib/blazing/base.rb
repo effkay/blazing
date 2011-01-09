@@ -1,7 +1,6 @@
 require 'blazing/cli'
 require 'blazing/config'
 
-Blazing::Base
-
+module Blazing::Base
 
 end

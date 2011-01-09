@@ -1,4 +1,5 @@
 require 'thor/group'
+require 'blazing/target'
 
 class Blazing::Config
 
@@ -11,29 +12,48 @@ class Blazing::Config
 
   def self.read(&block)
     config = Blazing::Config.new
-
-    p config
-
     block.arity < 1 ? config.instance_eval(&block) : block.call(config)
-    
-
-    p config
-
     return config
   end
 
-  def target(name)
-    @targets << name
-    p "asdasd #{@targets}"
+  def target(name, &block)
+    @targets << Blazing::Target.new(name, @repository, &block)
+  end
+  
+  def repository(url)
+    @repository = url
   end
 
+  def determine_target
+    target = case
+             when self.targets.size == 1 && !self.targets.first.location.nil?
+               self.targets.first
+
+             when !self.default.default_target.nil?
+               self.targets.find { |t| t.name == self.default.default_target }
+
+             when self.default && !self.default.hostname.nil?
+               self.default
+             end
+
+    return target
+  end
+
+  def default 
+    self.targets.find { |t| t.name == :blazing}
+  end
+  
+  # TODO: Why does thor break when this is put into an external file config folder?
   class Create < Thor::Group
+
+    desc 'creates a blazing config file'
 
     include Thor::Actions
 
     argument :username
     argument :hostname
     argument :path
+    argument :repository
 
     def self.source_root
       File.dirname(__FILE__)

@@ -2,13 +2,14 @@ require 'blazing/config'
 
 class Blazing::CLI < Thor
 
-  #TODO: optional project directory
+  # TODO: optional project directory
   desc 'init', 'initialize blazing in project'
   def init
     username = ask "Deploy User: "
     hostname = ask "Target hostname: "
     path = ask "Deploy path on server: "
-    invoke 'blazing:config:create', [username, hostname, path]
+    repository = ask "Enter is this projects repository: "
+    invoke 'blazing:config:create', [username, hostname, path, repository]
   end
 
 
@@ -19,20 +20,20 @@ class Blazing::CLI < Thor
     config = Blazing::Config.read do |blazing|
       blazing.instance_eval(File.read blazing.file)
     end
-    p config.targets
 
-    #if target.nil?
+    # Check if target can be found in config file
+    if target
+      target = config.targets.find { |t| t.name == target.to_sym }
+    end
 
-      # check if there is a default target
-      # - by checking if there is a target in global
-      # - or there is a default_target in global 
-      # => assign if present, else ask:
-      
-    # target = target || ask("Deployment Target: ") 
+    target = target || config.determine_target
 
-    #Blazing::Remote.clone
-    #Blazing::Remote.add_pre_receive_hook
-    #Blazing::Remote.add_post_receive_hook
+    if target
+      say "[BLAZING] -- SETTING UP #{ target.location }", :yellow
+      invoke 'blazing:target:setup:setup_repository', [target]
+    else
+      say 'no target specified and no default found in config', :red
+    end
     
   end
 
