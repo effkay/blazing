@@ -33,10 +33,8 @@ class Blazing::Target
       File.dirname(__FILE__)
     end
     
-    argument :target
-
     desc 'setup:setup_repository TARGET', 'sets up a target for blazing deployments'
-    def setup_repository
+    def setup_repository(target)
 
       # TODO: Extract into helper
       # remote_with_condition()
@@ -54,7 +52,7 @@ class Blazing::Target
     end
 
     desc 'setup:clone_repository TARGET', 'sets up a target for blazing deployments'
-    def add_pre_receive_hook
+    def add_pre_receive_hook(target)
       say 'adding pre-receive hook'
       pre_hook = "deploy/pre-receive"
       template('templates/pre-hook.tt', pre_hook)
@@ -65,7 +63,7 @@ class Blazing::Target
     end
 
     desc 'setup:clone_repository TARGET', 'sets up a target for blazing deployments'
-    def add_post_receive_hook
+    def add_post_receive_hook(target)
       say 'adding post-receive hook'
       post_hook = "deploy/post-receive"
       template('templates/post-hook.tt', post_hook)
@@ -76,7 +74,7 @@ class Blazing::Target
     end
     
     desc 'setup:add_remote TARGET', 'adds a git remote for the given target'
-    def add_remote
+    def add_remote(target)
       say 'adding target as remote to repository'
       system "git remote add #{ target.name } #{ target.user }@#{ target.hostname }:#{ target.path }"
     end
