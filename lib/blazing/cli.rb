@@ -1,4 +1,5 @@
 require 'blazing/config'
+require 'blazing/config/helper'
 
 class Blazing::CLI < Thor
 
@@ -15,18 +16,8 @@ class Blazing::CLI < Thor
 
   desc 'setup TARGET', 'bootstrap or update blazing setup on remote host and do a first deploy'
   def setup(target = nil)
-  
-    # Load config file
-    config = Blazing::Config.read do |blazing|
-      blazing.instance_eval(File.read blazing.file)
-    end
-
-    # Check if target can be found in config file
-    if target
-      target = config.targets.find { |t| t.name == target.to_sym }
-    end
-
-    target = target || config.determine_target
+    
+    target = Blazing::Config::Helper.find_target(target)
 
     if target
       say "[BLAZING] -- SETTING UP #{ target.location }", :yellow
@@ -38,7 +29,13 @@ class Blazing::CLI < Thor
   end
 
   desc 'deploy TARGET', 'deploy project with blazing'
-  def deploy
+  def deploy(target=nil)
+    
+    target = Blazing::Config::Helper.find_target(target)
+    
+    # TODO: optional: specify branch
+    `git push #{ target.name } master`
+
     # TODO: check if deployed setup is still uptodate, if not, run setup
     # tag and push
   end
