@@ -3,11 +3,11 @@
 #
 class Blazing::Remote
 
-  def self.pre_receive
+  def self.pre_receive(target_name)
     
   end
 
-  def self.post_receive
+  def self.post_receive(target_name)
     `rebase --hard HEAD`
   end
 
