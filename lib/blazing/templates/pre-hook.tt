@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 
-puts 'HELLO'
-
 require 'rubygems'
+require 'thor'
 require 'blazing'
+require 'blazing/cli'
 require 'blazing/remote'
 
-Blazing::Remote.pre_receive(<%= target.name %>)
+Blazing::Remote.pre_receive('<%= target.name %>')
