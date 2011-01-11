@@ -8,7 +8,7 @@ class Blazing::Remote
   end
 
   def self.post_receive(target_name)
-    `git rebase --hard HEAD`
+    `git reset --hard HEAD`
   end
 
 end
