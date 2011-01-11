@@ -41,7 +41,7 @@ class Blazing::Target
       # TODO: Extract into helper
       # remote_with_condition()
     
-      command = "if [ -e ~/sites/blazingoverride.ch/ ]; then echo 'repository has been cloned already'; else git clone #{ target.repository } #{ target.path }; fi"
+      command = "if [ -e ~/sites/blazingoverride.ch/ ]; then echo 'repository has been cloned already'; else git clone #{ target.repository } #{ target.path }; fi && git config receive.denyCurrentBranch ignore"
       system "ssh #{ target.user }@#{ target.hostname } '#{ command }'"
       if $? == 0
         say '--> [ok]', :green
@@ -54,7 +54,6 @@ class Blazing::Target
     end
 
     desc 'setup:clone_repository TARGET', 'sets up a target for blazing deployments'
-    
     def add_pre_receive_hook
       say 'adding pre-receive hook'
       pre_hook = "deploy/pre-receive"
