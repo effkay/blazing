@@ -2,6 +2,10 @@
 #  blazing config file  -- generated on <%= Time.now %>
 #
 
+# TODO: instead of global target, have
+#   - project specific settings in top level
+#   - per target setup, and one target is required at least!
+
 blazing.repository '<%= repository %>'
 
 blazing.target :global do
@@ -10,7 +14,32 @@ blazing.target :global do
   deploy_to '<%= username %>@<%= hostname %>:<%= path %>'
   
   # default_target :somethingelsethandefault
-  # sync dirs
+  # sync_dirs ['asdasd/awdawd', 'public/assets']
+  
+
+  # 
+  # setup recipe for project individually
+  # provide setup, run and use methods and ability to override the whole recipe
+  #
+  # => make it easy to keep recipe externally and use git submodule
+  #
+  # => later, make it possible to keep recipe and setup of all projects in
+  #    a central repo:
+  #
+  #    /recipes
+  #    /projects/
+  #      "   "   someproject.rb
+  #      "   "   anotherpoject.rb
+  #      
+  #
+  #      ????
+
+  recipe.setup do
+    use :rvm => 'ruby-1.9.2@someproject'
+    use :maintenance_page
+    use :bundler
+  end
+
 
 end
 
@@ -19,4 +48,4 @@ end
 # target :sometarget do
 #   ...  
 #
-  # end
+# end
