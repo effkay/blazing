@@ -21,9 +21,9 @@ class Blazing::CLI < Thor
 
     if target
       say "[BLAZING] -- SETTING UP #{ target.location }", :yellow
-      invoke 'blazing:target:setup:setup_repository', [target]
+      invoke 'blazing:remote:setup:setup_repository', [target]
     else
-      say 'no target specified and no default found in config', :red
+      say 'no remote specified and no default found in config', :red
     end
     
   end

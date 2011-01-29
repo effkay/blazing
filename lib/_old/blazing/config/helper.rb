@@ -7,7 +7,7 @@ module Blazing::Config::Helper
       blazing.instance_eval(File.read blazing.file)
     end
 
-    # Check if target can be found in config file
+    # Check if remote can be found in config file
     if target
       target = config.targets.find { |t| t.name == target.to_sym }
     end

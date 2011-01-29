@@ -1,7 +1,11 @@
 #!/usr/bin/env ruby
 
 require 'thor'
+require 'thor/group'
 require 'blazing'
-require 'blazing/cli'
+require 'blazing/config'
+require 'blazing/target'
+require 'blazing/cli/base'
+require 'blazing/cli/create'
 
-Blazing::CLI.start
+Blazing::CLI::Base.start

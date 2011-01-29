@@ -1,72 +1,69 @@
-require 'thor/group'
-require 'blazing/target'
+module Blazing
+  class Config
 
-class Blazing::Config
+    class << self
+      
+      #
+      # Read the Configuration File
+      #
+      def read(&block)
+        config = Blazing::Config.new
+        config.instance_eval(&block)
+        return config
+      end
 
-  attr_accessor :targets, :file
+      #
+      # Load configuration file and parse it
+      #
+      def load
+        config = self.read do
+          instance_eval(File.read Blazing::CONFIGURATION_FILE)
+        end
+      end
 
-  def initialize
-    @targets = []
-    @file = File.open('deploy/blazing.rb')
-  end
+      #
+      # DSL Setter helper method
+      #
+      def dsl_setter(*names)
+        names.each do |name|
+          define_method name do |value = nil|
+            if value
+              instance_variable_set("@#{name}", value)
+            else
+              instance_variable_get("@#{name}")
+            end
+          end
+        end
+      end
 
-  def self.read(&block)
-    config = Blazing::Config.new
-    block.arity < 1 ? config.instance_eval(&block) : block.call(config)
-    return config
-  end
-
-  def target(name, &block)
-    @targets << Blazing::Target.new(name, @repository, &block)
-  end
-  
-  def repository(url)
-    @repository = url
-  end
-
-  def determine_target
-    target = case
-             when self.targets.size == 1 && !self.targets.first.location.nil?
-               self.targets.first
-
-             when !self.default.default_target.nil?
-               self.targets.find { |t| t.name == self.default.default_target }
-
-             when self.default && !self.default.hostname.nil?
-               self.default
-             end
-
-    return target
-  end
-
-  def default 
-    self.targets.find { |t| t.name == :blazing}
-  end
-  
-  # TODO: Why does thor break when this is put into an external file config folder?
-  class Create < Thor::Group
-
-    desc 'creates a blazing config file'
-
-    include Thor::Actions
-
-    argument :username
-    argument :hostname
-    argument :path
-    argument :repository
-
-    def self.source_root
-      File.dirname(__FILE__)
     end
 
-    def create_blazing_dir
-      empty_directory 'deploy'
+    dsl_setter :repository
+
+    def define_target(name, options = {}, &target_definition)
+      
     end
 
-    def create_config_file
-      template('templates/blazing.tt', "deploy/blazing.rb")
+
+    #attr_reader :file, :targets, :default_target, :repository
+
+    #   case
+    #     when target && config.targets.find { |t| t.name == target.to_sym }
+    #       target
+    #     when config.targets.size == 1
+    #       config.targets.first
+    #     when config.default_target
+    #       config.default_target
+    #   end
+    # end
+
+    # def define_target(name, &block)
+    #   @targets << Blazing::Target.new(name, &block)
+    # end
+
+    def recipes(&block)
+      
     end
 
   end
-
 end

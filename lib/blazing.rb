@@ -1,8 +1,4 @@
 module Blazing
-  'blazing/base'
-  'blazing/cli'
-  'blazing/version'
-  'blazing/config'
-  'blazing/remote'
-  'blazing/target'
+  DIRECTORY = 'config'
+  CONFIGURATION_FILE = 'config/blazing.rb'
 end
