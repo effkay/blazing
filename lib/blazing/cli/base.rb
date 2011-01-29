@@ -21,24 +21,11 @@ module Blazing
       #
       # Setup target for deployment
       #
-      desc 'setup TARGET', 'setup or update blazing on specified target and deploy'
-      def setup(target = nil)
+      desc 'setup TARGET_NAME', 'setup or update blazing on specified target and deploy'
+      def setup(target_name = nil)
 
         config = Blazing::Config.load
-        puts config.repository
-        #puts Blazing::Config::determine_target(target).name
-
-        #say 'NO TARGET SPECIFIED AND NO DEFAULT TARGET FOUND', :red
-        #config = Blazing::Config.read do
-        #  self.instance_eval(File.read file)
-          #self.target :dada do
-          #  'asdasd'
-          #end
-
-        #end
-
-        #puts config.repository
-
+        target = config.find_target(target_name)
       end
 
       #
