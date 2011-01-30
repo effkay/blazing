@@ -40,22 +40,21 @@ module Blazing
     end
 
     dsl_setter :repository
-    attr_accessor :targets
+    attr_accessor :targets, :recipes
 
     def initialize
       @targets = []
+      @recipes = []
     end
 
     def target(name, options = {}, &target_definition)
-      # TODO: this is for later, if it becomes really necessary to have custom
-      #       setup for each target that can't be easily covered by the options,
-      #       like custom recipes or recipe order...
-      target_definition.call if target_definition
+      # TODO: implement if needed: target_definition.call if target_definition
       @targets << Blazing::Target.new(name, options)
     end
 
-    def recipes(&block)
-      # TODO: Implement
+    def use(name, options = {}, &recipe_definition)
+      #TODO: implement if needed: recipe_definition.call if recipe_definition
+      @recipes << Blazing::Recipe.new(name, options)
     end
 
     #
