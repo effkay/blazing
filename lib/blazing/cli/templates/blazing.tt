@@ -4,26 +4,7 @@
 
 repository '<%= repository %>'
 
-# TODO: NOT IMPLEMENTED YET
-# If you have multiple targets, you can specify the default remote like this
-# default_target :somethingelsethandefault
+target 'agoodname', :deploy_to => 'user@host:path/to/your/app'
 
-# TODO: NOT IMPLEMENTED YET
-# Define your recipe here:
-# Note: If you want to override the global recipe, just place this code inside a remote block
-recipes do
-  use :rvm => 'ruby-1.9.2@someproject'
-  use :maintenance_page
-  use :bundler
-end
-
-# TODO: NOT IMPLEMENTED YET
-# Define which directories need to be synced when syncing up and down between targets
-# sync_dirs ['asdasd/awdawd', 'public/assets']
-
-target :default do
-
-  # Define where the app is deployed to
-  deploy_to '<%= remote %>'
-
-end
+use 'rvm', :ruby => 'set_your_ruby@and_your_gemset'
+use 'bundler'
