@@ -41,7 +41,17 @@ module Blazing
       # Deploy to target
       #
       desc 'deploy TARGET', 'deploy to TARGET'
-      def deploy(target = nil)
+      def deploy(target_name = nil)
+        config = Blazing::Config.load
+        target = config.find_target(target_name)
+        LOGGER.info "deploying target #{target.name}"
+        target.deploy
+
+        if $?.exitstatus == 0
+          LOGGER.success "successfully deployed target #{target.name}"
+        else
+          LOGGER.error "failed deploying on target #{target.name}"
+        end
 
       end
 
