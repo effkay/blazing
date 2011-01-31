@@ -1,9 +1,6 @@
 #!/usr/bin/env ruby
 
 require 'rubygems'
-require 'thor'
 require 'blazing'
-require 'blazing/cli'
-require 'blazing/remote'
 
-Blazing::Remote.post_receive('<%= remote.name %>')
+Blazing::Remote.post_receive('<%= target.name %>')

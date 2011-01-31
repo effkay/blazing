@@ -17,8 +17,8 @@ module Blazing
       #
       def load
         # TODO: shorten with something like this: new.instance_eval(File.read(guardfile_path), guardfile_path, 1)
-        config = self.read do
-          instance_eval(File.read Blazing::CONFIGURATION_FILE)
+        config = read do
+          instance_eval(File.read(Blazing::CONFIGURATION_FILE))
         end
       end
 

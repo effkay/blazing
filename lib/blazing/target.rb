@@ -1,4 +1,3 @@
-# TODO: Try to read username/hostname for ssh from git url, else raise error
 module Blazing
   class Target < Config
 
@@ -24,6 +23,20 @@ module Blazing
       [:host, :user, :path].each do |option|
         raise "#{option} can't be blank!" if instance_variable_get("@#{option}").blank?
       end
+    end
+
+    def setup
+
+      # TODO: Log some output?
+      # TODO: install post-receive hook and make it executable
+
+      config = Blazing::Config.load
+      clone_command = "if [ -e #{path} ]; then \
+                     echo 'directory exists already'; else \
+                     git clone #{config.repository} #{path} && cd #{path} && git config receive.denyCurrentBranch ignore; fi"
+
+      system "ssh #{user}@#{host} '#{clone_command}'"
+      system "git remote add #{name} #{user}@#{host}:#{path}"
     end
 
   end
