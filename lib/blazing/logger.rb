@@ -61,18 +61,6 @@ class String
 # 47  White background
 # 49  Default background col
 
-# a better idea:
-#class String
-#    def red; colorize(self, "\e[1m\e[31m"); end
-#    def green; colorize(self, "\e[1m\e[32m"); end
-#    def dark_green; colorize(self, "\e[32m"); end
-#    def yellow; colorize(self, "\e[1m\e[33m"); end
-#    def blue; colorize(self, "\e[1m\e[34m"); end
-#    def dark_blue; colorize(self, "\e[34m"); end
-#    def pur; colorize(self, "\e[1m\e[35m"); end
-#    def colorize(text, color_code)  "#{color_code}#{text}\e[0m" end
-#end
-
  def black
    string = "\033[30m"
    string << self
