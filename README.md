@@ -1,16 +1,19 @@
-== Yet another deployment utility
+Yet another deployment utility
+==============================
 
-WARNING: This gem is in early development. Use at your own risk.
+**WARNING: This gem is in early development. Use at your own risk.**
 
 But why? Well, Capistrano was bloated for our use-cases, to much stuff bolted on. Inploy looked really interesting, but does not have multistage support from what I could tell. So I did what any reasonable developer would do and befell to the "Not Invented here syndrome". 
 
 Top Design goals, ideas:
+------------------------
  
-  - deploy is just a push to another remote. all that must be done is triggered by pre and post receveie git hooks.
-  - initial setup done by ruby script
-  - extensible recipe system, so you can plug in and out what you need and easily roll your own recipes
+  * deploy is just a push to another remote. all that must be done is triggered by pre and post receveie git hooks.
+  * initial setup done by ruby script
+  * extensible recipe system, so you can plug in and out what you need and easily roll your own recipes
 
-== Usage
+Usage
+=====
 
 Setup a project with
 
@@ -32,7 +35,8 @@ Or just use
 
 which does basically the same
 
-=== Roadmap
+Roadmap
+=======
 
 You have guessed it, and the version number does not lie. This is all in early development. So here's my little roadmap, aka the backlog:
 
