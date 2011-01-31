@@ -43,5 +43,9 @@ module Blazing
       system "ssh #{user}@#{host} 'chmod +x #{path}/.git/hooks/post-receive'"
     end
 
+    def deploy
+      system "git push #{name}"
+    end
+
   end
 end
