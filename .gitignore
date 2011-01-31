@@ -4,3 +4,4 @@ pkg/*
 *.swp
 *.DS_Store
 tags
+.idea
