@@ -3,3 +3,4 @@ pkg/*
 .bundle
 *.swp
 *.DS_Store
+tags
