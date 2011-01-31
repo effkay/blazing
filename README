@@ -34,17 +34,6 @@ which does basically the same
 
 You have guessed it, and the version number does not lie. This is all in early development. So here's my little roadmap, aka the backlog:
 
-
-0.0.3
-
-  * basic recipe system
-
-0.0.4
-
-  *  now that I'm done prototyping, spec it!
-
-not assigned yet:
-
   * recipe extension system
   * disable colored log output
   * cleanup logging
@@ -67,3 +56,4 @@ not assigned yet:
   * unicorn recipe
   * apache recipe
   * nginx recipe
+  * nanoc deploy
