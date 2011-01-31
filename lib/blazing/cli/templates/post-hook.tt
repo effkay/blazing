@@ -3,4 +3,4 @@
 require 'rubygems'
 require 'blazing'
 
-Blazing::Remote.post_receive('<%= target.name %>')
+Blazing::Remote.post_receive('<%= target %>')

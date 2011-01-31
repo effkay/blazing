@@ -10,5 +10,6 @@ require 'blazing/recipe'
 require 'blazing/object'
 require 'blazing/cli/base'
 require 'blazing/cli/create'
+require 'blazing/cli/hook'
 
 Blazing::CLI::Base.start

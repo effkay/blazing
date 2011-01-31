@@ -37,6 +37,10 @@ module Blazing
 
       system "ssh #{user}@#{host} '#{clone_command}'"
       system "git remote add #{name} #{user}@#{host}:#{path}"
+
+      Blazing::CLI::Hook.new([name]).generate #.generate(target.name)
+      system "scp /tmp/post-receive #{user}@#{host}:#{path}/.git/hooks/post-receive"
+      system "ssh #{user}@#{host} 'chmod +x #{path}/.git/hooks/post-receive'"
     end
 
   end
