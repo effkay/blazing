@@ -15,7 +15,7 @@ module Blazing
           repository = ask "Repository URL: (ie username@host:/path/to/app)"
         end
         
-        Blazing::CLI::Create.new([repository, target]).invoke
+        Blazing::CLI::Create.new([repository, target]).invoke_all
       end
 
       #
