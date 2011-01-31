@@ -27,6 +27,14 @@ module Blazing
         target = config.find_target(target_name)
         LOGGER.info "setting up target #{target.name}"
         target.setup
+
+        # TODO: Abstract this into module and load it where we need it. Methods / actions should have
+        # a success and failure message
+        if $?.exitstatus == 0
+          LOGGER.success "successfully set up target #{target.name}"
+        else
+          LOGGER.error "failed setting up target #{target.name}"
+        end
       end
 
       #

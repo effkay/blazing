@@ -2,17 +2,33 @@ module Blazing
   class Logger
   
     @@use_color = true
+    # TODO: implement non colored output, allow to pass option from commandline
 
-    def info(message)
-      if @@use_color
-        puts "#{prefix} #{message} ***".blue
-      else
-        puts prefix + message
-      end
+    [:info, :success, :warn, :error].each do |type|
+      define_method type do |message|
+        message(message, type)
+      end 
     end
 
     def prefix
-      "[BLAZING] ".red + "*** "
+      "[".red + "BLAZING".yellow + "] ".red + '*** '
+    end
+
+    def postfix
+      ' ***'
+    end
+
+    def message(message, type)
+      case type
+      when :info
+        puts prefix + message.blue + postfix
+      when :success
+        puts prefix + message.green + postfix
+      when :warn
+        puts prefix + message.yellow + postfix
+      when :error
+        puts prefix + message.red + postfix
+      end 
     end
 
   end
