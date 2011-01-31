@@ -6,6 +6,4 @@ o customizable and modular
 o multistage
 o sync fs and db flavours
 
-o recipes should live in git submodules
-
-
+o recipes should/can live in git submodules

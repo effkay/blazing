@@ -6,6 +6,26 @@ Top Design goals, ideas:
  
   - deploy is just a push to another remote. all that must be done is triggered by pre and post receveie git hooks.
   - initial setup done by ruby script
-  - the stuff that gets executed is defined in recipes, which are handled kind of like chef recipes with vendor branches
+  - extensible recipe system, so you can plug in and out what you need and easily roll your own recipes
 
-Also, I just wanted to play around with instance_eval and such :-)
+== Usage
+
+Setup a project with
+
+ blazing init
+
+Then edit your config/blazing.rb file.
+
+If you are ready to do your first deploy, run 
+
+ blazing setup <target_name>
+
+Afterwards you can just deploy with
+
+  blazing deploy <target_name>
+
+Or just use
+
+  git push <target_name>
+
+which does basically the same

@@ -8,12 +8,9 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Felipe Kaufmann"]
   s.email       = ["felipekaufmann@gmail.com"]
-  s.homepage    = ""
+  s.homepage    = "https://github.com/effkay/blazing"
   s.summary     = %q{blazing fast deployment}
-  s.description = %q{git push style deployments for the masses}
-
-  s.rubyforge_project = "blazing"
-
+  s.description = %q{git push deployent utility, ready to be extended by your own recipes}
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
