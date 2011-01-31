@@ -1,9 +1,0 @@
-o deploy static site
-o deploy static site with maintenance page
-o deploy rails apps from SC
-
-o customizable and modular
-o multistage
-o sync fs and db flavours
-
-o recipes should/can live in git submodules

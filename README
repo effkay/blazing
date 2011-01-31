@@ -29,3 +29,41 @@ Or just use
   git push <target_name>
 
 which does basically the same
+
+=== Roadmap
+
+You have guessed it, and the version number does not lie. This is all in early development. So here's my little roadmap, aka the backlog:
+
+
+0.0.3
+
+  * basic recipe system
+
+0.0.4
+
+  *  now that I'm done prototyping, spec it!
+
+not assigned yet:
+
+  * recipe extension system
+  * disable colored log output
+  * cleanup logging
+  * sync fs recipes
+  * sync db recipes for
+    * mysql
+    * postgres
+    * mongodb
+    * redis
+
+  * hoptoad notifier
+  * maintenance page recipe
+  * rollback recipe/feature
+  * rvm recipe
+  * bundler recipe
+  * whenever recipe
+  * coffescript recipe
+  * sass recipe
+  * passenger recipe
+  * unicorn recipe
+  * apache recipe
+  * nginx recipe
