@@ -4,7 +4,4 @@
 
 repository '<%= repository %>'
 
-target 'agoodname', :deploy_to => 'user@host:path/to/your/app'
-
-use 'rvm', :ruby => 'set_your_ruby@and_your_gemset'
-use 'bundler'
+target :default, :deploy_to => '<%= target %>'
