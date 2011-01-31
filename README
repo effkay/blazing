@@ -1,5 +1,7 @@
 == Yet another deployment utility
 
+WARNING: This gem is in early development. Use at your own risk.
+
 But why? Well, Capistrano was bloated for our use-cases, to much stuff bolted on. Inploy looked really interesting, but does not have multistage support from what I could tell. So I did what any reasonable developer would do and befell to the "Not Invented here syndrome". 
 
 Top Design goals, ideas:
