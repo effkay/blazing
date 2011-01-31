@@ -1,5 +1,5 @@
 module Blazing
-  class remote
+  class Remote
 
     # TODO: RVM
     # TODO: Bundler
@@ -12,17 +12,17 @@ module Blazing
         reset_head
       end
 
-    end
-
-    def set_git_dir
-      if ENV['GIT_DIR'] == '.'
-        Dir.chdir('..')
-        ENV['GIT_DIR'] = '.git'
+      def set_git_dir
+        if ENV['GIT_DIR'] == '.'
+          Dir.chdir('..')
+          ENV['GIT_DIR'] = '.git'
+        end
       end
-    end
 
-    def reset_head
-      system 'git reset --hard HEAD'
+      def reset_head
+        system 'git reset --hard HEAD'
+      end
+
     end
 
   end
