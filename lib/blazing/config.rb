@@ -27,13 +27,15 @@ module Blazing
       #
       def dsl_setter(*names)
         names.each do |name|
-          define_method name do |value = nil|
-            if value
-              instance_variable_set("@#{name}", value)
-            else
-              instance_variable_get("@#{name}")
+          class_eval <<-EVAL
+            def #{name}(value = nil)
+              if value
+                instance_variable_set("@#{name}", value)
+              else
+                instance_variable_get("@#{name}")
+              end
             end
-          end
+          EVAL
         end
       end
 
