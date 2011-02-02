@@ -11,7 +11,7 @@ module Blazing
     end
 
     def prefix
-      "[".red + "BLAZING".yellow + "] ".red + '*** '
+      '[BLAZING] *** '
     end
 
     def postfix
