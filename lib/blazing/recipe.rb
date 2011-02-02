@@ -8,5 +8,9 @@ module Blazing
       @options = options
     end
 
+    def execute
+      # TODO: load and run the actual recipe 
+    end
+
   end
 end
