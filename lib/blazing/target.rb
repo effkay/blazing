@@ -1,7 +1,7 @@
 module Blazing
-  class Target < Config
+  class Target
 
-    attr_accessor :name
+    attr_accessor :name, :recipes
 
     @@configuration_options = [:deploy_to, :host, :user, :path, :default]
 
@@ -26,11 +26,6 @@ module Blazing
     end
 
     def setup
-
-      # TODO: Log some output?
-      # TODO: install post-receive hook and make it executable
-
-      config = Blazing::Config.load
       clone_command = "if [ -e #{path} ]; then \
                      echo 'directory exists already'; else \
                      git clone #{config.repository} #{path} && cd #{path} && git config receive.denyCurrentBranch ignore; fi"
@@ -45,6 +40,10 @@ module Blazing
 
     def deploy
       system "git push #{name}"
+    end
+
+    def config
+      Blazing::Config.load
     end
 
   end
