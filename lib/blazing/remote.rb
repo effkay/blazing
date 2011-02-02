@@ -13,7 +13,7 @@ module Blazing
         if target.recipes.blank?
           target.recipes = config.recipes
         end
-        
+
         # TODO: bundle install should be done before any other recipe
         # TODO: provide hooks for recipe to use bundle exec
         # TODO: run recipes
