@@ -1,16 +1,31 @@
 module Blazing
   class Remote
 
-    # TODO: RVM
     # TODO: Bundler
     # TODO: Check if post-hook and blazing versions match
 
     class << self
 
-      def post_receive(target)
+      def post_receive(target_name)
         set_git_dir
-        reset_head
+        target = config.find_target(target_name)
+
+        if target.recipes.blank?
+          target.recipes = config.recipes
+        end
+        
+        # TODO: bundle install should be done before any other recipe
+        # TODO: provide hooks for recipe to use bundle exec
+        # TODO: run recipes
+
+        reset_head!
       end
+
+      def post_setup(target_name)
+
+      end
+
+      private
 
       def set_git_dir
         if ENV['GIT_DIR'] == '.'
@@ -19,25 +34,15 @@ module Blazing
         end
       end
 
-      def reset_head
+      def reset_head!
         system 'git reset --hard HEAD'
+      end
+
+      def config 
+        Blazing::Config.load
       end
 
     end
 
   end
 end
-
-# if ENV['MY_RUBY_HOME'] && ENV['MY_RUBY_HOME'].include?('rvm')
-#   begin
-#     rvm_path     = File.dirname(File.dirname(ENV['MY_RUBY_HOME']))
-#     rvm_lib_path = File.join(rvm_path, 'lib')
-#     $LOAD_PATH.unshift rvm_lib_path
-#     require 'rvm'
-#     RVM.use_from_path! File.dirname(File.dirname(__FILE__))
-#   rescue LoadError
-#     # RVM is unavailable at this point.
-#     raise "RVM ruby lib is currently unavailable."
-#   end
-# end
-
