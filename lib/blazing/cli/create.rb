@@ -7,7 +7,7 @@ module Blazing
       include Thor::Actions
 
       argument :repository
-      argument :remote
+      argument :target
 
       def self.source_root
         File.dirname(__FILE__)
