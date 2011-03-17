@@ -1,23 +1,30 @@
 module Blazing
   class Remote
-
-    # TODO: Bundler
-    # TODO: Check if post-hook and blazing versions match
-
     class << self
 
       def post_receive(target_name)
         set_git_dir
         target = config.find_target(target_name)
 
+        # TODO: Check if post-hook and blazing versions match before doing anything
+
         if target.recipes.blank?
           target.recipes = config.recipes
         end
 
-        # TODO: bundle install should be done before any other recipe
-        # TODO: provide hooks for recipe to use bundle exec
-        # TODO: run recipes
-
+        if target.recipes.include? :rvm
+          target.recipes.detele_if { |r| r == :rvm }
+          Blazing::Recipes.run(:rvm)
+        end
+        
+        if gemfile_present?
+          # TODO: Bundler setup or somethign
+        end
+        
+        target.recipes.each do |recipe|
+          Blazing::Recipe.run(recipe)
+        end
+        
         reset_head!
       end
 
@@ -26,6 +33,10 @@ module Blazing
       end
 
       private
+      
+      def gemfile_present?
+        File.exists? 'Gemfile'
+      end
 
       def set_git_dir
         if ENV['GIT_DIR'] == '.'
@@ -38,7 +49,7 @@ module Blazing
         system 'git reset --hard HEAD'
       end
 
-      def config 
+      def config
         Blazing::Config.load
       end
 
