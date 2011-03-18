@@ -12,28 +12,31 @@ module Blazing
           target.recipes = config.recipes
         end
 
-        if target.recipes.include? :rvm
-          target.recipes.detele_if { |r| r == :rvm }
-          Blazing::Recipes.run(:rvm)
+        # TODO: looks stupid. shorter way to do it?
+        use_rvm = target.recipes.find { |recipe| recipe.name == 'rvm' }
+        target.recipes.delete_if { |recipe| recipe.name == 'rvm' }
+
+        if use_rvm
+          use_rvm.run
         end
-        
+
         if gemfile_present?
-          # TODO: Bundler setup or somethign
+          # TODO: Bundler setup or something
         end
-        
+
         target.recipes.each do |recipe|
-          Blazing::Recipe.run(recipe)
+          recipe.run
         end
-        
+
         reset_head!
       end
 
       def post_setup(target_name)
-
+        # TODO: needed?
       end
 
       private
-      
+
       def gemfile_present?
         File.exists? 'Gemfile'
       end
