@@ -2,9 +2,6 @@ module Blazing
   module CLI
     class Base < Thor
 
-      #
-      # Configure blazing in current working dir
-      #
       desc 'init', 'prepare project for blazing deploys'
       def init
         target = ask "Deployment Target: (ie username@host:/path/to/app)"
@@ -14,13 +11,10 @@ module Blazing
         else
           repository = ask "Repository URL: (ie username@host:/path/to/app)"
         end
-        
+
         Blazing::CLI::Create.new([repository, target]).invoke_all
       end
 
-      #
-      # Setup target for deployment
-      #
       desc 'setup TARGET_NAME', 'setup or update blazing on specified target and deploy'
       def setup(target_name = nil)
         config = Blazing::Config.load
@@ -37,9 +31,6 @@ module Blazing
         end
       end
 
-      #
-      # Deploy to target
-      #
       desc 'deploy TARGET', 'deploy to TARGET'
       def deploy(target_name = nil)
         config = Blazing::Config.load
@@ -52,7 +43,13 @@ module Blazing
         else
           LOGGER.error "failed deploying on target #{target.name}"
         end
+      end
 
+      desc 'recipes', 'List available recipes'
+      def recipes
+        Blazing::Recipe.list.each do |recipe|
+          puts recipe.name
+        end
       end
 
     end
