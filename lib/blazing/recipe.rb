@@ -1,44 +1,27 @@
+require 'active_support/inflector'
+
 module Blazing
   class Recipe
 
-    # TODO: provide hooks for recipe to use bundle exec
-    # TODO: check if i use active_support syntacitc sugar like constantize etc, wrap into
-    #       own and shorter code
+    # TODO: provide hooks for pe to use bundle exec
 
     attr_accessor :name, :options
 
-    class << self
-      
-      def run(name, options = {})
-        @name = name.to_s
-        @options = options
-        
-        # TODO: LOAD ALL RECIPES FROM THE TWO LOCATIONS
-        #       THEN CHECK IF I HAVE THEM OR NOT
-        # http://stackoverflow.com/questions/735073/best-way-to-require-all-files-from-a-directory-in-ruby
-        
-        
-        # TODO: fix paths
-        # TODO: how can i have multipe requires?
-        begin
-          require File.join( __FILE__ + 'recipes' + @name )
-        rescue LoadError
-          require 'try to load the file from lib/recipes'
-        end
-        
-        # TODO: Fail if i could not load recipe
-        
-        recipe = @name.to_s.camelize.constantize
-        if recipe.responds_to(:run)
-          recipe.run
-        else
-          # TODO: Raise? Or just show an error?
-          raise 'recipe does not have a run method'
-        end
-      end
-    
+    def initialize(name, options = {})
+      @name = name.to_s
+      @options = options
     end
-    
+
+    def run
+      recipe_implementation = ('Blazing::' + (@name.to_s + '_recipe').camelize).constantize
+      puts "gonna run #{@name}"
+      if recipe_implementation.method_defined?(:run)
+        recipe_implementation.run
+      else
+        raise "Recipe #{@name} run method not defined"
+      end
+    end
+
     def fail
       raise 'NOT IMPLEMENTED'
       # TODO: implement meaningful default behaviour!
@@ -47,6 +30,39 @@ module Blazing
     def success
       raise 'NOT IMPLEMENTED'
       # TODO: implement meaningful default behaviour!
+    end
+
+
+    class << self
+
+      def load_builtin_recipes
+        dir = File.join(File.dirname(__FILE__), "/recipes")
+        $LOAD_PATH.unshift(dir)
+        Dir[File.join(dir, "*.rb")].each { |file| require File.basename(file) }
+      end
+
+      def load_gem_recipes
+        #TODO: Implement
+      end
+
+      def load_local_recipes
+        #TODO: Implement
+      end
+
+      #
+      # Output the list of available recipes
+      #
+      def list
+        load_builtin_recipes
+
+        descendants = []
+        ObjectSpace.each_object(Class) do |k|
+          descendants.unshift k if k < self
+        end
+        descendants.uniq!
+        descendants
+      end
+
     end
 
   end
