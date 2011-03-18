@@ -1,3 +1,4 @@
+require 'spec_helper'
 require 'blazing/remote'
 
 describe Blazing::Remote do

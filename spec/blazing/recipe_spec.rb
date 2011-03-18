@@ -1,3 +1,4 @@
+require 'spec_helper'
 require 'blazing/recipe'
 
 describe Blazing::Recipe do
