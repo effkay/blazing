@@ -32,7 +32,6 @@ module Blazing
       # TODO: implement meaningful default behaviour!
     end
 
-
     class << self
 
       def load_builtin_recipes
