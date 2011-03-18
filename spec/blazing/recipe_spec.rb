@@ -31,9 +31,27 @@ describe Blazing::Recipe do
     it 'include a bundler recipe' do
       lambda { Blazing::BundlerRecipe }.should_not raise_error NameError
     end
+  end
 
+  context 'running recipes' do
     it 'delegate running a recipe to the recipe implementation' do
+      Blazing::RvmRecipe.should_receive(:run)
       Blazing::Recipe.new(:rvm).run
+    end
+
+    it 'construct the correct classname to use from recie name' do
+      Blazing::Recipe.new(:rvm).recipe_class.should == Blazing::RvmRecipe
+    end
+
+    it 'raises an error when a recipe has no run method defined' do
+      class Blazing::BlahRecipe < Blazing::Recipe; end
+      lambda { Blazing::Recipe.new(:blah).run }.should raise_error NoMethodError
+    end
+  end
+
+  context 'recipe discovery' do
+    it 'can discover available recipes' do
+      Blazing::Recipe.list.should be_all { |recipe| recipe.superclass.should == Blazing::Recipe }
     end
   end
 

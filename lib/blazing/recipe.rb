@@ -3,7 +3,7 @@ require 'active_support/inflector'
 module Blazing
   class Recipe
 
-    # TODO: provide hooks for pe to use bundle exec
+    # TODO: provide hooks for recipe to use bundle exec
 
     attr_accessor :name, :options
 
@@ -13,13 +13,11 @@ module Blazing
     end
 
     def run
-      recipe_implementation = ('Blazing::' + (@name.to_s + '_recipe').camelize).constantize
-      puts "gonna run #{@name}"
-      if recipe_implementation.method_defined?(:run)
-        recipe_implementation.run
-      else
-        raise "Recipe #{@name} run method not defined"
-      end
+      recipe_class.run
+    end
+
+    def recipe_class
+      ('Blazing::' + (@name.to_s + '_recipe').camelize).constantize
     end
 
     def fail
@@ -49,7 +47,8 @@ module Blazing
       end
 
       #
-      # Output the list of available recipes
+      # Return the list of available recipes based
+      # on class hierarchy
       #
       def list
         load_builtin_recipes
