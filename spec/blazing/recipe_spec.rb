@@ -32,7 +32,7 @@ describe Blazing::Recipe do
       lambda { Blazing::BundlerRecipe }.should_not raise_error NameError
     end
 
-    it 'should delegate running a recipe to the recipe implementation' do
+    it 'delegate running a recipe to the recipe implementation' do
       Blazing::Recipe.new(:rvm).run
     end
   end
