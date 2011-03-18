@@ -5,3 +5,6 @@ gemspec
 
 gem 'rspec'
 gem 'ruby-debug19'
+gem 'guard'
+gem 'guard-rspec'
+gem 'growl'
