@@ -5,3 +5,4 @@ pkg/*
 *.DS_Store
 tags
 .idea
+coverage
