@@ -44,10 +44,15 @@ describe Blazing::Recipe do
       Blazing::Recipe.new(:rvm).recipe_class.should == Blazing::RvmRecipe
     end
 
-    it 'raises an error when a recipe has no run method defined' do
+    it 'raise an error when a recipe has no run method defined' do
       class Blazing::BlahRecipe < Blazing::Recipe; end
       lambda { Blazing::Recipe.new(:blah).run }.should raise_error NoMethodError
     end
+
+    it 'does not crash when a recipe can not be loaded' do
+      Blazing::Recipe.new(:undefined).run
+    end
+
   end
 
 

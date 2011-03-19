@@ -1,9 +1,12 @@
 require 'active_support/inflector'
+require 'blazing/logger'
 
 module Blazing
   class Recipe
 
     # TODO: provide hooks for recipe to use bundle exec
+
+    LOGGER = LOGGER = Blazing::Logger.new
 
     attr_accessor :name, :options
 
@@ -13,11 +16,13 @@ module Blazing
     end
 
     def run
-      recipe_class.run
+      recipe_class.run if recipe_class
     end
 
     def recipe_class
       ('Blazing::' + (@name.to_s + '_recipe').camelize).constantize
+    rescue NameError
+      LOGGER.error "unable to load #{@name} recipe"
     end
 
     def fail

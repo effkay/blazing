@@ -1,13 +1,13 @@
 module Blazing
   class Logger
-  
+
     @@use_color = true
     # TODO: implement non colored output, allow to pass option from commandline
 
     [:info, :success, :warn, :error].each do |type|
       define_method type do |message|
         message(message, type)
-      end 
+      end
     end
 
     def prefix
@@ -28,7 +28,7 @@ module Blazing
         puts prefix + message.yellow + postfix
       when :error
         puts prefix + message.red + postfix
-      end 
+      end
     end
 
   end
