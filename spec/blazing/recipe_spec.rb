@@ -20,22 +20,22 @@ describe Blazing::Recipe do
     end
   end
 
-  context 'builtin recipes' do
-    before :all do
-      Blazing::Recipe.load_builtin_recipes
+  context 'recipe discovery' do
+    it 'before loading them, no recipes are known' do
+      lambda { Blazing::RvmRecipe }.should raise_error NameError
     end
 
-    it 'include an rvm recipe' do
-      lambda { Blazing::RvmRecipe }.should_not raise_error NameError
-    end
-
-    it 'include a bundler recipe' do
-      lambda { Blazing::BundlerRecipe }.should_not raise_error NameError
+    it 'can discover available recipes' do
+      recipes = Blazing::Recipe.list
+      recipes.should be_all { |recipe| recipe.superclass.should == Blazing::Recipe }
+      recipes.each { |r| Blazing.send(:remove_const, r.name.to_s.gsub(/^.*::/, '')) }
     end
   end
 
   context 'running recipes' do
+
     it 'delegate running a recipe to the recipe implementation' do
+      Blazing::Recipe.load_builtin_recipes
       Blazing::RvmRecipe.should_receive(:run)
       Blazing::Recipe.new(:rvm).run
     end
@@ -50,9 +50,15 @@ describe Blazing::Recipe do
     end
   end
 
-  context 'recipe discovery' do
-    it 'can discover available recipes' do
-      Blazing::Recipe.list.should be_all { |recipe| recipe.superclass.should == Blazing::Recipe }
+
+  context 'builtin recipes' do
+
+    it 'include an rvm recipe' do
+      lambda { Blazing::RvmRecipe }.should_not raise_error NameError
+    end
+
+    it 'include a bundler recipe' do
+      lambda { Blazing::BundlerRecipe }.should_not raise_error NameError
     end
   end
 

@@ -13,6 +13,7 @@ module Blazing
     end
 
     def run
+      self.class.load_builtin_recipes
       recipe_class.run
     end
 
@@ -35,7 +36,7 @@ module Blazing
       def load_builtin_recipes
         dir = File.join(File.dirname(__FILE__), "/recipes")
         $LOAD_PATH.unshift(dir)
-        Dir[File.join(dir, "*.rb")].each { |file| require File.basename(file) }
+        Dir[File.join(dir, "*.rb")].each { |file| load File.basename(file) }
       end
 
       def load_gem_recipes
