@@ -13,7 +13,6 @@ module Blazing
     end
 
     def run
-      self.class.load_builtin_recipes
       recipe_class.run
     end
 

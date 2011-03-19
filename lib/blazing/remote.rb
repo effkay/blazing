@@ -16,6 +16,8 @@ module Blazing
         use_rvm = target.recipes.find { |recipe| recipe.name == 'rvm' }
         target.recipes.delete_if { |recipe| recipe.name == 'rvm' }
 
+        Blazing::Recipe.load_builtin_recipes
+
         if use_rvm
           use_rvm.run
         end
