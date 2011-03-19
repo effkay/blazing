@@ -36,20 +36,21 @@ Or just use
 
 which does basically the same
 
-Roadmap
+Backlog
 =======
 
 You have guessed it, and the version number does not lie. This is all in early development. So here's my little roadmap, aka the backlog:
 
+  * speccing it all out
   * finish rvm recipe
-
-  * Bundler
-    * before running recipes? (so we have the gems blazing needs)
-    * after reseting code (so the app has the gems it needs)
-
+    * bundler after reseting code (so the app has the gems it needs)
   * improve logging: bubbling of messages, only print them out if needed
+  * cleanup documentation
+  * release
 
 Recipes:
+
+  * bundler before running recipes? (so we have the gems blazing needs)
 
   * sync fs recipes
   * sync db recipes for
