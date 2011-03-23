@@ -37,8 +37,6 @@ module Blazing
         # TODO: needed?
       end
 
-      private
-
       def gemfile_present?
         File.exists? 'Gemfile'
       end
