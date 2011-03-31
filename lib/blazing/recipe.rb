@@ -6,7 +6,7 @@ module Blazing
 
     # TODO: provide hooks for recipe to use bundle exec
 
-    LOGGER = LOGGER = Blazing::Logger.new
+    LOGGER = Blazing::Logger.new
 
     attr_accessor :name, :options
 
