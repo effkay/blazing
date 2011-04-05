@@ -1,35 +1,46 @@
 module Blazing
   class Logger
 
-    @@use_color = true
-    # TODO: implement non colored output, allow to pass option from commandline
+    LOG_LEVELS =  [:info, :success, :warn, :error]
 
-    [:info, :success, :warn, :error].each do |type|
+    def initialize(use_color = false)
+      @use_color = use_color
+    end
+
+    def messages
+      @messages ||= []
+    end
+
+    def puts(message, type)
+      messages << Hash[:message => message, :type => type]
+    end
+
+    LOG_LEVELS.each do |type|
       define_method type do |message|
-        message(message, type)
+        puts(message, type)
       end
     end
 
-    def prefix
-      '[BLAZING] *** '
-    end
+    # def prefix
+    #   '[BLAZING] *** '
+    # end
 
-    def postfix
-      ' ***'
-    end
+    # def postfix
+    #   ' ***'
+    # end
 
-    def message(message, type)
-      case type
-      when :info
-        puts prefix + message.blue + postfix
-      when :success
-        puts prefix + message.green + postfix
-      when :warn
-        puts prefix + message.yellow + postfix
-      when :error
-        puts prefix + message.red + postfix
-      end
-    end
+    # def message(message, type)
+    #   case type
+    #   when :info
+    #     puts prefix + message.blue + postfix
+    #   when :success
+    #     puts prefix + message.green + postfix
+    #   when :warn
+    #     puts prefix + message.yellow + postfix
+    #   when :error
+    #     puts prefix + message.red + postfix
+    #   end
+    # end
 
   end
 end
