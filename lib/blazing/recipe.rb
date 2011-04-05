@@ -1,12 +1,10 @@
 require 'active_support/inflector'
-require 'blazing/logger'
+require 'blazing'
 
 module Blazing
   class Recipe
 
     # TODO: provide hooks for recipe to use bundle exec
-
-    LOGGER = Blazing::Logger.new
 
     attr_accessor :name, :options
 
@@ -22,7 +20,8 @@ module Blazing
     def recipe_class
       ('Blazing::' + (@name.to_s + '_recipe').camelize).constantize
     rescue NameError
-      LOGGER.error "unable to load #{@name} recipe"
+      Blazing::LOGGER.error "unable to load #{@name} recipe"
+      return nil
     end
 
     def fail
@@ -56,9 +55,10 @@ module Blazing
       # on class hierarchy
       #
       def list
+        descendants = []
+
         load_builtin_recipes
 
-        descendants = []
         ObjectSpace.each_object(Class) do |k|
           descendants.unshift k if k < self
         end
