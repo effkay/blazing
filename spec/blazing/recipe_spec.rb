@@ -4,6 +4,7 @@ require 'blazing/recipe'
 describe Blazing::Recipe do
 
   context 'initializer' do
+
     it 'takes a string as name parameter' do
       recipe = Blazing::Recipe.new('some_recipe')
       recipe.name.should == 'some_recipe'
@@ -18,9 +19,11 @@ describe Blazing::Recipe do
       recipe = Blazing::Recipe.new(:some_recipe, :an_option => 'yeah')
       recipe.options[:an_option].should == 'yeah'
     end
+
   end
 
   context 'recipe discovery' do
+
     it 'before loading them, no recipes are known' do
       lambda { Blazing::RvmRecipe }.should raise_error NameError
     end
@@ -30,6 +33,7 @@ describe Blazing::Recipe do
       recipes.should be_all { |recipe| recipe.superclass.should == Blazing::Recipe }
       recipes.each { |r| Blazing.send(:remove_const, r.name.to_s.gsub(/^.*::/, '')) }
     end
+
   end
 
   context 'running recipes' do
@@ -67,6 +71,7 @@ describe Blazing::Recipe do
         Blazing::LOGGER.should_receive(:error) # TODO: how should one do this?? .with("unable to laod #{@unknown_recipe_name} recipe")
         Blazing::Recipe.new(:undefined).run
       end
+
     end
   end
 
@@ -80,6 +85,6 @@ describe Blazing::Recipe do
     it 'include a bundler recipe' do
       lambda { Blazing::BundlerRecipe }.should_not raise_error NameError
     end
-  end
 
+  end
 end
