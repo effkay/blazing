@@ -34,6 +34,10 @@ describe Blazing::Recipe do
 
   context 'running recipes' do
 
+    # before :each do
+    #   @logger = double('logger').as_null_object
+    # end
+
     it 'delegate running a recipe to the recipe implementation' do
       Blazing::Recipe.load_builtin_recipes
       Blazing::RvmRecipe.should_receive(:run)
@@ -49,10 +53,21 @@ describe Blazing::Recipe do
       lambda { Blazing::Recipe.new(:blah).run }.should raise_error NoMethodError
     end
 
-    it 'does not crash when a recipe can not be loaded' do
-      Blazing::Recipe.new(:undefined).run
-    end
+    context 'unknown recipe' do
 
+      before :all do
+        @unknown_recipe_name = :undefined
+      end
+
+      it 'does not crash when a recipe can not be loaded' do
+        lambda { Blazing::Recipe.new(@unknown_recipe_name).run }.should_not raise_error
+      end
+
+      it 'logs an error when a recipe cant be loaded' do
+        Blazing::LOGGER.should_receive(:error).with("unable to laod #{@unknown_recipe_name} recipe")
+        Blazing::Recipe.new(:undefined).run
+      end
+    end
   end
 
 
