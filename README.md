@@ -1,75 +1,96 @@
-Yet another deployment utility
-==============================
+Blazing -- Fast and painless git push deploys
+=============================================
 
-**WARNING: This gem is in early development. Use at your own risk.**
+## What
 
-But why? Well, Capistrano was bloated for our use-cases, to much stuff bolted on. Inploy looked really interesting, but does not have multistage support from what I could tell. So I did what any reasonable developer would do and befell to the "Not Invented here syndrome".
+Blazing aims to be a fast and hassle free way to deploy web
+applications. It may work for other frameworks, but it is mainly
+designed to deploy Ruby on Rails and Rack based applications, as well as
+static sites.
 
-Top Design goals, ideas:
-------------------------
+Some design goals:
 
-  * deploy is just a push to another remote. all that must be done is triggered by pre and post receveie git hooks.
+  * A deploy is just a git push to another remote. All that must be done afterwards is triggered by pre and post receveie git hooks.
   * initial setup done by ruby script, so unexerpienced users do not
     have to fiddle with the git config files
-  * extensible recipe system, so you can plug in and out what you need and easily roll your own recipes
+  * clean API for writing your own recipes, no messy rake file jungles
+  * DRY, clean and minimal configuration file
+  * blazing fast!
 
-Usage
-=====
+## Why
 
-Setup a project with
+I initially started working on an extension to capistrano which would
+cover most of my needs and the needs we had at [Screen
+Concept](http://www.screencocnept.ch). After a short while I noticed
+that bolting more functionality on top of capistrano was just going to
+be messy (and a PTA to maintain). We were alerady using tons of own recipes and customizations,
+capistrano multistage, capistrano-ext, etc.
 
- blazing init
+I had a look at what others were doing and after a round of trying
+around and not getting what I wanted, I started this.
 
-Then edit your config/blazing.rb file.
+### Inspiration & Alternatives
 
-If you are ready to do your first deploy, run 
+I looked at [Inploy](https://github.com/dcrec1/inploy) and [Vlad](https://github.com/seattlerb/vlad) after having used [Capistrano](https://github.com/capistrano/capistrano) for several
+years. Then got inspired by defunkt's
+[blog post](https://github.com/blog/470-deployment-script-spring-cleaning) about deployment script spring cleaning. Other's doing a similar thing with git push deployments are Mislav's [git-deploy](https://github.com/mislav/git-deploy) and [pushand](https://github.com/remi/pushand.git) by remi.
 
- blazing setup <target_name>
+## Installation & Setup
 
-Afterwards you can just deploy with
+Run `blazing init` in your project's root, this will create the necessary files to use and configure blazing.
 
-  blazing deploy <target_name>
+## Configuration & Blazing DSL
 
-Or just use
+The blazing config file features a DSL similar to capistrano or other
+such systems.
 
-  git push <target_name>
+Examples:
 
-which does basically the same
+    repository 'git@github.com:someones/repository.git'
 
-Backlog
-=======
+    use [:rvm, :bundler, :whenever]
 
-You have guessed it, and the version number does not lie. This is all in early development. So here's my little roadmap, aka the backlog:
+    target :stagigng, :deploy_to => 'user@hostname:/path/to/target', :default => true
+    target :production, :deploy_to => 'user@somehostname:/path/to/target'
 
-  * speccing it all out
-  * finish rvm recipe
-    * bundler after reseting code (so the app has the gems it needs)
-  * improve logging: bubbling of messages, only print them out if needed
-  * cleanup documentation
-  * release
+    ...
 
-Recipes:
+## Deploying
 
-  * bundler before running recipes? (so we have the gems blazing needs)
+    blazing deploy <target_name>
 
-  * sync fs recipes
-  * sync db recipes for
-    * mysql
-    * postgres
-    * mongodb
-    * redis
-  * hoptoad notifier
-  * maintenance page recipe
-  * rollback recipe/feature
-  * rvm recipe
-  * whenever recipe
-  * coffescript recipe
-  * sass recipe
-  * passenger recipe
-  * unicorn recipe
-  * apache recipe
-  * nginx recipe
-  * nanoc deploy
+Or, if everyting is already set up on the remote etc. you can acutally
+just do a git push to your target name.
+
+## Development 
+
+Report Issues/Questions/Feature requests on [GitHub
+Issues](http://github.com/effkay/blazing/issues)
+
+### Extending / Fixing Blazing itself
+
+Pull requests are very welcome as long as they are well tested. Please
+create a topic branch for every separate change you intend to make.
+
+### Developing Blazing Extensions
+
+**(Still work in progress and not a stable API yet)**
+
+Example:
+
+    class SomeFunkyRecipe < Blazing::Recipe
+
+      def self.run
+        # do something
+      end
+
+    end
+
+## Authors
+
+[Felipe Kaufmann](http://github.com/effkay)
+
+## License
 
 Copyright (c) 2011 Felipe Kaufmann
 
