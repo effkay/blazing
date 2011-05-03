@@ -1,7 +1,7 @@
 Blazing -- Fast and painless git push deploys
 =============================================
 
-[![Build Status](http://travis-ci.org/effkay/blazing.png)](http://travis-ci.org/effkay/blazing)
+[![Build Status](http://travis-ci.org/effkay/blazing.png)](http://travis-ci.org/effkay/blazing) (but still in alpha!)
 
 ## What
 
