@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    blazing (0.0.4)
+    blazing (0.0.6)
       activesupport (>= 3.0.5)
       i18n
       thor (>= 0.14.6)
@@ -9,7 +9,7 @@ PATH
 GEM
   remote: http://rubygems.org/
   specs:
-    activesupport (3.0.5)
+    activesupport (3.0.7)
     archive-tar-minitar (0.5.2)
     columnize (0.3.2)
     configuration (1.2.0)

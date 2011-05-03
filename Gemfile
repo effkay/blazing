@@ -4,7 +4,8 @@ source "http://rubygems.org"
 gemspec
 
 gem 'rspec'
-gem 'ruby-debug19'
+gem 'ruby-debug19', :platforms => :ruby_19
+gem 'ruby-debug', :platforms => :ruby_18
 gem 'guard'
 gem 'guard-rspec'
 gem 'growl'
