@@ -1,6 +1,8 @@
 Blazing -- Fast and painless git push deploys
 =============================================
 
+[![Build Status](http://travis-ci.org/effkay/blazing.png)](http://travis-ci.org/effkay/blazing)
+
 ## What
 
 Blazing aims to be a fast and hassle free way to deploy web
