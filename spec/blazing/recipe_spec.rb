@@ -38,10 +38,6 @@ describe Blazing::Recipe do
 
   context 'running recipes' do
 
-    # before :each do
-    #   @logger = double('logger').as_null_object
-    # end
-
     it 'delegate running a recipe to the recipe implementation' do
       Blazing::Recipe.load_builtin_recipes
       Blazing::RvmRecipe.should_receive(:run)
@@ -68,8 +64,9 @@ describe Blazing::Recipe do
       end
 
       it 'logs an error when a recipe cant be loaded' do
-        Blazing::LOGGER.should_receive(:error) # TODO: how should one do this?? .with("unable to laod #{@unknown_recipe_name} recipe")
-        Blazing::Recipe.new(:undefined).run
+        @recipe = Blazing::Recipe.new(:undefined)
+        @recipe.should_receive(:log) # TODO: how should one do this?? .with("unable to laod #{@unknown_recipe_name} recipe")
+        @recipe.run
       end
 
     end

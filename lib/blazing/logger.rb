@@ -1,24 +1,18 @@
 module Blazing
-  class Logger
+  module Logger
 
     LOG_LEVELS =  [:info, :success, :warn, :error]
 
-    def initialize(use_color = false)
-      @use_color = use_color
-    end
+    # def initialize(use_color = false)
+    #   @use_color = use_color
+    # end
 
     def messages
       @messages ||= []
     end
 
-    def puts(message, type)
+    def log(message, type)
       messages << Hash[:message => message, :type => type]
-    end
-
-    LOG_LEVELS.each do |type|
-      define_method type do |message|
-        puts(message, type)
-      end
     end
 
     # def prefix
@@ -45,7 +39,7 @@ module Blazing
   end
 end
 
-class String
+# class String
 
 # 00  Turn off all attributes
 # 01  Set bright mode
@@ -72,53 +66,53 @@ class String
 # 47  White background
 # 49  Default background col
 
- def black
-   string = "\033[30m"
-   string << self
-   string << "\033[0m"
- end
+#  def black
+#    string = "\033[30m"
+#    string << self
+#    string << "\033[0m"
+#  end
 
- def red
-   string = "\033[31m"
-   string << self
-   string << "\033[0m"
- end
+#  def red
+#    string = "\033[31m"
+#    string << self
+#    string << "\033[0m"
+#  end
 
- def green
-   string = "\033[32m"
-   string << self
-   string << "\033[0m"
- end
+#  def green
+#    string = "\033[32m"
+#    string << self
+#    string << "\033[0m"
+#  end
 
- def yellow
-   string = "\033[33m"
-   string << self
-   string << "\033[0m"
- end
+#  def yellow
+#    string = "\033[33m"
+#    string << self
+#    string << "\033[0m"
+#  end
 
- def blue
-   string = "\033[34m"
-   string << self
-   string << "\033[0m"
- end
+#  def blue
+#    string = "\033[34m"
+#    string << self
+#    string << "\033[0m"
+#  end
 
- def purple
-   string = "\033[35m"
-   string << self
-   string << "\033[0m"
- end
+#  def purple
+#    string = "\033[35m"
+#    string << self
+#    string << "\033[0m"
+#  end
 
- def cyan
-   string = "\033[36m"
-   string << self
-   string << "\033[0m"
- end
+#  def cyan
+#    string = "\033[36m"
+#    string << self
+#    string << "\033[0m"
+#  end
 
- def white
-   string = "\033[37m"
-   string << self
-   string << "\033[0m"
- end
+#  def white
+#    string = "\033[37m"
+#    string << self
+#    string << "\033[0m"
+#  end
 
-end
+# end
 
