@@ -19,8 +19,9 @@ module Blazing
 
       def create_config_file
         template 'templates/blazing.tt', Blazing::CONFIGURATION_FILE
-        say "Blazing config file has been created in #{Blazing::CONFIGURATION_FILE} with a default remote."
-        say "Check the config and then setup your remote with blazing setup REMOTE"
+        Blazing.log :info, "Blazing config file has been created in #{Blazing::CONFIGURATION_FILE} with a default remote."
+        Blazing.log :info, "Check the config and then setup your remote with blazing setup REMOTE"
+        Blazing.report
       end
 
     end
