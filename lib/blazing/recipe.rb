@@ -13,7 +13,7 @@ module Blazing
     def initialize(name, options = {})
       @name = name.to_s
       @options = options
-      @logger = options[:logger] ||= Blazing::Logger.new
+      @logger = options[:_logger] ||= Blazing::Logger.new
     end
 
     def run
