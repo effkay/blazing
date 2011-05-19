@@ -73,7 +73,7 @@ describe Blazing::Recipe do
       it 'logs an error when a recipe cant be loaded' do
         @logger = double
         @recipe = Blazing::Recipe.new(:undefined, :logger => @logger)
-        @logger.should_receive(:log) # TODO: how should one do this?? .with("unable to laod #{@unknown_recipe_name} recipe")
+        @logger.should_receive(:log) # TODO: WTF??? .with(:error, "unable to laod #{@unknown_recipe_name} recipe")
         @recipe.run
       end
 
