@@ -23,7 +23,7 @@ Some design goals:
 
 I initially started working on an extension to capistrano which would
 cover most of my needs and the needs we had at [Screen
-Concept](http://www.screencocnept.ch). After a short while I noticed
+Concept](http://www.screenconcept.ch). After a short while I noticed
 that bolting more functionality on top of capistrano was just going to
 be messy (and a PTA to maintain). We were alerady using tons of own recipes and customizations,
 capistrano multistage, capistrano-ext, etc.
