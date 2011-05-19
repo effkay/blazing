@@ -45,7 +45,7 @@ describe Blazing::Recipe do
 
   context 'running recipes' do
 
-    it 'delegate running a recipe to the recipe implementation' do
+    it 'delegates running a recipe to the recipe implementation' do
       Blazing::Recipe.load_builtin_recipes
       Blazing::RvmRecipe.should_receive(:run)
       Blazing::Recipe.new(:rvm).run
