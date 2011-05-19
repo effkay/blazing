@@ -2,7 +2,7 @@ module Blazing
   class Config
 
     class << self
-      
+
       #
       # Read the Configuration File
       #
