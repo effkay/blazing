@@ -1,3 +1,5 @@
+require 'thor'
+
 module Blazing
   module CLI
     class Hook < Thor
@@ -14,7 +16,7 @@ module Blazing
       def generate
         template('templates/post-hook.tt', '/tmp/post-receive')
       end
-      
+
     end
   end
 end
