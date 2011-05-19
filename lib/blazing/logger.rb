@@ -7,8 +7,12 @@ module Blazing
       @messages ||= []
     end
 
-    def log(message, type)
-      messages << Hash[:message => message, :type => type]
+    def log(type, message)
+      if LOG_LEVELS.include? type
+        messages << Hash[:message => message, :type => type]
+      else
+        raise
+      end
     end
 
   end
