@@ -1,13 +1,17 @@
+require 'blazing/object'
+require 'blazing'
+
 module Blazing
   class Target
 
     attr_accessor :name, :recipes
 
-    @@configuration_options = [:deploy_to, :host, :user, :path, :default]
+    CONFIGURATION_OPTIONS = [:deploy_to, :host, :user, :path, :default]
 
     def initialize(name, options = {})
       @name = name.to_s
-      @@configuration_options.each do |option|
+      @logger = options[:_logger] ||= Blazing::Logger.new
+      CONFIGURATION_OPTIONS.each do |option|
         instance_variable_set("@#{option}", options[option])
         self.class.send(:attr_accessor, option)
       end
@@ -43,7 +47,8 @@ module Blazing
     end
 
     def config
-      Blazing::Config.load
+      @_config ||= Blazing::Config
+      @_config.load
     end
 
   end
