@@ -24,6 +24,14 @@ describe Blazing::Recipe do
 
   context 'recipe discovery' do
 
+    around :each do |example|
+      # Make sure specs dont interfere with recipe discovery mechanism
+      recipes = Blazing::Recipe.list
+      recipes.each { |r| Blazing.send(:remove_const, r.name.to_s.gsub(/^.*::/, '')) rescue NameError }
+      example.run
+      recipes.each { |r| Blazing.send(:remove_const, r.name.to_s.gsub(/^.*::/, '')) rescue NameError }
+    end
+
     it 'before loading them, no recipes are known' do
       lambda { Blazing::RvmRecipe }.should raise_error NameError
     end
@@ -31,7 +39,6 @@ describe Blazing::Recipe do
     it 'can discover available recipes' do
       recipes = Blazing::Recipe.list
       recipes.should be_all { |recipe| recipe.superclass.should == Blazing::Recipe }
-      recipes.each { |r| Blazing.send(:remove_const, r.name.to_s.gsub(/^.*::/, '')) }
     end
 
   end

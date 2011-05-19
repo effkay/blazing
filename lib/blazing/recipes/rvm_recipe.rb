@@ -1,3 +1,5 @@
+require 'blazing/recipe'
+
 module Blazing
 
   class RvmRecipe < Blazing::Recipe

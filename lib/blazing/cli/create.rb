@@ -1,3 +1,6 @@
+require 'thor'
+require 'thor/group'
+
 module Blazing
   module CLI
     class Create < Thor::Group

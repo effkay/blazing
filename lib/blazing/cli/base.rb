@@ -1,3 +1,6 @@
+require 'thor'
+require 'blazing/logger'
+
 module Blazing
   module CLI
     class Base < Thor

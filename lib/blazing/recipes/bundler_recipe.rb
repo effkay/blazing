@@ -1,3 +1,5 @@
+require 'blazing/recipe'
+
 module Blazing
 
   class BundlerRecipe < Blazing::Recipe
