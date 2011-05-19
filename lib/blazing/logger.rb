@@ -15,5 +15,13 @@ module Blazing
       end
     end
 
+    def report(type = nil)
+      if type
+        messages.select { |m| m[:type] == type }.each { |m| puts m[:message] }
+      else
+        messages.each { |m| puts m[:message] }
+      end
+    end
+
   end
 end
