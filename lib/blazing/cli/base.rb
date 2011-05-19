@@ -47,12 +47,6 @@ module Blazing
         end
       end
 
-      # TODO: Make this method not be callable from shell
-      def log(*args)
-        @logger ||= Blazing::Logger.new
-        @logger.log(args)
-      end
-
     end
   end
 end
