@@ -5,8 +5,6 @@ module Blazing
   module CLI
     class Base < Thor
 
-      include Blazing::Logger
-
       desc 'init', 'prepare project for blazing deploys'
       def init
         Blazing::CLI::Create.new.invoke_all
@@ -47,6 +45,12 @@ module Blazing
         Blazing::Recipe.list.each do |recipe|
           puts recipe.name
         end
+      end
+
+      # TODO: Make this method not be callable from shell
+      def log(*args)
+        @logger ||= Blazing::Logger.new
+        @logger.log(args)
       end
 
     end

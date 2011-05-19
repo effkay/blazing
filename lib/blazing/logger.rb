@@ -1,7 +1,11 @@
 module Blazing
-  module Logger
+  class Logger
 
     LOG_LEVELS =  [:info, :success, :warn, :error]
+
+    def initialize(output = $stdout)
+      @output = output
+    end
 
     def messages
       @messages ||= []
@@ -17,9 +21,9 @@ module Blazing
 
     def report(type = nil)
       if type
-        messages.select { |m| m[:type] == type }.each { |m| puts m[:message] }
+        messages.select { |m| m[:type] == type }.each { |m| @output.puts m[:message] }
       else
-        messages.each { |m| puts m[:message] }
+        messages.each { |m| @output.puts m[:message] }
       end
     end
 
