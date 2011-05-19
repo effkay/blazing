@@ -6,15 +6,15 @@ module Blazing
 
       include Thor::Actions
 
-      def self.source_root
-        File.dirname(__FILE__)
-      end
-
       argument :target
 
       desc 'generate', 'generate post-receive hook from template'
       def generate
         template('templates/post-hook.tt', '/tmp/post-receive')
+      end
+
+      def self.source_root
+        File.dirname(__FILE__)
       end
 
     end
