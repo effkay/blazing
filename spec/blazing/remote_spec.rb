@@ -9,12 +9,25 @@ describe Blazing::Remote do
   end
 
   describe '#post_receive' do
-    it 'sets up the git dir' do
+    before :each do
       recipes = []
       config = double('config', :load => double('actual_config', :recipes => recipes, :find_target => double('target', :recipes => recipes)))
       @remote.instance_variable_set('@_config', config)
       @remote.instance_variable_set('@runner', double('runner', :run => true))
+    end
+
+    it 'sets up the git dir' do
       @remote.should_receive(:set_git_dir)
+      @remote.post_receive('sometarget')
+    end
+
+    it 'runs the recipes' do
+      @remote.should_receive(:setup_and_run_recipes)
+      @remote.post_receive('sometarget')
+    end
+
+    it 'resets the git repository' do
+      @remote.should_receive(:reset_head!)
       @remote.post_receive('sometarget')
     end
   end
