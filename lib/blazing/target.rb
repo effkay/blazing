@@ -1,5 +1,5 @@
-require 'blazing/object'
 require 'blazing'
+require 'blazing/object'
 
 module Blazing
   class Target
