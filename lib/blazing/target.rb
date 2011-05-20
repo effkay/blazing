@@ -12,6 +12,7 @@ module Blazing
       @name = name.to_s
       @logger = options[:_logger] ||= Blazing::Logger.new
       @runner = options[:_runner] ||= Blazing::Runner
+      @hook = options[:_hook] ||= Blazing::CLI::Hook
       create_accesors(options)
     end
 
@@ -72,7 +73,7 @@ module Blazing
     end
 
     def setup_post_receive_hook
-      Blazing::CLI::Hook.new([@name]).generate
+      @hook.new([@name]).generate
       @runner.run "scp /tmp/post-receive #{@user}@#{@host}:#{@path}/.git/hooks/post-receive"
       @runner.run "ssh #{@user}@#{@host} 'chmod +x #{@path}/.git/hooks/post-receive'"
     end

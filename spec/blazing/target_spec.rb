@@ -4,15 +4,14 @@ require 'blazing/target'
 describe Blazing::Target do
 
   before :each do
-    @logger = double
-    @runner = double
-    @options = { :deploy_to => 'someone@somehost:/some/path', :_runner => @runner, :_logger => @logger }
+    @logger = double('logger')
+    @runner = double('runner', :run => nil)
+    @hook = double('hook', :new => double('template', :generate => nil))
+    @options = { :deploy_to => 'someone@somehost:/some/path', :_hook => @hook, :_runner => @runner, :_logger => @logger }
   end
 
-  context 'initializer' do
-
+  describe '#initialize' do
     context 'with deploy_to option' do
-
       it 'sets the configuration options accordingly and creates an accessor' do
         @target = Blazing::Target.new('somename', @options)
         @target.deploy_to.should == @options[:deploy_to]
@@ -50,7 +49,6 @@ describe Blazing::Target do
     end
 
     context 'with missing options' do
-
       it 'raises an error if the path option is missing' do
         @options = { :host => 'somehost', :user => 'someuser' }
         lambda { Blazing::Target.new('somename', @options) }.should raise_error
@@ -68,29 +66,45 @@ describe Blazing::Target do
     end
   end
 
-  it 'config delegates to Blazing::Config.load' do
-    blazing_config = double
-    target = Blazing::Target.new('somename', @options)
-    target.instance_variable_set("@_config", blazing_config)
-    blazing_config.should_receive(:load)
-    target.config
+  describe '#config' do
+    it 'delegates to Blazing::Config.load' do
+      blazing_config = double
+      target = Blazing::Target.new('somename', @options)
+      target.instance_variable_set("@_config", blazing_config)
+      blazing_config.should_receive(:load)
+      target.config
+    end
   end
 
-  it 'uses git push to deploy to the target' do
-    target = Blazing::Target.new('somename', @options)
-    @runner.should_receive(:run).with(/git push somename/)
-    target.deploy
+
+  describe '#deploy' do
+    it 'uses git push to deploy to the target' do
+      target = Blazing::Target.new('somename', @options)
+      @runner.should_receive(:run).with(/git push somename/)
+      target.deploy
+    end
   end
 
-  context 'setup' do
+  describe '#setup' do
     before :each do
+      blazing_config = double('config', :load => Blazing::Config.new)
       @target = Blazing::Target.new('somename', @options)
+      @target.instance_variable_set("@_config", blazing_config)
+    end
+
+    it 'clones the repository on the target location' do
+      @target.should_receive(:clone_repository)
+      @target.setup
     end
 
     it 'adds the target as a git remote' do
-      @runner.should_receive(:run).with("git remote add #{@target.name} #{@target.user}@#{@target.host}:#{@target.path}")
-      @target.add_target_as_remote
+      @target.should_receive(:add_target_as_remote)
+      @target.setup
     end
 
+    it 'sets up the post-receive hook' do
+      @target.should_receive(:setup_post_receive_hook)
+      @target.setup
+    end
   end
 end
