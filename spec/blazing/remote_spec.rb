@@ -3,11 +3,121 @@ require 'blazing/remote'
 
 describe Blazing::Remote do
 
-  context 'post_receive method' do
-    it 'set the gid dir to .git if it is not already' do
-      pending 'dont know how to spec this yet'
-    end
-
+  before :each do
+    @remote = Blazing::Remote.new
+    @remote.instance_variable_set('@_dir', double('Dir', :chdir => nil))
   end
 
+  describe '#post_receive' do
+    it 'sets up the git dir' do
+      recipes = []
+      config = double('config', :load => double('actual_config', :recipes => recipes, :find_target => double('target', :recipes => recipes)))
+      @remote.instance_variable_set('@_config', config)
+      @remote.instance_variable_set('@runner', double('runner', :run => true))
+      @remote.should_receive(:set_git_dir)
+      @remote.post_receive('sometarget')
+    end
+  end
+
+  describe '#gemfile_present?' do
+    it 'checks if a Gemfile is in the cwd' do
+      File.should_receive(:exists?).with('Gemfile')
+      @remote.gemfile_present?
+    end
+  end
+
+  describe '#set_git_dir' do
+    it 'sets .git as gitdir if git dir is "."' do
+      env = { 'GIT_DIR'=> '.' }
+      @remote.instance_variable_set('@_env', env)
+      @remote.set_git_dir
+      @remote.instance_variable_get('@_env')['GIT_DIR'].should == '.git'
+    end
+  end
+
+  describe '#reset_head!' do
+    it 'does a git reset --hard HEAD' do
+      runner = double('runner', :run => nil)
+      @remote.instance_variable_set('@runner', runner)
+      runner.should_receive(:run).with('git reset --hard HEAD')
+      @remote.reset_head!
+    end
+  end
+
+  describe '#config' do
+    it 'loads the blazing config' do
+      config = double('config', :load => nil)
+      @remote.instance_variable_set('@_config', config)
+      config.should_receive(:load)
+      @remote.config
+    end
+  end
+
+  describe '#use_rvm?' do
+    context 'with rvm recipe enabled' do
+      it 'returns true' do
+        @remote.instance_variable_set('@recipes', double('rvm_recipe', :find => true, :delete_if => nil))
+        @remote.use_rvm?.should be true
+      end
+
+      it 'deletes the rvm recipes from the recipes array' do
+        @remote.instance_variable_set('@recipes', [double('rvm_recipe', :name => 'rvm')])
+        @remote.use_rvm?
+        @remote.instance_variable_get('@recipes').should be_blank
+      end
+    end
+
+    context 'without rvm_recipe' do
+      it 'returns false' do
+        @remote.instance_variable_set('@recipes', double('rvm_recipe', :find => false, :delete_if => nil))
+        @remote.use_rvm?.should be false
+      end
+    end
+  end
+
+  describe '#setup_and_run_recipes' do
+    context 'when the target has no recipes' do
+      it 'assigns the global recipes settings from the config' do
+        recipe_probe = double('recipe_probe', :name => 'noname', :run => nil)
+        global_config = double('config', :recipes => [recipe_probe])
+        blazing_config_class = double('blazing_config', :load => global_config)
+        @remote.instance_variable_set('@_config', blazing_config_class)
+        @remote.setup_and_run_recipes
+        @remote.instance_variable_get('@recipes').first.should be recipe_probe
+      end
+    end
+
+    context 'when the target has recipes' do
+      it 'does not touch the target recipes' do
+        target_recipe_probe = double('target_recipe_probe', :name => 'target', :run => nil)
+        global_recipe_probe = double('global_recipe_probe', :name => 'global', :run => nil)
+        global_config = double('config', :recipes => [global_recipe_probe])
+        blazing_config_class = double('blazing_config', :load => global_config)
+        @remote.instance_variable_set('@_config', blazing_config_class)
+        @remote.instance_variable_set('@recipes', [target_recipe_probe])
+        @remote.setup_and_run_recipes
+        @remote.instance_variable_get('@recipes').first.name.should == 'target'
+      end
+    end
+  end
+
+  describe '#run_recipes' do
+    it 'runs all recipes' do
+      recipes =  [double('one', :name => nil), double('two', :name => nil), double('three', :name => nil)]
+      @remote.instance_variable_set('@recipes', recipes)
+      recipes.each do |recipe|
+        recipe.should_receive(:run)
+      end
+      @remote.run_recipes
+    end
+  end
+
+  describe '#run_bootstrap_recipes' do
+    it 'runs rvm recipe if it is enabled' do
+      rvm_recipe = double('rvm_recipe', :name => 'rvm')
+      @remote.instance_variable_set('@recipes', [rvm_recipe])
+      rvm_recipe.should_receive(:run)
+      @remote.run_bootstrap_recipes
+    end
+  end
 end
