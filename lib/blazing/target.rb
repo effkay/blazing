@@ -57,8 +57,6 @@ module Blazing
       end
     end
 
-    #TODO: to be specced, from here on down...
-
     def clone_command
       "if [ -e #{@path} ]; then \
       echo 'directory exists already'; else \
