@@ -5,6 +5,11 @@ module Blazing
   module CLI
     class Base < Thor
 
+      def initialize(logger = Blazing::Logger.new)
+        @logger = logger
+        super
+      end
+
       desc 'init', 'prepare project for blazing deploys'
       def init
         Blazing::CLI::Create.new.invoke_all
@@ -14,15 +19,15 @@ module Blazing
       def setup(target_name = nil)
         config = Blazing::Config.load
         target = config.find_target(target_name)
-        log :info, "setting up target #{target.name}"
+        @logger.log :info, "setting up target #{target.name}"
         target.setup
 
         # TODO: Abstract this into module and load it where we need it. Methods / actions should have
         # a success and failure message
         if $?.exitstatus == 0
-          log :success, "successfully set up target #{target.name}"
+          @logger.log :success, "successfully set up target #{target.name}"
         else
-          log :error, "failed setting up target #{target.name}"
+          @logger.log :error, "failed setting up target #{target.name}"
         end
       end
 
@@ -30,13 +35,13 @@ module Blazing
       def deploy(target_name = nil)
         config = Blazing::Config.load
         target = config.find_target(target_name)
-        log :info, "deploying target #{target.name}"
+        @logger.log :info, "deploying target #{target.name}"
         target.deploy
 
         if $?.exitstatus == 0
-          log :success, "successfully deployed target #{target.name}"
+          @logger.log :success, "successfully deployed target #{target.name}"
         else
-          log :error, "failed deploying on target #{target.name}"
+          @logger.log :error, "failed deploying on target #{target.name}"
         end
       end
 

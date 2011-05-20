@@ -5,7 +5,8 @@ require 'blazing/cli/create'
 describe Blazing::CLI::Create do
 
   before :each do
-    @config_generator = Blazing::CLI::Create.new
+    @logger = double('logger', :log => nil, :report => nil)
+    @config_generator = Blazing::CLI::Create.new(@logger)
   end
 
   it 'knows the source root for its tempate' do

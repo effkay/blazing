@@ -9,6 +9,11 @@ module Blazing
 
       include Thor::Actions
 
+      def initialize(logger = Blazing::Logger.new)
+        @logger = logger
+        super
+      end
+
       def self.source_root
         File.dirname(__FILE__)
       end
@@ -19,9 +24,9 @@ module Blazing
 
       def create_config_file
         template 'templates/blazing.tt', Blazing::CONFIGURATION_FILE
-        Blazing.log :info, "Blazing config file has been created in #{Blazing::CONFIGURATION_FILE} with a default remote."
-        Blazing.log :info, "Check the config and then setup your remote with blazing setup REMOTE"
-        Blazing.report
+        @logger.log :info, "Blazing config file has been created in #{Blazing::CONFIGURATION_FILE} with a default remote."
+        @logger.log :info, "Check the config and then setup your remote with blazing setup REMOTE"
+        @logger.report
       end
 
     end
