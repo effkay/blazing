@@ -11,6 +11,7 @@ module Blazing
     def initialize(name, options = {})
       @name = name.to_s
       @logger = options[:_logger] ||= Blazing::Logger.new
+      @runner = options[:_runner] ||= Blazing::Runner
       CONFIGURATION_OPTIONS.each do |option|
         instance_variable_set("@#{option}", options[option])
         self.class.send(:attr_accessor, option)
@@ -43,7 +44,7 @@ module Blazing
     end
 
     def deploy
-      system "git push #{name}"
+      @runner.run "git push #{name}"
     end
 
     def config

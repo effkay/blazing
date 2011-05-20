@@ -5,7 +5,8 @@ describe Blazing::Target do
 
   before :each do
     @logger = double
-    @options = { :deploy_to => 'someone@somehost:/some/path', :_logger => @logger }
+    @runner = double
+    @options = { :deploy_to => 'someone@somehost:/some/path', :_runner => @runner, :_logger => @logger }
   end
 
   context 'initializer' do
@@ -51,20 +52,17 @@ describe Blazing::Target do
     context 'with missing options' do
 
       it 'raises an error if the path option is missing' do
-        @logger = double
-        @options = { :host => 'somehost', :user => 'someuser', :_logger => @logger }
+        @options = { :host => 'somehost', :user => 'someuser' }
         lambda { Blazing::Target.new('somename', @options) }.should raise_error
       end
 
       it 'raises an error if the host option is missing' do
-        @logger = double
-        @options = { :user => 'someuser', :path => 'somepath', :_logger => @logger }
+        @options = { :user => 'someuser', :path => 'somepath' }
         lambda { Blazing::Target.new('somename', @options) }.should raise_error
       end
 
       it 'raises an error if the user option is missing' do
-        @logger = double
-        @options = { :host => 'somehost', :path => 'somepath', :_logger => @logger }
+        @options = { :host => 'somehost', :path => 'somepath' }
         lambda { Blazing::Target.new('somename', @options) }.should raise_error
       end
     end
@@ -76,5 +74,15 @@ describe Blazing::Target do
     target.instance_variable_set("@_config", blazing_config)
     blazing_config.should_receive(:load)
     target.config
+  end
+
+  it 'uses git push to deploy to the target' do
+    target = Blazing::Target.new('somename', @options)
+    @runner.should_receive(:run).with(/git push somename/)
+    target.deploy
+  end
+
+  context 'setup' do
+
   end
 end
