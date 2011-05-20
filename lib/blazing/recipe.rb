@@ -27,16 +27,6 @@ module Blazing
       return nil
     end
 
-    def fail
-      raise 'NOT IMPLEMENTED'
-      # TODO: implement meaningful default behaviour!
-    end
-
-    def success
-      raise 'NOT IMPLEMENTED'
-      # TODO: implement meaningful default behaviour!
-    end
-
     class << self
 
       def load_builtin_recipes
