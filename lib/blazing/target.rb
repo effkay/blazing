@@ -57,6 +57,8 @@ module Blazing
       end
     end
 
+    #TODO: to be specced, from here on down...
+
     def clone_command
       "if [ -e #{@path} ]; then \
       echo 'directory exists already'; else \
@@ -64,17 +66,17 @@ module Blazing
     end
 
     def clone_repository
-      system "ssh #{@user}@#{@host} '#{clone_command}'"
+      @runner.run "ssh #{@user}@#{@host} '#{clone_command}'"
     end
 
     def add_target_as_remote
-      system "git remote add #{@name} #{@user}@#{@host}:#{@path}"
+      @runner.run "git remote add #{@name} #{@user}@#{@host}:#{@path}"
     end
 
     def setup_post_receive_hook
       Blazing::CLI::Hook.new([@name]).generate
-      system "scp /tmp/post-receive #{@user}@#{@host}:#{@path}/.git/hooks/post-receive"
-      system "ssh #{@user}@#{@host} 'chmod +x #{@path}/.git/hooks/post-receive'"
+      @runner.run "scp /tmp/post-receive #{@user}@#{@host}:#{@path}/.git/hooks/post-receive"
+      @runner.run "ssh #{@user}@#{@host} 'chmod +x #{@path}/.git/hooks/post-receive'"
     end
 
   end
