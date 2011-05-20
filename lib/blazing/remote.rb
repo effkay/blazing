@@ -4,8 +4,6 @@ require 'blazing/config'
 module Blazing
   class Remote
 
-    # TODO: Check if post-hook and blazing versions match before doing anything
-
     def post_receive(target_name)
       set_git_dir
       @target = config.find_target(target_name)
