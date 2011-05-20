@@ -83,6 +83,14 @@ describe Blazing::Target do
   end
 
   context 'setup' do
+    before :each do
+      @target = Blazing::Target.new('somename', @options)
+    end
+
+    it 'adds the target as a git remote' do
+      @runner.should_receive(:run).with("git remote add #{@target.name} #{@target.user}@#{@target.host}:#{@target.path}")
+      @target.add_target_as_remote
+    end
 
   end
 end
