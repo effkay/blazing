@@ -1,3 +1,6 @@
+require 'blazing'
+require 'blazing/target'
+
 module Blazing
   class Config
 
@@ -16,7 +19,6 @@ module Blazing
       # Load configuration file and parse it
       #
       def load
-        # TODO: shorten with something like this: new.instance_eval(File.read(guardfile_path), guardfile_path, 1)
         config = read do
           instance_eval(File.read(Blazing::CONFIGURATION_FILE))
         end
@@ -49,13 +51,11 @@ module Blazing
       @recipes = []
     end
 
-    def target(name, options = {}, &target_definition)
-      # TODO: implement if needed: target_definition.call if target_definition
+    def target(name, options = {})
       @targets << Blazing::Target.new(name, options)
     end
 
-    def use(name, options = {}, &recipe_definition)
-      #TODO: implement if needed: recipe_definition.call if recipe_definition
+    def use(name, options = {})
       @recipes << Blazing::Recipe.new(name, options)
     end
 
