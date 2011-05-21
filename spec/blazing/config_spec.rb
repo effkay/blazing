@@ -48,8 +48,20 @@ describe Blazing::Config do
   end
 
   describe '.dsl_setter' do
-    it 'creates a dsl setter method for the config class' do
+    before :each do
+      @config.class.class_eval do
+        dsl_setter :foo
+      end
+    end
 
+    it 'creates a dsl method to set the attribute in the config class' do
+      @config.foo 'something'
+      @config.instance_variable_get('@foo').should == 'something'
+    end
+
+    it 'creates a dsl method that allows to read the attribute in the config class' do
+      @config.foo 'something'
+      @config.foo.should == 'something'
     end
   end
 
