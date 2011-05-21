@@ -63,7 +63,7 @@ module Blazing
     # Determines which target is picked, based on defaults and CLI argument
     # If only one target is defined, it is the default one
     #
-    def find_target(target_name)
+    def find_target(target_name = nil)
       if target_name
         target = targets.find {|target| target.name == target_name }
       end
