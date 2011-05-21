@@ -66,11 +66,17 @@ describe Blazing::Config do
   end
 
   describe '.load' do
-
+    it 'reads and parses the config file and returns a config object' do
+      Blazing.send(:remove_const, 'CONFIGURATION_FILE')
+      Blazing::CONFIGURATION_FILE = 'spec/support/config.rb'
+      Blazing::Config.load.should be_a Blazing::Config
+    end
   end
 
   describe '.read' do
-
+    it 'parses the config and returns a config object' do
+      @config.class.read {}.should be_a Blazing::Config
+    end
   end
 
 end
