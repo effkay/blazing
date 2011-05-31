@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    blazing (0.0.6)
+    blazing (0.0.7)
       activesupport (>= 3.0.5)
       i18n
       thor (>= 0.14.6)
