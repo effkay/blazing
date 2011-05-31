@@ -6,3 +6,4 @@ pkg/*
 tags
 .idea
 coverage
+*.rbc
