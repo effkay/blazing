@@ -12,7 +12,8 @@ describe Blazing::CLI::Base do
     @logger = double('logger', :log => nil, :report => nil)
     @runner = double('runner', :run => nil)
     @hook = double('hook', :new => double('template', :generate => nil))
-    @base =  Blazing::CLI::Base.new(@logger)
+    @base =  Blazing::CLI::Base.new
+    @base.instance_variable_set('@logger', @logger)
   end
 
   describe '#init' do
