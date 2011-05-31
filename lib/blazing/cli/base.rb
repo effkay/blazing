@@ -19,7 +19,7 @@ module Blazing
 
       desc 'setup TARGET_NAME', 'setup or update blazing on specified target and deploy'
       def setup(target_name = nil)
-        target = @config.find_target(target_name)
+        target = config.find_target(target_name)
         log :info, "setting up target #{target.name}"
         target.setup
 
@@ -34,7 +34,7 @@ module Blazing
 
       desc 'deploy TARGET', 'deploy to TARGET'
       def deploy(target_name = nil)
-        target = @config.find_target(target_name)
+        target = config.find_target(target_name)
         log :info, "deploying target #{target.name}"
         target.deploy
 

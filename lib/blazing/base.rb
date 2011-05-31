@@ -6,6 +6,10 @@ module Blazing
       @logger.log(type, message)
     end
 
+    def config
+      @config ||= Blazing::Config.load
+    end
+
     def report
       @logger.report
     end
