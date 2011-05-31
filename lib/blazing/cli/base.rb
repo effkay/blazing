@@ -1,6 +1,8 @@
 require 'thor'
 require 'blazing'
 require 'blazing/logger'
+require 'blazing/recipe'
+
 require 'blazing/cli/create'
 
 module Blazing
@@ -27,7 +29,7 @@ module Blazing
 
         # TODO: Abstract this into module and load it where we need it. Methods / actions should have
         # a success and failure message
-        if $?.exitstatus == 0
+        if exit_status == 0
           @logger.log :success, "successfully set up target #{target.name}"
         else
           @logger.log :error, "failed setting up target #{target.name}"
@@ -40,7 +42,7 @@ module Blazing
         @logger.log :info, "deploying target #{target.name}"
         target.deploy
 
-        if $?.exitstatus == 0
+        if exit_status == 0
           @logger.log :success, "successfully deployed target #{target.name}"
         else
           @logger.log :error, "failed deploying on target #{target.name}"
@@ -50,8 +52,15 @@ module Blazing
       desc 'recipes', 'List available recipes'
       def recipes
         Blazing::Recipe.list.each do |recipe|
-          puts recipe.name
+          @logger.log :success, recipe.name
         end
+        @logger.report
+      end
+
+    private
+
+      def exit_status
+        @exit_status || $?.exitstatus
       end
     end
   end
