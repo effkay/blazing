@@ -1,5 +1,7 @@
 require 'thor'
+require 'blazing'
 require 'blazing/logger'
+require 'blazing/cli/create'
 
 module Blazing
   module CLI
@@ -7,18 +9,19 @@ module Blazing
 
       def initialize(logger = Blazing::Logger.new)
         @logger = logger
+        @config = Blazing::Config.load
         super
       end
 
       desc 'init', 'prepare project for blazing deploys'
       def init
-        Blazing::CLI::Create.new.invoke_all
+        @task ||= Blazing::CLI::Create.new
+        @task.invoke_all
       end
 
       desc 'setup TARGET_NAME', 'setup or update blazing on specified target and deploy'
       def setup(target_name = nil)
-        config = Blazing::Config.load
-        target = config.find_target(target_name)
+        target = @config.find_target(target_name)
         @logger.log :info, "setting up target #{target.name}"
         target.setup
 
@@ -33,8 +36,7 @@ module Blazing
 
       desc 'deploy TARGET', 'deploy to TARGET'
       def deploy(target_name = nil)
-        config = Blazing::Config.load
-        target = config.find_target(target_name)
+        target = @config.find_target(target_name)
         @logger.log :info, "deploying target #{target.name}"
         target.deploy
 
@@ -51,7 +53,6 @@ module Blazing
           puts recipe.name
         end
       end
-
     end
   end
 end
