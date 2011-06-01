@@ -1,6 +1,10 @@
-#!/usr/bin/env ruby
+#!/bin/bash
 
-require 'rubygems'
-require 'blazing'
+cd ..
+rvm=$(blazing rvm)
 
-Blazing::Remote.post_receive('<%= target %>')
+if [ $rvm != 'false' ]; then
+  rvm use $rvm
+fi
+
+blazing post_receive

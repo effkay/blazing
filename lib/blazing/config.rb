@@ -56,7 +56,7 @@ module Blazing
     end
 
     def use(name, options = {})
-      @recipes << Blazing::Recipe.new(name, options)
+      @recipes << Blazing::Recipe.new_recipe_by_name(name, options)
     end
 
     #

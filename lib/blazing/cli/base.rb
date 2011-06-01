@@ -53,6 +53,22 @@ module Blazing
         report
       end
 
+      #TODO: move post_recevie and rvm somewhere else, they must only be called by the
+      # post-receive hook and not visible to user
+
+      desc 'post_receive', 'trigger the post-receive actions'
+      def post_receive(target_name = nil)
+        target = config.find_target(target_name)
+        Blazing::Remote.new(target.name).post_receive
+      end
+
+      desc 'rvm', 'used by post_receive hook to decide if rvm env needs to be switched'
+      def rvm(target_name = nil)
+        target = config.find_target(target_name)
+        log :info, Blazing::Remote.new(target.name).use_rvm?
+        report
+      end
+
     private
 
       def exit_status

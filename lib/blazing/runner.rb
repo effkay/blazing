@@ -1,5 +1,7 @@
 class Blazing::Runner
-  def self.run(command)
+
+  def run(command)
     system command
   end
+
 end

@@ -11,7 +11,7 @@ module Blazing
     def initialize(name, options = {})
       @name = name.to_s
       @logger = options[:_logger] ||= Blazing::Logger.new
-      @runner = options[:_runner] ||= Blazing::Runner
+      @runner = options[:_runner] ||= Blazing::Runner.new
       @hook = options[:_hook] ||= Blazing::CLI::Hook
       create_accesors(options)
     end

@@ -16,10 +16,6 @@ module Blazing
       @logger = options[:_logger] ||= Blazing::Logger.new
     end
 
-    def run
-      recipe_class.run if recipe_class
-    end
-
     def recipe_class
       ('Blazing::' + (@name.to_s + '_recipe').camelize).constantize
     rescue NameError
@@ -28,6 +24,11 @@ module Blazing
     end
 
     class << self
+
+      def new_recipe_by_name(name, options = {})
+        load_builtin_recipes
+        new(name, options).recipe_class.new(name, options)
+      end
 
       def load_builtin_recipes
         dir = File.join(File.dirname(__FILE__), "/recipes")
@@ -59,7 +60,9 @@ module Blazing
         descendants
       end
 
+      def create(name, options)
+        recipe_class(name)
+      end
     end
-
   end
 end
