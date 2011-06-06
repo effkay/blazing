@@ -4,31 +4,33 @@ require 'blazing/remote'
 describe Blazing::Remote do
 
   before :each do
-    @remote = Blazing::Remote.new
+    # recipes = []
+    # @config = double('config', :load => double('actual_config', :recipes => recipes, :find_target => double('target', :recipes => recipes)))
+    @config = Blazing::Config.new
+    @config.target :some_name, :deploy_to => 'user@hostname:/path'
+    @remote = Blazing::Remote.new('some_name', :config => @config)
     @remote.instance_variable_set('@_dir', double('Dir', :chdir => nil))
   end
 
   describe '#post_receive' do
     before :each do
-      recipes = []
-      config = double('config', :load => double('actual_config', :recipes => recipes, :find_target => double('target', :recipes => recipes)))
-      @remote.instance_variable_set('@_config', config)
       @remote.instance_variable_set('@runner', double('runner', :run => true))
+      Dir.stub!(:chdir)
     end
 
     it 'sets up the git dir' do
       @remote.should_receive(:set_git_dir)
-      @remote.post_receive('sometarget')
+      @remote.post_receive
     end
 
     it 'runs the recipes' do
-      @remote.should_receive(:setup_and_run_recipes)
-      @remote.post_receive('sometarget')
+      @remote.should_receive(:run_recipes)
+      @remote.post_receive
     end
 
     it 'resets the git repository' do
       @remote.should_receive(:reset_head!)
-      @remote.post_receive('sometarget')
+      @remote.post_receive
     end
   end
 
@@ -41,10 +43,8 @@ describe Blazing::Remote do
 
   describe '#set_git_dir' do
     it 'sets .git as gitdir if git dir is "."' do
-      env = { 'GIT_DIR'=> '.' }
-      @remote.instance_variable_set('@_env', env)
-      @remote.set_git_dir
-      @remote.instance_variable_get('@_env')['GIT_DIR'].should == '.git'
+      # Dir.should_receive(:chdir).with('.git')
+      # @remote.set_git_dir
     end
   end
 
@@ -57,24 +57,15 @@ describe Blazing::Remote do
     end
   end
 
-  describe '#config' do
-    it 'loads the blazing config' do
-      config = double('config', :load => nil)
-      @remote.instance_variable_set('@_config', config)
-      config.should_receive(:load)
-      @remote.config
-    end
-  end
-
   describe '#use_rvm?' do
     context 'with rvm recipe enabled' do
-      it 'returns true' do
-        @remote.instance_variable_set('@recipes', double('rvm_recipe', :find => true, :delete_if => nil))
-        @remote.use_rvm?.should be true
+      it 'returns the rvm string' do
+        @remote.instance_variable_set('@recipes', double('recipes', :find => double('recipe', :options => { :rvm_string => 'someruby@somegemset'}), :delete_if => nil))
+        @remote.use_rvm?.should == 'someruby@somegemset'
       end
 
       it 'deletes the rvm recipes from the recipes array' do
-        @remote.instance_variable_set('@recipes', [double('rvm_recipe', :name => 'rvm')])
+        @remote.instance_variable_set('@recipes', [double('rvm_recipe', :name => 'rvm', :options => {})])
         @remote.use_rvm?
         @remote.instance_variable_get('@recipes').should be_blank
       end
@@ -88,14 +79,13 @@ describe Blazing::Remote do
     end
   end
 
-  describe '#setup_and_run_recipes' do
+  describe '#setup_recipes' do
     context 'when the target has no recipes' do
       it 'assigns the global recipes settings from the config' do
         recipe_probe = double('recipe_probe', :name => 'noname', :run => nil)
-        global_config = double('config', :recipes => [recipe_probe])
-        blazing_config_class = double('blazing_config', :load => global_config)
-        @remote.instance_variable_set('@_config', blazing_config_class)
-        @remote.setup_and_run_recipes
+        config = double('config', :recipes => [recipe_probe])
+        @remote.instance_variable_set('@config', config)
+        @remote.setup_recipes
         @remote.instance_variable_get('@recipes').first.should be recipe_probe
       end
     end
@@ -108,7 +98,7 @@ describe Blazing::Remote do
         blazing_config_class = double('blazing_config', :load => global_config)
         @remote.instance_variable_set('@_config', blazing_config_class)
         @remote.instance_variable_set('@recipes', [target_recipe_probe])
-        @remote.setup_and_run_recipes
+        @remote.setup_recipes
         @remote.instance_variable_get('@recipes').first.name.should == 'target'
       end
     end
@@ -127,10 +117,7 @@ describe Blazing::Remote do
 
   describe '#run_bootstrap_recipes' do
     it 'runs rvm recipe if it is enabled' do
-      rvm_recipe = double('rvm_recipe', :name => 'rvm')
-      @remote.instance_variable_set('@recipes', [rvm_recipe])
-      rvm_recipe.should_receive(:run)
-      @remote.run_bootstrap_recipes
+      pending 'implement bootstrap recipes if still needed'
     end
   end
 end

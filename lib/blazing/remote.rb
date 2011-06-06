@@ -4,8 +4,9 @@ require 'blazing/config'
 module Blazing
   class Remote
 
-    def initialize(target_name)
-      @target = config.find_target(target_name)
+    def initialize(target_name, options = {})
+      @config = options[:config] || Blazing::Config.load
+      @target = @config.find_target(target_name)
       @recipes = @target.recipes
       setup_recipes
     end
@@ -22,25 +23,12 @@ module Blazing
     end
 
     def set_git_dir
-      @_env ||= ENV
-      @_dir ||= Dir
-
-      # TODO: cleanup!
-      # if @_env['GIT_DIR'] == '.'
-        @_dir.chdir('.git')
-        # @_dir.chdir('..')
-        # @_env['GIT_DIR'] = '.git'
-      # end
+      Dir.chdir('.git')
     end
 
     def reset_head!
       @runner ||= Blazing::Runner.new
       @runner.run 'git reset --hard HEAD'
-    end
-
-    def config
-      @_config ||= Blazing::Config
-      @_config.load
     end
 
     #
@@ -62,7 +50,7 @@ module Blazing
       # namespace of the config. Make it possible for targets to
       # define recipes individually
 
-      @recipes = config.recipes if @recipes.blank?
+      @recipes = @config.recipes if @recipes.blank?
       Blazing::Recipe.load_builtin_recipes
     end
 

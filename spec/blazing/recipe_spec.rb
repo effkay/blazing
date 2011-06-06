@@ -45,38 +45,18 @@ describe Blazing::Recipe do
 
   context 'running recipes' do
 
-    it 'delegates running a recipe to the recipe implementation' do
-      Blazing::Recipe.load_builtin_recipes
-      Blazing::RvmRecipe.should_receive(:run)
-      Blazing::Recipe.new(:rvm).run
-    end
-
     it 'construct the correct classname to use from recie name' do
+      Blazing::Recipe.load_builtin_recipes
       Blazing::Recipe.new(:rvm).recipe_class.should == Blazing::RvmRecipe
     end
 
     it 'raise an error when a recipe has no run method defined' do
       class Blazing::BlahRecipe < Blazing::Recipe; end
-      lambda { Blazing::Recipe.new(:blah).run }.should raise_error NoMethodError
+      lambda { Blazing::Recipe.new(:blah).run }.should raise_error RuntimeError
     end
 
     context 'unknown recipe' do
-
-      before :all do
-        @unknown_recipe_name = :undefined
-      end
-
-      it 'does not crash when a recipe can not be loaded' do
-        lambda { Blazing::Recipe.new(@unknown_recipe_name).run }.should_not raise_error
-      end
-
-      it 'logs an error when a recipe cant be loaded' do
-        @logger = double
-        @recipe = Blazing::Recipe.new(:undefined, :_logger => @logger)
-        @logger.should_receive(:log) # TODO: WTF??? .with(:error, "unable to laod #{@unknown_recipe_name} recipe")
-        @recipe.run
-      end
-
+      pending "Handle errors for loading unknown recipes"
     end
   end
 

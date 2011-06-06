@@ -23,6 +23,10 @@ module Blazing
       return nil
     end
 
+    def run
+     raise 'run method must be implemented in recipe' 
+    end
+
     class << self
 
       def new_recipe_by_name(name, options = {})
