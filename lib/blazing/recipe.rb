@@ -64,9 +64,6 @@ module Blazing
         descendants
       end
 
-      def create(name, options)
-        recipe_class(name)
-      end
     end
   end
 end

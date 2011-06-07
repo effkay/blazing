@@ -100,4 +100,41 @@ describe Blazing::CLI::Base do
     end
   end
 
+  describe '#post_receive' do
+
+    before :each do
+      @some_target_name = 'test_target'
+      config = Blazing::Config.new
+      config.target(@some_target_name, :deploy_to => 'smoeone@somewhere:/asdasdasd')
+      @base.instance_variable_set('@config', config)
+    end
+
+    it 'instantiates a new remote and calls its post_receive method' do
+      Blazing::Remote.should_receive(:new).with(@some_target_name).and_return(double('remote', :post_receive => nil))
+      @base.post_receive
+    end
+  end
+
+  describe '#rvm' do
+
+    before :each do
+      @some_target_name = 'test_target'
+      hook = double('hook', :new => double('template', :generate => nil))
+      @config = Blazing::Config.new
+      @config.target(@some_target_name, :deploy_to => 'smoeone@somewhere:/asdasdasd', :_logger => @logger, :_runner => @runner, :_hook => hook)
+      @base.instance_variable_set('@config', @config)
+    end
+
+    it 'writes a log with the rvm string if the target has rvm enabled' do
+      @logger.should_receive(:log).with(:info, 'someruby@somegemset')
+      Blazing::Remote.stub!(:new).and_return(double('remote', :use_rvm? => 'someruby@somegemset'))
+      @base.rvm(@some_target_name)
+    end
+
+    it 'writes a log saying false if the target has no rvm enabled' do
+      @logger.should_receive(:log).with(:info, false)
+      Blazing::Remote.stub!(:new).and_return(double('remote', :use_rvm? => false))
+      @base.rvm(@some_target_name)
+    end
+  end
 end
