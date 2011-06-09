@@ -7,6 +7,9 @@ rescue LoadError
   puts 'ignoring simplecov, needs ruby-1.9'
 end
 
+#
+# Stuff borrowed from carlhuda/bundler
+#
 RSpec.configure do |config|
   def capture(stream)
     begin
