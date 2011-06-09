@@ -1,7 +1,6 @@
 require 'blazing/recipe'
 
 module Blazing
-
   class BundlerRecipe < Blazing::Recipe
 
     def initialize(name, options = {})
