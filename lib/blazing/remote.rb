@@ -62,11 +62,11 @@ module Blazing
     end
 
     def run_bootstrap_recipes
-      # @rvm_recipe.run if use_rvm?
-
-      # if gemfile_present?
-      #   # TODO: Bundler setup or something ?
-      # end
+      bundler = @recipes.find { |r| r.name == 'bundler' }
+      if bundler
+        bundler.run
+        @recipes.delete_if { |r| r.name == 'bundler' }
+      end
     end
   end
 

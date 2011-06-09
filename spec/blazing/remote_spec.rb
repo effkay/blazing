@@ -116,8 +116,21 @@ describe Blazing::Remote do
   end
 
   describe '#run_bootstrap_recipes' do
-    it 'runs rvm recipe if it is enabled' do
-      pending 'implement bootstrap recipes if still needed'
+
+    before :each do
+      @bundler = double('bundler', :name => 'bundler', :run => nil)
+      @recipes =  [@bundler, double('two', :name => nil), double('three', :name => nil)]
+      @remote.instance_variable_set('@recipes', @recipes)
+    end
+
+    it 'runs bundler recipe if it is enabled' do
+      @bundler.should_receive(:run)
+      @remote.run_bootstrap_recipes
+    end
+
+    it 'deletes the bundler recipe from the array after running it' do
+      @remote.run_bootstrap_recipes
+      @recipes.find { |r| r.name == 'bundler' }.should be nil
     end
   end
 end
