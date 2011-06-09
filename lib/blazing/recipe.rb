@@ -14,6 +14,7 @@ module Blazing
       @name = name.to_s
       @options = options
       @logger = options[:_logger] ||= Blazing::Logger.new
+      @runner = Blazing::Runner.new
     end
 
     def recipe_class
