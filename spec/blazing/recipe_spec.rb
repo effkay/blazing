@@ -4,7 +4,6 @@ require 'blazing/recipe'
 describe Blazing::Recipe do
 
   context 'initializer' do
-
     it 'takes a string as name parameter' do
       recipe = Blazing::Recipe.new('some_recipe')
       recipe.name.should == 'some_recipe'
@@ -19,7 +18,6 @@ describe Blazing::Recipe do
       recipe = Blazing::Recipe.new(:some_recipe, :an_option => 'yeah')
       recipe.options[:an_option].should == 'yeah'
     end
-
   end
 
   context 'recipe discovery' do
@@ -40,29 +38,35 @@ describe Blazing::Recipe do
       recipes = Blazing::Recipe.list
       recipes.should be_all { |recipe| recipe.superclass.should == Blazing::Recipe }
     end
-
   end
 
-  context 'running recipes' do
-
-    it 'construct the correct classname to use from recie name' do
+  describe '#recipe_class' do
+    it 'construct the correct classname to use from recipe name' do
       Blazing::Recipe.load_builtin_recipes
       Blazing::Recipe.new(:rvm).recipe_class.should == Blazing::RvmRecipe
     end
 
+    context 'when trying to load an unknown recipe' do
+      it 'does not raise a NameError' do
+        lambda { Blazing::Recipe.new('weirdname').recipe_class }.should_not raise_error NameError
+      end
+
+      it 'logs an error message' do
+        @logger = double('logger')
+        @logger.should_receive(:log).with(:error, "unable to load weirdname recipe")
+        Blazing::Recipe.new('weirdname', :_logger => @logger).recipe_class
+      end
+    end
+  end
+
+  describe '#run' do
     it 'raise an error when a recipe has no run method defined' do
       class Blazing::BlahRecipe < Blazing::Recipe; end
       lambda { Blazing::Recipe.new(:blah).run }.should raise_error RuntimeError
     end
-
-    context 'unknown recipe' do
-      pending "Handle errors for loading unknown recipes"
-    end
   end
 
-
   context 'builtin recipes' do
-
     it 'include an rvm recipe' do
       lambda { Blazing::RvmRecipe }.should_not raise_error NameError
     end
@@ -70,6 +74,5 @@ describe Blazing::Recipe do
     it 'include a bundler recipe' do
       lambda { Blazing::BundlerRecipe }.should_not raise_error NameError
     end
-
   end
 end
