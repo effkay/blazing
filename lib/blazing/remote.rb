@@ -13,9 +13,9 @@ module Blazing
 
     def post_receive
       set_git_dir
+      reset_head!
       @recipes.delete_if { |recipe| recipe.name == 'rvm' }
       run_recipes
-      reset_head!
     end
 
     def gemfile_present?
