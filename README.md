@@ -48,21 +48,21 @@ such systems.
 
 Examples:
 ```ruby
-    repository 'git@github.com:someones/repository.git'
+repository 'git@github.com:someones/repository.git'
 
-    use [:bundler, :whenever]
-    use :rvm, :rvm_string => 'ree@production'
+use [:bundler, :whenever]
+use :rvm, :rvm_string => 'ree@production'
 
-    target :stagigng, :deploy_to => 'user@hostname:/path/to/target', :default => true
-    target :production, :deploy_to => 'user@somehostname:/path/to/target'
+target :stagigng, :deploy_to => 'user@hostname:/path/to/target', :default => true
+target :production, :deploy_to => 'user@somehostname:/path/to/target'
 
-    ...
+...
 ```
 
 ## Deploying
 
 ```ruby
-    blazing deploy <target_name>
+blazing deploy <target_name>
 ```
 
 Or, if everyting is already set up on the remote etc. you can acutally
@@ -85,13 +85,13 @@ create a topic branch for every separate change you intend to make.
 Example:
 
 ```ruby
-    class SomeFunkyRecipe < Blazing::Recipe
+class SomeFunkyRecipe < Blazing::Recipe
 
-      def self.run
-        # do something
-      end
+  def self.run
+    # do something
+  end
 
-    end
+end
 ```
 
 ## Authors
