@@ -47,19 +47,23 @@ The blazing config file features a DSL similar to capistrano or other
 such systems.
 
 Examples:
-
+```ruby
     repository 'git@github.com:someones/repository.git'
 
-    use [:rvm, :bundler, :whenever]
+    use [:bundler, :whenever]
+    use :rvm, :rvm_string => 'ree@production'
 
     target :stagigng, :deploy_to => 'user@hostname:/path/to/target', :default => true
     target :production, :deploy_to => 'user@somehostname:/path/to/target'
 
     ...
+```
 
 ## Deploying
 
+```ruby
     blazing deploy <target_name>
+```
 
 Or, if everyting is already set up on the remote etc. you can acutally
 just do a git push to your target name.
@@ -80,6 +84,7 @@ create a topic branch for every separate change you intend to make.
 
 Example:
 
+```ruby
     class SomeFunkyRecipe < Blazing::Recipe
 
       def self.run
@@ -87,6 +92,7 @@ Example:
       end
 
     end
+```
 
 ## Authors
 
