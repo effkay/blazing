@@ -47,6 +47,7 @@ The blazing config file features a DSL similar to capistrano or other
 such systems.
 
 Examples:
+
 ```ruby
 repository 'git@github.com:someones/repository.git'
 
@@ -55,13 +56,12 @@ use :rvm, :rvm_string => 'ree@production'
 
 target :stagigng, :deploy_to => 'user@hostname:/path/to/target', :default => true
 target :production, :deploy_to => 'user@somehostname:/path/to/target'
-
 ...
 ```
 
 ## Deploying
 
-```ruby
+```bash
 blazing deploy <target_name>
 ```
 
