@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+Bundler.setup
+
 require 'thor'
 require 'thor/group'
 require 'blazing'
