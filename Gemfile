@@ -11,6 +11,4 @@ gem 'guard' , '0.4.0.rc'
 gem 'guard-rspec'
 gem 'growl'
 gem 'simplecov', '>= 0.4.0', :require => false, :group => :test, :platforms => :ruby_19
-gem 'cucumber'
-gem 'aruba'
 gem 'rb-fsevent'
