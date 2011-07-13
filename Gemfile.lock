@@ -11,31 +11,14 @@ GEM
   specs:
     activesupport (3.0.9)
     archive-tar-minitar (0.5.2)
-    aruba (0.3.6)
-      childprocess (>= 0.1.7)
-      cucumber (>= 0.10.0)
-      rspec (>= 2.5.0)
-    builder (3.0.0)
-    childprocess (0.1.9)
-      ffi (~> 1.0.6)
     columnize (0.3.2)
-    cucumber (0.10.6)
-      builder (>= 2.1.2)
-      diff-lcs (>= 1.1.2)
-      gherkin (~> 2.4.0)
-      json (>= 1.4.6)
-      term-ansicolor (>= 1.0.5)
     diff-lcs (1.1.2)
-    ffi (1.0.9)
-    gherkin (2.4.0)
-      json (>= 1.4.6)
     growl (1.0.3)
     guard (0.4.0.rc)
       thor (~> 0.14.6)
     guard-rspec (0.3.0)
       guard (>= 0.2.2)
     i18n (0.6.0)
-    json (1.5.1)
     linecache (0.43)
     linecache19 (0.5.12)
       ruby_core_source (>= 0.1.4)
@@ -67,16 +50,13 @@ GEM
     simplecov (0.4.2)
       simplecov-html (~> 0.4.4)
     simplecov-html (0.4.4)
-    term-ansicolor (1.0.5)
     thor (0.14.6)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  aruba
   blazing!
-  cucumber
   growl
   guard (= 0.4.0.rc)
   guard-rspec
