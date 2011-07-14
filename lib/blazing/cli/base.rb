@@ -54,8 +54,7 @@ module Blazing
         report
       end
 
-      #TODO: move post_recevie and rvm somewhere else, they must only be called by the
-      # post-receive hook and not visible to user
+      #TODO: move post_recevie and rvm somewhere else, they must only be called by the post-receive hook and not visible to user
 
       desc 'post_receive', 'trigger the post-receive actions'
       def post_receive(target_name = nil)
@@ -68,21 +67,6 @@ module Blazing
         target = config.find_target(target_name)
         log :info, Blazing::Remote.new(target.name).use_rvm?
         report
-      end
-
-    private
-
-      # TODO: Move these methods up into Blazing, as they can be used elsewhere
-
-      def exit_status
-        @exit_status || $?.exitstatus
-      end
-
-      #
-      # Try to read the default remote
-      #
-      def repository_url
-        Grit::Repo.new(Dir.pwd).config['remote.origin.url'] || 'user@host:/some/path'
       end
     end
   end
