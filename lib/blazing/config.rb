@@ -12,7 +12,8 @@ module Blazing
       def read(&block)
         config = Blazing::Config.new
         config.instance_eval(&block)
-        return config
+
+        config
       end
 
       #
