@@ -87,12 +87,25 @@ describe Blazing::Target do
       @target.should_receive(:setup_post_receive_hook)
       @target.setup
     end
+
+    it 'checks out the correct branch if a branch is specified' do
+      @target.branch = 'test'
+      @target.should_receive(:checkout_correct_branch)
+      @target.setup
+    end
   end
 
   describe '#deploy' do
     it 'uses git push to deploy to the target' do
       target = Blazing::Target.new('somename', @options)
       @runner.should_receive(:run).with(/git push somename/)
+      target.deploy
+    end
+
+    it 'pushes the correct branch when one is configured' do
+      target = Blazing::Target.new('somename', @options)
+      target.branch = 'somebranch'
+      @runner.should_receive(:run).with(/git push somename somebranch:somebranch/)
       target.deploy
     end
   end
