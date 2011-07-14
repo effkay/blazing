@@ -19,7 +19,7 @@ module Blazing
       # Load configuration file and parse it
       #
       def load
-        config = read do
+        read do
           instance_eval(File.read(Blazing::CONFIGURATION_FILE))
         end
       end
