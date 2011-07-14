@@ -6,14 +6,14 @@ module Blazing
 
     attr_accessor :name, :recipes
 
-    AVAILABLE_SETTINGS = [:deploy_to, :host, :user, :path, :default]
+    AVAILABLE_SETTINGS = [:deploy_to, :host, :user, :path, :default, :branch]
 
     def initialize(name, options = {})
       @name = name.to_s
       @logger = options[:_logger] ||= Blazing::Logger.new
       @runner = options[:_runner] ||= Blazing::Runner.new
       @hook = options[:_hook] ||= Blazing::CLI::Hook
-      create_accesors(options)
+      create_accessors(options)
     end
 
     def setup
@@ -31,7 +31,7 @@ module Blazing
       @_config.load
     end
 
-    def create_accesors(options)
+    def create_accessors(options)
       assign_settings(options)
       parse_deploy_to_string unless @deploy_to.blank?
       ensure_mandatory_settings
