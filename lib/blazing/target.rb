@@ -70,7 +70,9 @@ module Blazing
     end
 
     def checkout_correct_branch
-      @runner.run "ssh #{@user}@#{@host} 'cd #{@path} && git checkout #{@ranch}'" if @branch
+      @logger.log :info, "Checking out #{@branch} on remote"
+      @runner.run "ssh #{@user}@#{@host} 'cd #{@path} && git checkout #{@branch}'" if @branch
+      @logger.report
     end
 
     def clone_repository
