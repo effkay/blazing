@@ -22,4 +22,5 @@ Gem::Specification.new do |s|
   # TODO: Get rid of those, just used for guessing recipe names etc in lib/recipes.rb
   s.add_dependency "activesupport", ">= 3.0.5"
   s.add_dependency "i18n"
+  s.add_dependency "grit"
 end
