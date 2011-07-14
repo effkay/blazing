@@ -66,25 +66,6 @@ describe Blazing::Target do
     end
   end
 
-  describe '#config' do
-    it 'delegates to Blazing::Config.load' do
-      blazing_config = double
-      target = Blazing::Target.new('somename', @options)
-      target.instance_variable_set("@_config", blazing_config)
-      blazing_config.should_receive(:load)
-      target.config
-    end
-  end
-
-
-  describe '#deploy' do
-    it 'uses git push to deploy to the target' do
-      target = Blazing::Target.new('somename', @options)
-      @runner.should_receive(:run).with(/git push somename/)
-      target.deploy
-    end
-  end
-
   describe '#setup' do
     before :each do
       blazing_config = double('config', :load => Blazing::Config.new)
@@ -105,6 +86,24 @@ describe Blazing::Target do
     it 'sets up the post-receive hook' do
       @target.should_receive(:setup_post_receive_hook)
       @target.setup
+    end
+  end
+
+  describe '#deploy' do
+    it 'uses git push to deploy to the target' do
+      target = Blazing::Target.new('somename', @options)
+      @runner.should_receive(:run).with(/git push somename/)
+      target.deploy
+    end
+  end
+
+  describe '#config' do
+    it 'delegates to Blazing::Config.load' do
+      blazing_config = double
+      target = Blazing::Target.new('somename', @options)
+      target.instance_variable_set("@_config", blazing_config)
+      blazing_config.should_receive(:load)
+      target.config
     end
   end
 end
