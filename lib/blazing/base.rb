@@ -3,13 +3,13 @@ require 'grit'
 module Blazing
   module Base
 
+    def config
+      @config ||= Blazing::Config.load
+    end
+
     def log(type, message)
       @logger ||= Blazing::Logger.new
       @logger.log(type, message)
-    end
-
-    def config
-      @config ||= Blazing::Config.load
     end
 
     def report
