@@ -6,7 +6,7 @@ describe Blazing::CLI::Create do
 
   before :each do
     @logger = double('logger', :log => nil, :report => nil)
-    @config_generator = Blazing::CLI::Create.new
+    @config_generator = Blazing::CLI::Create.new(['repository_url'])
     @config_generator.instance_variable_set('@logger', @logger)
   end
 

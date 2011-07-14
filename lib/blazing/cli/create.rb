@@ -8,6 +8,8 @@ module Blazing
 
       desc 'create a blazing config file'
 
+      argument :repository
+
       include Thor::Actions
       include Blazing::Base
 
@@ -25,7 +27,6 @@ module Blazing
         log :info, "Check the config and then setup your remote with blazing setup REMOTE"
         report
       end
-
     end
   end
 end

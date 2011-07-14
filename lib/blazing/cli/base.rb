@@ -1,4 +1,5 @@
 require 'thor'
+require 'grit'
 require 'blazing'
 require 'blazing/logger'
 require 'blazing/base'
@@ -13,7 +14,7 @@ module Blazing
 
       desc 'init', 'prepare project for blazing deploys'
       def init
-        @task ||= Blazing::CLI::Create.new
+        @task ||= Blazing::CLI::Create.new([repository_url])
         @task.invoke_all
       end
 
@@ -71,8 +72,17 @@ module Blazing
 
     private
 
+      # TODO: Move these methods up into Blazing, as they can be used elsewhere
+
       def exit_status
         @exit_status || $?.exitstatus
+      end
+
+      #
+      # Try to read the default remote
+      #
+      def repository_url
+        Grit::Repo.new(Dir.pwd).config['remote.origin.url'] || 'user@host:/some/path'
       end
     end
   end

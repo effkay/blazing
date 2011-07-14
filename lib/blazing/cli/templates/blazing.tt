@@ -2,6 +2,6 @@
 #  blazing config file  -- generated on <%= Time.now %>
 #
 
-repository 'username@host:path/to/your/repository.git'
+repository '<%= repository %>'
 
 target :default, :deploy_to => 'username@host:path/to/deploy'
