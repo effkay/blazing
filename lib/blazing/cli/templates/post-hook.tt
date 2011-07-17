@@ -1,10 +1,12 @@
 #!/bin/bash
 
 cd ..
-rvm=$(blazing rvm)
+unset GIT_DIR
+
+rvm=$(bundle exec blazing rvm)
 
 if [ $rvm != 'false' ]; then
   rvm use $rvm
 fi
 
-blazing post_receive
+bundle exec blazing post_receive

@@ -23,7 +23,7 @@ module Blazing
     end
 
     def set_git_dir
-      Dir.chdir('.git')
+      ENV['GIT_DIR'] = '.git'
     end
 
     def reset_head!
