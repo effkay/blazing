@@ -18,9 +18,7 @@ module Blazing
 
     def setup
       # TODO: Use a Wrapper to Net::SSH
-      #
       clone_repository
-      checkout_correct_branch if @branch
       add_target_as_remote
       setup_post_receive_hook
     end
@@ -66,11 +64,7 @@ module Blazing
     def clone_command
       "if [ -e #{@path} ]; then \
       echo 'directory exists already'; else \
-      git clone #{config.repository} #{@path} && cd #{@path} && git config receive.denyCurrentBranch ignore; fi"
-    end
-
-    def checkout_correct_branch
-      @runner.run "ssh #{@user}@#{@host} 'cd #{@path} && git checkout #{@branch}'" if @branch
+      git clone #{config.repository} #{"--branch #{@branch}" if @branch} #{@path} && cd #{@path} && git config receive.denyCurrentBranch ignore; fi"
     end
 
     def clone_repository
