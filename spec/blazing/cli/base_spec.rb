@@ -28,11 +28,22 @@ describe Blazing::CLI::Base do
   describe '#setup' do
 
     before :each do
+
+      #
+      # WORK IN PROGRESS!
+      #
+
       @some_target_name = 'test_target'
       hook = double('hook', :new => double('template', :generate => nil))
-      config = Blazing::Config.new
-      config.target(@some_target_name, :deploy_to => 'smoeone@somewhere:/asdasdasd', :_logger => @logger, :_runner => @runner, :_hook => hook)
-      @base.instance_variable_set('@config', config)
+      # config = Blazing::Config.new
+      # config.target(@some_target_name, :deploy_to => 'smoeone@somewhere:/asdasdasd', :_logger => @logger, :_runner => @runner, :_hook => hook)
+      # @base.instance_variable_set('@config', config)
+
+      @options = { :deploy_to => 'smoeone@somewhere:/asdasdasd', :_logger => @logger, :_runner => @runner, :_hook => hook }
+      @target = Blazing::Target.new(@some_target_name, @options)
+      @config = Blazing::Config.new
+      @config.targets << @target
+      Blazing::Config.stub!(:parse).and_return(@config)
     end
 
     it 'says what target is being setup' do

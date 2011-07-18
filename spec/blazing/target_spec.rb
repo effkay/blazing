@@ -70,10 +70,12 @@ describe Blazing::Target do
   describe '.setup' do
     before :each do
       @target = Blazing::Target.new('somename', @options)
+      @config = Blazing::Config.new
+      @config.targets << @target
+      Blazing::Config.stub!(:parse).and_return(@config)
     end
 
     it 'clones the repository on the target location' do
-      Blazing::Config.stub!(:parse).and_return(Blazing::Config.new)
       @target.should_receive(:clone_repository)
       Blazing::Target.setup('somename')
     end
@@ -87,36 +89,34 @@ describe Blazing::Target do
       @target.should_receive(:setup_post_receive_hook)
       Blazing::Target.setup('somename')
     end
-
-    it 'checks out the correct branch if a branch is specified' do
-      @target.branch = 'test'
-      @target.should_receive(:checkout_correct_branch)
-      Blazing::Target.setup('somename')
-    end
   end
 
   describe '.deploy' do
+    before :each do
+      @target = Blazing::Target.new('somename', @options)
+      @config = Blazing::Config.new
+      @config.targets << @target
+      Blazing::Config.stub!(:parse).and_return(@config)
+      @runner = double('runner', :run => nil)
+      Blazing::Runner.stub!(:new).and_return(@runner)
+    end
+
     it 'uses git push to deploy to the target' do
-      target = Blazing::Target.new('somename', @options)
       @runner.should_receive(:run).with(/git push somename/)
-      target.deploy
+      Blazing::Target.deploy('somename')
     end
 
     it 'pushes the correct branch when one is configured' do
-      target = Blazing::Target.new('somename', @options)
-      target.branch = 'somebranch'
+      @target.branch = 'somebranch'
       @runner.should_receive(:run).with(/git push somename somebranch:somebranch/)
-      target.deploy
+      Blazing::Target.deploy('somename')
     end
   end
 
-  describe '#config' do
+  describe 'config' do
     it 'delegates to Blazing::Config.load' do
-      blazing_config = double
-      target = Blazing::Target.new('somename', @options)
-      target.instance_variable_set("@config", blazing_config)
-      blazing_config.should_receive(:parse)
-      target.config
+      Blazing::Config.should_receive(:parse)
+      Blazing::Target.config
     end
   end
 end

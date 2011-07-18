@@ -16,6 +16,7 @@ module Blazing
 
       def setup(name)
         target = config.find_target(name)
+        runner = Blazing::Runner.new
         # TODO: Use a Wrapper to Net::SSH
         target.clone_repository
         target.add_target_as_remote
@@ -24,11 +25,12 @@ module Blazing
 
       def deploy(name)
         target = config.find_target(name)
+        runner = Blazing::Runner.new
         deploy_command = "git push #{name}"
         deploy_command += " #{target.branch}:#{target.branch}" if target.branch
 
         # TODO: checkout branch if we pushed to a branch which is not checked out
-        @runner.run deploy_command
+        runner.run deploy_command
       end
 
       def post_receive(name)
@@ -41,6 +43,10 @@ module Blazing
 
       def config
         Blazing::Config.parse
+      end
+
+      def runner
+        Blazing::Runner.new
       end
 
     end
