@@ -40,7 +40,7 @@ module Blazing
       if @rvm_recipe
         @rvm_recipe.options[:rvm_string]
       else
-        false
+        'none'
       end
     end
 

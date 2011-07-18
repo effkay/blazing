@@ -82,7 +82,7 @@ module Blazing
     end
 
     def setup_post_receive_hook
-      @hook.new([@name]).generate
+      @hook.new([Blazing::Remote.new(@name).use_rvm?]).generate
       @runner.run "scp /tmp/post-receive #{@user}@#{@host}:#{@path}/.git/hooks/post-receive"
       @runner.run "ssh #{@user}@#{@host} 'chmod +x #{@path}/.git/hooks/post-receive'"
     end

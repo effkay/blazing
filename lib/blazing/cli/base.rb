@@ -61,13 +61,6 @@ module Blazing
         target = config.find_target(target_name)
         Blazing::Remote.new(target.name).post_receive
       end
-
-      desc 'rvm', 'used by post_receive hook to decide if rvm env needs to be switched'
-      def rvm(target_name = nil)
-        target = config.find_target(target_name)
-        log :info, Blazing::Remote.new(target.name).use_rvm?
-        report
-      end
     end
   end
 end

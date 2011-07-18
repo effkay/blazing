@@ -6,7 +6,7 @@ module Blazing
 
       include Thor::Actions
 
-      argument :target
+      argument :rvm_string
 
       desc 'generate', 'generate post-receive hook from template'
       def generate
