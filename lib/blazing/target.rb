@@ -1,40 +1,64 @@
 require 'blazing'
 require 'blazing/object'
+require 'blazing/config'
+require 'blazing/setup'
 
 module Blazing
   class Target
 
+    include Blazing::Target::Setup
+
     attr_accessor :name, :recipes
 
     AVAILABLE_SETTINGS = [:deploy_to, :host, :user, :path, :default, :branch]
+
+    class << self
+
+      def setup(name)
+        target = config.find_target(name)
+        # TODO: Use a Wrapper to Net::SSH
+        target.clone_repository
+        target.add_target_as_remote
+        target.setup_post_receive_hook
+      end
+
+      def deploy(name)
+        target = config.find_target(name)
+        deploy_command = "git push #{name}"
+        deploy_command += " #{target.branch}:#{target.branch}" if target.branch
+
+        # TODO: checkout branch if we pushed to a branch which is not checked out
+        @runner.run deploy_command
+      end
+
+      def post_receive(name)
+        target = config.find_target(name)
+        target.set_git_dir
+        target.reset_head!
+        @recipes.delete_if { |recipe| recipe.name == 'rvm' }
+        target.run_recipes
+      end
+
+      def config
+        Blazing::Config.parse
+      end
+
+    end
 
     def initialize(name, options = {})
       @name = name.to_s
       @logger = options[:_logger] ||= Blazing::Logger.new
       @runner = options[:_runner] ||= Blazing::Runner.new
       @hook = options[:_hook] ||= Blazing::CLI::Hook
-      create_accessors(options)
+
+      @config = options[:config] || Blazing::Config.parse
+
+      @repository = @config.repository
+      create_accessors_from_config(options)
+      load_recipes
     end
 
-    def setup
-      # TODO: Use a Wrapper to Net::SSH
-      clone_repository
-      add_target_as_remote
-      setup_post_receive_hook
-    end
-
-    def deploy
-      deploy_command = "git push #{name}"
-      deploy_command += " #{@branch}:#{@branch}" if @branch
-      @runner.run deploy_command
-    end
-
-    def config
-      @_config ||= Blazing::Config
-      @_config.load
-    end
-
-    def create_accessors(options)
+    def create_accessors_from_config(options)
       assign_settings(options)
       parse_deploy_to_string unless @deploy_to.blank?
       ensure_mandatory_settings
@@ -61,25 +85,59 @@ module Blazing
       end
     end
 
-    def clone_command
-      "if [ -e #{@path} ]; then \
-      echo 'directory exists already'; else \
-      git clone #{config.repository} #{"--branch #{@branch}" if @branch} #{@path} && cd #{@path} && git config receive.denyCurrentBranch ignore; fi"
+    #
+    # STUFF FROM REMOTE!!!!!!!!!!!!
+    #
+
+    def gemfile_present?
+      File.exists? 'Gemfile'
     end
 
-    def clone_repository
-      @runner.run "ssh #{@user}@#{@host} '#{clone_command}'"
+    def set_git_dir
+      ENV['GIT_DIR'] = '.git'
     end
 
-    def add_target_as_remote
-      @runner.run "git remote add #{@name} #{@user}@#{@host}:#{@path}"
+    def reset_head!
+      @runner ||= Blazing::Runner.new
+      @runner.run 'git reset --hard HEAD'
     end
 
-    def setup_post_receive_hook
-      @hook.new([Blazing::Remote.new(@name).use_rvm?]).generate
-      @runner.run "scp /tmp/post-receive #{@user}@#{@host}:#{@path}/.git/hooks/post-receive"
-      @runner.run "ssh #{@user}@#{@host} 'chmod +x #{@path}/.git/hooks/post-receive'"
+    #
+    # Called by post-receive hook to determine rvm usage
+    #
+    def use_rvm?
+      @rvm_recipe = @recipes.find { |recipe| recipe.name == 'rvm' }
+      @recipes.delete_if { |recipe| recipe.name == 'rvm' }
+      if @rvm_recipe
+        @rvm_recipe.options[:rvm_string]
+      else
+        'none'
+      end
     end
 
+    def load_recipes
+
+      # TODO: For now, recipes can be assigned only in the global
+      # namespace of the config. Make it possible for targets to
+      # define recipes individually
+
+      @recipes = @config.recipes if @recipes.blank?
+      Blazing::Recipe.load_builtin_recipes
+    end
+
+    def run_recipes
+      run_bootstrap_recipes
+      @recipes.each do |recipe|
+        recipe.run
+      end
+    end
+
+    def run_bootstrap_recipes
+      bundler = @recipes.find { |r| r.name == 'bundler' }
+      if bundler
+        bundler.run
+        @recipes.delete_if { |r| r.name == 'bundler' }
+      end
+    end
   end
 end

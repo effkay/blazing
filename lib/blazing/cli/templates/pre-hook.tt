@@ -1,9 +1,0 @@
-#!/usr/bin/env ruby
-
-require 'rubygems'
-require 'thor'
-require 'blazing'
-require 'blazing/cli'
-require 'blazing/remote'
-
-Blazing::Remote.pre_receive('<%= remote.name %>')

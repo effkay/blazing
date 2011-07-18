@@ -4,7 +4,7 @@ module Blazing
   module Base
 
     def config
-      @config ||= Blazing::Config.load
+      @config ||= Blazing::Config.parse
     end
 
     def log(type, message)

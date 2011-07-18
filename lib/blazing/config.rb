@@ -19,7 +19,7 @@ module Blazing
       #
       # Load configuration file and parse it
       #
-      def load
+      def parse
         read do
           instance_eval(File.read(Blazing::CONFIGURATION_FILE))
         end
@@ -53,7 +53,7 @@ module Blazing
     end
 
     def target(name, options = {})
-      @targets << Blazing::Target.new(name, options)
+      @targets << Blazing::Target.new(name, options.merge(:config => self))
     end
 
     def use(name, options = {})
@@ -65,23 +65,25 @@ module Blazing
     # If only one target is defined, it is the default one
     #
     def find_target(target_name = nil)
+      active_target = nil
+
       if target_name
-        target = targets.find {|target| target.name == target_name }
+        active_target = targets.find {|target| target.name == target_name }
       end
 
-      if target.nil? && targets.size == 1
-        target = targets.first
+      if active_target.nil? && targets.size == 1
+        active_target = targets.first
       end
 
-      if target.nil?
-        target = targets.find {|target| target.default }
+      if active_target.nil?
+        active_target = targets.find {|target| target.default }
       end
 
-      if target.nil?
+      if active_target.nil?
         raise 'no target specified and no default targets found'
       end
 
-      target
+      active_target
     end
 
   end

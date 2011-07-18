@@ -20,10 +20,8 @@ module Blazing
 
       desc 'setup TARGET_NAME', 'setup or update blazing on specified target and deploy'
       def setup(target_name = nil)
-        target = config.find_target(target_name)
-        log :info, "setting up target #{target.name}"
-        target.setup
-
+        Blazing::Target.setup(target_name)
+        
         # TODO: Abstract this into module and load it where we need it. Methods / actions should have
         # a success and failure message
         if exit_status == 0
@@ -35,9 +33,7 @@ module Blazing
 
       desc 'deploy TARGET', 'deploy to TARGET'
       def deploy(target_name = nil)
-        target = config.find_target(target_name)
-        log :info, "deploying target #{target.name}"
-        target.deploy
+        Blazing::Target.deploy(target_name)
 
         if exit_status == 0
           log :success, "successfully deployed target #{target.name}"
@@ -54,12 +50,9 @@ module Blazing
         report
       end
 
-      #TODO: move post_recevie and rvm somewhere else, they must only be called by the post-receive hook and not visible to user
-
       desc 'post_receive', 'trigger the post-receive actions'
       def post_receive(target_name = nil)
-        target = config.find_target(target_name)
-        Blazing::Remote.new(target.name).post_receive
+        Blazing::Target.post_receive(target_name)
       end
     end
   end
