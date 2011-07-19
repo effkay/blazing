@@ -18,7 +18,7 @@ module Blazing
         @task.invoke_all
       end
 
-      desc 'setup TARGET_NAME', 'setup or update blazing on specified target and deploy'
+      desc 'bootstrap TARGET_NAME', 'setup or update blazing on specified target and deploy'
       def bootstrap(target_name = nil)
         Blazing::Target.bootstrap(target_name)
 
