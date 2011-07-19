@@ -18,10 +18,17 @@ module Blazing
     end
 
     def recipe_class
-      ('Blazing::' + (@name.to_s + '_recipe').camelize).constantize
+      # TODO: Unify naming conventions
+      # Gem Recipe Naming Convention
+      ('Blazing::' + @name.to_s.gsub('_','/').camelize).constantize
     rescue NameError
-      @logger.log :error, "unable to load #{@name} recipe"
-      return nil
+      begin
+        # Builtin Recipe Naming Convention
+        ('Blazing::' + (@name.to_s + '_recipe').camelize).constantize
+      rescue NameError
+        @logger.log :error, "unable to load #{@name} recipe"
+        return nil
+      end
     end
 
     def run
@@ -42,7 +49,15 @@ module Blazing
       end
 
       def load_gem_recipes
-        #TODO: Implement
+        # TODO: I'm sure there is a better way to do this...
+        gems = open('Gemfile').grep(/blazing-/).map { |l| l.match(/(blazing-.*)\'\,/)[1] }
+        gems.each do |gem|
+          gem_lib_path = $:.find { |p| p.include? gem }
+          recipes_path = File.join(gem_lib_path, gem, 'recipes')
+          recipes = Dir.entries(recipes_path).delete_if { |r| r == '.' || r == '..' }
+          debugger
+          recipes.each { |recipe| require File.join(gem, 'recipes', recipe) }
+        end
       end
 
       def load_local_recipes
@@ -57,6 +72,7 @@ module Blazing
         descendants = []
 
         load_builtin_recipes
+        load_gem_recipes
 
         ObjectSpace.each_object(Class) do |k|
           descendants.unshift k if k < self
