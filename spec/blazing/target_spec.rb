@@ -67,7 +67,7 @@ describe Blazing::Target do
     end
   end
 
-  describe '.setup' do
+  describe '.bootstrap' do
     before :each do
       @target = Blazing::Target.new('somename', @options)
       @config = Blazing::Config.new
@@ -77,17 +77,17 @@ describe Blazing::Target do
 
     it 'clones the repository on the target location' do
       @target.should_receive(:clone_repository)
-      Blazing::Target.setup('somename')
+      Blazing::Target.bootstrap('somename')
     end
 
     it 'adds the target as a git remote' do
       @target.should_receive(:add_target_as_remote)
-      Blazing::Target.setup('somename')
+      Blazing::Target.bootstrap('somename')
     end
 
     it 'sets up the post-receive hook' do
       @target.should_receive(:setup_post_receive_hook)
-      Blazing::Target.setup('somename')
+      Blazing::Target.bootstrap('somename')
     end
   end
 

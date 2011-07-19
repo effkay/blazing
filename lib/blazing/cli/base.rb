@@ -19,15 +19,15 @@ module Blazing
       end
 
       desc 'setup TARGET_NAME', 'setup or update blazing on specified target and deploy'
-      def setup(target_name = nil)
-        Blazing::Target.setup(target_name)
+      def bootstrap(target_name = nil)
+        Blazing::Target.bootstrap(target_name)
 
         # TODO: Abstract this into module and load it where we need it. Methods / actions should have
         # a success and failure message
         if exit_status == 0
-          log :success, "successfully set up target #{target_name}"
+          log :success, "successfully bootstrapped target #{target_name}"
         else
-          log :error, "failed setting up target #{target_name}"
+          log :error, "failed bootstrapping target #{target_name}"
         end
       end
 

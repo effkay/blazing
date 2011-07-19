@@ -1,12 +1,12 @@
 require 'blazing'
 require 'blazing/object'
 require 'blazing/config'
-require 'blazing/setup'
+require 'blazing/bootstrap'
 
 module Blazing
   class Target
 
-    include Blazing::Target::Setup
+    include Blazing::Target::Bootstrap
 
     attr_accessor :name, :recipes
 
@@ -14,7 +14,7 @@ module Blazing
 
     class << self
 
-      def setup(name)
+      def bootstrap(name)
         target = config.find_target(name)
         runner = Blazing::Runner.new
         # TODO: Use a Wrapper to Net::SSH

@@ -25,29 +25,29 @@ describe Blazing::CLI::Base do
     end
   end
 
-  describe '#setup' do
+  describe '#bootstrap' do
 
     before :each do
       @some_target_name = 'test_target'
     end
 
     it 'runs setup on selected target' do
-      Blazing::Target.should_receive(:setup).with(@some_target_name)
-      @base.setup(@some_target_name)
+      Blazing::Target.should_receive(:bootstrap).with(@some_target_name)
+      @base.bootstrap(@some_target_name)
     end
 
     it 'logs a success message if exitstatus of setup was 0' do
-      Blazing::Target.stub!(:setup)
+      Blazing::Target.stub!(:bootstrap)
       @base.instance_variable_set('@exit_status', 0)
-      @logger.should_receive(:log).with(:success, "successfully set up target test_target")
-      @base.setup(@some_target_name)
+      @logger.should_receive(:log).with(:success, "successfully bootstrapped target test_target")
+      @base.bootstrap(@some_target_name)
     end
 
     it 'logs an error if exitstatus of setup was not 0' do
-      Blazing::Target.stub!(:setup)
+      Blazing::Target.stub!(:bootstrap)
       @base.instance_variable_set('@exit_status', 1)
-      @logger.should_receive(:log).with(:error, "failed setting up target test_target")
-      @base.setup(@some_target_name)
+      @logger.should_receive(:log).with(:error, "failed bootstrapping target test_target")
+      @base.bootstrap(@some_target_name)
     end
   end
 

@@ -1,6 +1,6 @@
 module Blazing
   class Target
-    module Setup
+    module Bootstrap
 
       def clone_command
         "if [ -e #{@path} ]; then \
