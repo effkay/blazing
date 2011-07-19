@@ -9,8 +9,10 @@ describe 'blazing init' do
     @sandbox_directory = File.join(@blazing_root, 'spec/support/sandbox')
     @blazing =  Blazing::CLI::Base.new
 
-    # Setup Sandbox
+    # Sometimes, when specs failed, the sandbox would stick around
     FileUtils.rm_rf(@sandbox_directory) if Dir.exists?(@sandbox_directory)
+
+    # Setup Sandbox
     Dir.mkdir(@sandbox_directory)
     Dir.chdir(@sandbox_directory)
 
