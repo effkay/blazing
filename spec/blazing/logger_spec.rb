@@ -1,6 +1,6 @@
 require 'spec_helper'
 require 'blazing/logger'
-require 'blazing/object'
+require 'blazing/core_ext/object'
 
 describe Blazing::Logger do
 

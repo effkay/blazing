@@ -30,5 +30,12 @@ module Blazing
       Grit::Repo.new(Dir.pwd).config['remote.origin.url'] || 'user@host:/some/path'
     end
 
+    #
+    # Return true if a Gemfile exists in pwd
+    #
+    def gemfile_present?
+      File.exists? 'Gemfile'
+    end
+
   end
 end

@@ -1,5 +1,5 @@
 require 'blazing'
-require 'blazing/object'
+require 'blazing/core_ext/object'
 require 'blazing/config'
 require 'blazing/bootstrap'
 
@@ -99,10 +99,6 @@ module Blazing
       [:host, :user, :path].each do |option|
         raise "#{option} can't be blank!" if instance_variable_get("@#{option}").blank?
       end
-    end
-
-    def gemfile_present?
-      File.exists? 'Gemfile'
     end
 
     def set_git_dir
