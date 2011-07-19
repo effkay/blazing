@@ -19,9 +19,10 @@ Gem::Specification.new do |s|
 
   # TODO: better to use ~ ?
   s.add_dependency "thor", ">= 0.14.6"
+  s.add_dependency "grit"
 
   # TODO: Get rid of those, just used for guessing recipe names etc in lib/recipes.rb
   s.add_dependency "activesupport", ">= 3.0.5"
   s.add_dependency "i18n"
-  s.add_dependency "grit"
+
 end
