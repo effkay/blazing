@@ -101,10 +101,6 @@ module Blazing
       end
     end
 
-    #
-    # STUFF FROM REMOTE!!!!!!!!!!!!
-    #
-
     def gemfile_present?
       File.exists? 'Gemfile'
     end
