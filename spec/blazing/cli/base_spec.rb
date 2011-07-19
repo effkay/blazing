@@ -14,6 +14,7 @@ describe Blazing::CLI::Base do
     @hook = double('hook', :new => double('template', :generate => nil))
     @base =  Blazing::CLI::Base.new
     @base.instance_variable_set('@logger', @logger)
+    @some_target_name = 'test_target'
   end
 
   describe '#init' do
@@ -27,11 +28,7 @@ describe Blazing::CLI::Base do
 
   describe '#bootstrap' do
 
-    before :each do
-      @some_target_name = 'test_target'
-    end
-
-    it 'runs setup on selected target' do
+    it 'runs bootstrap on selected target' do
       Blazing::Target.should_receive(:bootstrap).with(@some_target_name)
       @base.bootstrap(@some_target_name)
     end
@@ -51,11 +48,14 @@ describe Blazing::CLI::Base do
     end
   end
 
-  describe '#deploy' do
-
-    before :each do
-      @some_target_name = 'test_target'
+  describe '#setup' do
+    it 'runs setup on given target' do
+      Blazing::Target.should_receive(:setup).with(@some_target_name)
+      @base.setup(@some_target_name)
     end
+  end
+
+  describe '#deploy' do
 
     it 'runs setup on selected target' do
       Blazing::Target.should_receive(:deploy).with(@some_target_name)
@@ -85,10 +85,6 @@ describe Blazing::CLI::Base do
   end
 
   describe '#post_receive' do
-
-    before :each do
-      @some_target_name = 'test_target'
-    end
 
     it 'instantiates a new remote and calls its post_receive method' do
       Blazing::Target.should_receive(:post_receive).with(@some_target_name)

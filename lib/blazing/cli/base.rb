@@ -31,6 +31,11 @@ module Blazing
         end
       end
 
+      desc 'setup TARGET_NAME', 'setup git remote for one or all targets'
+      def setup(target_name = nil)
+        Blazing::Target.setup(target_name)
+      end
+
       desc 'deploy TARGET', 'deploy to TARGET'
       def deploy(target_name = nil)
         Blazing::Target.deploy(target_name)
