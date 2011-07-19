@@ -25,9 +25,9 @@ module Blazing
         # TODO: Abstract this into module and load it where we need it. Methods / actions should have
         # a success and failure message
         if exit_status == 0
-          log :success, "successfully set up target #{target.name}"
+          log :success, "successfully set up target #{target_name}"
         else
-          log :error, "failed setting up target #{target.name}"
+          log :error, "failed setting up target #{target_name}"
         end
       end
 
@@ -36,9 +36,9 @@ module Blazing
         Blazing::Target.deploy(target_name)
 
         if exit_status == 0
-          log :success, "successfully deployed target #{target.name}"
+          log :success, "successfully deployed target #{target_name}"
         else
-          log :error, "failed deploying on target #{target.name}"
+          log :error, "failed deploying on target #{target_name}"
         end
       end
 
