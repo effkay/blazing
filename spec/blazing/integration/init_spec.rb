@@ -24,6 +24,7 @@ describe 'blazing init' do
   end
 
   after :each do
+    # Teardown Sandbox
     Dir.chdir(@blazing_root)
     FileUtils.rm_rf(@sandbox_directory)
   end
