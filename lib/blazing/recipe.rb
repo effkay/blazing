@@ -56,7 +56,6 @@ module Blazing
           gem_lib_path = $:.find { |p| p.include? gem }
           recipes_path = File.join(gem_lib_path, gem, 'recipes')
           recipes = Dir.entries(recipes_path).delete_if { |r| r == '.' || r == '..' }
-          debugger
           recipes.each { |recipe| require File.join(gem, 'recipes', recipe) }
         end
       end
