@@ -39,6 +39,7 @@ module Blazing
 
       def new_recipe_by_name(name, options = {})
         load_builtin_recipes
+        load_gem_recipes
         new(name, options).recipe_class.new(name, options)
       end
 
