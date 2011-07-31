@@ -8,7 +8,7 @@ describe Blazing::CLI::Hook do
   end
 
   it 'genereates the hook template in the correct location' do
-    @hook = Blazing::CLI::Hook.new(['test_target'])
+    @hook = Blazing::CLI::Hook.new(['test_target', 'some_rvm_string'])
     @hook.should_receive(:template).with('templates/post-hook.tt', '/tmp/post-receive')
     @hook.generate
   end

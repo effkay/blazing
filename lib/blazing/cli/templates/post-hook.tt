@@ -22,4 +22,4 @@
 cd ..
 unset GIT_DIR
 
-bundle exec blazing post_receive
+bundle exec blazing post_receive <%= target_name %>
