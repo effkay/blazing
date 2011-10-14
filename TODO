@@ -1,3 +1,0 @@
-o allow recipe creation without name parameter
-o allow cli usage with -f <config> option => refactor post_receive & rvm + cleanup Remote#set_git_dir
-o refactor specs: more stubs, clean syntax, order of describes should match method definition order

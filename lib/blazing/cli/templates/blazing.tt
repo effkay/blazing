@@ -1,7 +1,0 @@
-#
-#  blazing config file  -- generated on <%= Time.now %>
-#
-
-repository '<%= repository %>'
-
-target :default, :deploy_to => 'username@host:path/to/deploy'
