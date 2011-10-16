@@ -7,9 +7,9 @@ Gem::Specification.new do |s|
   s.version     = Blazing::VERSION
   s.authors     = ["Felipe Kaufmann"]
   s.email       = ["felipekaufmann@gmail.com"]
-  s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.homepage    = "https://github.com/effkay/blazing"
+  s.summary     = %q{blazing fast deployment}
+  s.description = %q{git push deployent utility, ready to be extended by your own recipes}
 
   s.rubyforge_project = "blazing"
 
@@ -24,5 +24,9 @@ Gem::Specification.new do |s|
   s.add_development_dependency('rdoc')
   s.add_development_dependency('aruba')
   s.add_development_dependency('rake','~> 0.9.2')
+  s.add_development_dependency('rspec')
+  s.add_development_dependency('guard')
+  s.add_development_dependency('guard-rspec')
+  s.add_development_dependency('guard-cucumber')
   s.add_dependency('methadone')
 end
