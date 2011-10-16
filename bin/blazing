@@ -6,6 +6,9 @@ require 'methadone'
 include Methadone::Main
 
 main do # Add args you want: |like,so|
+  if ARGV.empty?
+    puts opts
+  end
   # your program code here
   # You can access CLI options via
   # the options Hash

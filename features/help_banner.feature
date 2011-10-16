@@ -1,11 +1,15 @@
-Feature: My bootstrapped app kinda works
-  In order to get going on coding my awesome app
-  I want to have aruba and cucumber setup
-  So I don't have to do it myself
+Feature: Help Banner
+  In order to know what this gem does
+  I want to see the help banner
 
-  Scenario: App just runs
+  Scenario: Run blazing --help
     When I get help for "blazing"
     Then the exit status should be 0
     And the banner should be present
     And the banner should document that this app takes no options
     And the banner should document that this app takes no arguments
+
+  Scenario:
+    When I run `blazing`
+    Then the exit status should be 0
+    And the banner should be present
