@@ -6,10 +6,8 @@ Feature: Help Banner
     When I get help for "blazing"
     Then the exit status should be 0
     And the banner should be present
-    And the banner should document that this app takes no options
-    And the banner should document that this app takes no arguments
 
   Scenario:
     When I run `blazing`
-    Then the exit status should be 0
-    And the banner should be present
+    Then the exit status should not be 0
+    And the output should contain "'command' is required"

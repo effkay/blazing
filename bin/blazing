@@ -30,7 +30,9 @@ end
 # Or, just call OptionParser methods on opts
 #
 # Require an argument
-# arg :some_arg 
+arg :command
+on("-f file", "config file location (defaults to config/blazing.rb)")
+
 #
 # # Make an argument optional
 # arg :optional_arg, :optional
