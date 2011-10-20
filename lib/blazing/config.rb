@@ -1,6 +1,10 @@
 class Blazing::Config
 
-  def load(config)
+  class << self
+
+    def parse(config)
+      puts 'hello'
+    end
 
   end
 

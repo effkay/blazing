@@ -1,14 +1,18 @@
 #!/usr/bin/env ruby -w
 
+require 'bundler'
+Bundler.setup
+
 require 'optparse'
 require 'methadone'
-# require 'lib/blazing/config'
+require 'blazing/config'
+require 'blazing/runner'
 
 include Methadone::Main
 
 main do |command|
-  config = Blazing::Config::load(options[:file])
-  # Blazing::Runner.exec(command)
+  config = Blazing::Config::parse(options[:file])
+  Blazing::Runner.exec(command)
 end
 
 arg :command
