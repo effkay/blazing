@@ -10,10 +10,12 @@ class Blazing::Config
 
   class << self
 
-    # def parse(configuration_file)
-    #   config = self.new
-    #   config.instance_eval(File.read(self.file))
-    # end
+    def parse(configuration_file = nil)
+      config = self.new(configuration_file)
+      config.instance_eval(File.read(config.file))
+
+      config
+    end
 
   end
 
