@@ -5,7 +5,7 @@ class Blazing::Runner
   end
 
   def exec(command)
-    puts 'hello'
+    raise 'Unknown Command' unless self.respond_to? 'command'
   end
 
 end
