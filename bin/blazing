@@ -11,8 +11,9 @@ require 'blazing/runner'
 include Methadone::Main
 
 main do |command|
-  config = Blazing::Config::parse(options[:file])
-  Blazing::Runner.exec(command, config)
+  config = Blazing::Config.parse(options[:file])
+  runner = Blazing::Runner.new(config)
+  runner.exec(command)
 end
 
 arg :command
