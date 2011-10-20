@@ -12,7 +12,7 @@ include Methadone::Main
 
 main do |command|
   config = Blazing::Config::parse(options[:file])
-  Blazing::Runner.exec(command)
+  Blazing::Runner.exec(command, config)
 end
 
 arg :command
