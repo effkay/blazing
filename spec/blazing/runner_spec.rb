@@ -13,6 +13,30 @@ describe Blazing::Runner do
       lambda { Blazing::Runner.new(@config).exec('weird_command') }.should raise_error
     end
 
+    it 'knows the init command' do
+      runner = Blazing::Runner.new(@config)
+      runner.should_receive(:init_command)
+      runner.exec('init')
+    end
+
+    it 'knows the setup:local command' do
+      runner = Blazing::Runner.new(@config)
+      runner.should_receive(:setup_local_command)
+      runner.exec('setup:local')
+    end
+
+    it 'knows the setup:remote command' do
+      runner = Blazing::Runner.new(@config)
+      runner.should_receive(:setup_remote_command)
+      runner.exec('setup:remote')
+    end
+
+    it 'knows the deploy command' do
+      runner = Blazing::Runner.new(@config)
+      runner.should_receive(:deploy_command)
+      runner.exec('deploy')
+    end
+
   end
 
 end
