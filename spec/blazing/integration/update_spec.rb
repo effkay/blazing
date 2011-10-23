@@ -21,6 +21,10 @@ describe 'blazing update' do
   end
 
   it 'generates the hook' do
+    @shell_double = double('shell')#Blazing::Shell.new
+    @target = @config.default_target
+    @target.instance_variable_set('@shell', @shell_double)
+    @shell_double.stub(:run)
     capture(:stdout) { @runner.exec('update') }
     File.exists?(Blazing::TMP_HOOK).should be true
   end
