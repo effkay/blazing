@@ -18,7 +18,7 @@ class Blazing::Target
   end
 
   def update
-    hook = ERB.new(File.read("#{Blazing::TEMPLATE_ROOT}/hook.erb")).result
+    hook = ERB.new(File.read("#{Blazing::TEMPLATE_ROOT}/hook.erb")).result(binding)
 
     File.open(Blazing::TMP_HOOK, "wb") do |f|
       f.puts hook

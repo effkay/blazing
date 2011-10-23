@@ -1,0 +1,43 @@
+#!/bin/bash
+
+cd ..
+GIT_DIR='.git'
+
+git reset --hard HEAD
+
+<% if @config.rvm %>
+  # Load RVM into a shell session *as a function*
+  if [[ -s "$HOME/.rvm/scripts/rvm" ]] ; then
+
+    # First try to load from a user install
+    source "$HOME/.rvm/scripts/rvm"
+
+    <% if @config.rvm == :rvmrc %>
+      source .rvmrc
+    <% else %>
+      rvm use <%= @config.rvm %>
+    <% end %>
+
+  elif [[ -s "/usr/local/rvm/scripts/rvm" ]] ; then
+
+    # Then try to load from a root install
+    source "/usr/local/rvm/scripts/rvm"
+
+    <% if @config.rvm == :rvmrc %>
+      source .rvmrc
+    <% else %>
+      rvm use <%= @config.rvm %>
+    <% end %>
+
+  else
+    printf "ERROR: RVM was enabled in config but no RVM installation was not found.\n"
+  fi
+<% end %>
+
+<% if @config.rake %>
+  rake <%= @config.rake %>
+<% end %>
+
+<%# bundle --deployment%>
+<%# bundle exec rake RAILS_ENV=production RAILS_GROUPS=assets assets:precompile%>
+<%# touch tmp/restart.txt%>
