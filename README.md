@@ -16,31 +16,12 @@
 
 ## Contribution
 
-## TODO
-
-###0.1 alpha:
-
-* implement hook
-
-* implement recipes
-
-* checkout branch specified when deploying (i.e git push production
-  some_feature_branch should checkout some_feature_branch on prod target)
-
-* handle target as argument in runner
-
-* finish readme
-
-### Later
-
-* recipes with options
-* read origin and set it as repository automatically
-* allow to set deployed branch in config
-* handle local deployment
-
-
 ## Authors
+
+Felipe Kaufmann ([@effkay][])
 
 ## License
 
 See the `MIT-LICENSE` file
+
+[@effkay]: https://github.com/effkay
