@@ -10,7 +10,13 @@ module Blazing::Command
     end
 
     def setup_remote_command
-      # generate hook
+      hook = ERB.new(File.read("#{Blazing::TEMPLATE_ROOT}/hook.erb")).result
+
+      File.open('/tmp/post-receive',"wb") do |f|
+        f.puts hook
+      end
+
+
       # clone repo
       # copy hook
       # make hook executable
