@@ -29,7 +29,7 @@ class Blazing::Config
 
   def target(name, location, options = {})
     raise "Name already taken" if targets.find { |t| t.name == name }
-    targets << Blazing::Target.new(name, location, options)
+    targets << Blazing::Target.new(name, location, self, options)
   end
 
   def recipes(recipes = nil)

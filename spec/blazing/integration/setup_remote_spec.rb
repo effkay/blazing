@@ -13,15 +13,20 @@ describe 'blazing setup:remote' do
     @config = Blazing::Config.new
     @config.target :production, @production_url
     @config.target :staging, @staging_url, :default => true
-    capture(:stdout) { Blazing::Runner.new(@config).exec('setup:remote') }
+    @runner = Blazing::Runner.new(@config)
   end
 
   after :each do
     teardown_sandbox
   end
 
-  it 'generates the hook' do
-    File.exists?('/tmp/post-receive').should be true
+  it 'clones the repository, configures it and updates the target' do
+    @shell = Blazing::Shell.new
+    @target = @config.default_target
+    @target.instance_variable_set('@shell', @shell)
+    @shell.should_receive(:run).with("ssh user@host 'git clone  /some/where/else && cd /some/where/else && git config receive.denyCurrentBranch ignore'")
+    @target.should_receive(:update)
+    capture(:stdout) { @runner.exec('setup:remote') }
   end
 
 end
