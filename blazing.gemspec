@@ -31,6 +31,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency('growl')
   s.add_development_dependency('rb-fsevent')
   s.add_dependency('methadone')
+  s.add_dependency('grit')
 
   # TODO: Get rid of those, just used for guessing recipe names etc in lib/recipes.rb
   s.add_dependency "activesupport"
