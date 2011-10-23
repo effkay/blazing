@@ -16,9 +16,13 @@
 
 ## TODO
 
-* recipes at all
+* implement recipes
 * recipes with options
 * read origin and set it as repository automatically
+* allow to set deployed branch in config
+* checkout branch specified when deploying (i.e git push production
+  some_feature_branch should checkout some_feature_branch on prod target)
+* use Net::SSH instead of system calls to ssh
 
 ## Authors
 
