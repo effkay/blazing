@@ -14,7 +14,7 @@ describe 'blazing init' do
   end
 
   it 'creates a config directory if none exists yet' do
-    Dir.exists?('config').should be true
+    File.exists?('config').should be true
   end
 
   it 'creates a config file in config/blazing.rb' do

@@ -3,27 +3,36 @@
 require 'bundler'
 Bundler.setup
 
-require 'optparse'
-require 'methadone'
 require 'blazing'
 require 'blazing/config'
 require 'blazing/runner'
+require 'optparse'
 
-include Methadone::Main
+options = {}
 
-main do |command, target|
-  if command == 'init'
-    config = nil
-  else
-    config = Blazing::Config.parse(options[:file])
+optparse = OptionParser.new do|opts|
+  opts.banner = "Usage: blazing <command> [options]"
+
+  opts.on( '-h', '--help', 'Display this screen' ) do
+    puts opts
+    exit
   end
 
-  runner = Blazing::Runner.new(config, target)
-  runner.exec(command)
+  opts.on( '-f config', '--file config', 'specify config file location (defaults to config/blazing.rb)' ) do |file|
+    options[:file] = file
+  end
 end
 
-arg :command
-arg :target, :optional
-on("-f configuration", "--file configuration", "config file location (defaults to config/blazing.rb)")
+optparse.parse!(ARGV)
 
-go!
+command = ARGV[0]
+target = ARGV[1]
+
+if command == 'init'
+  config = nil
+else
+  config = Blazing::Config.parse(options[:file])
+end
+
+runner = Blazing::Runner.new(config, target)
+runner.exec(command)

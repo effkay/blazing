@@ -1,9 +1,9 @@
 require 'erb'
-require 'methadone'
+require 'blazing/cli_logging'
 
 class Blazing::Runner
 
-  include Methadone::CLILogging
+  include Blazing::CLILogging
 
   def initialize(config = nil, target = nil)
     if config
@@ -22,7 +22,7 @@ class Blazing::Runner
     info("Creating an example config file in #{Blazing::DEFAULT_CONFIG_LOCATION}")
     info("Customize it to your needs")
 
-    Dir.mkdir 'config' unless Dir.exists? 'config'
+    Dir.mkdir 'config' unless File.exists? 'config'
     configuration_file = ERB.new(File.read("#{Blazing::TEMPLATE_ROOT}/config.erb")).result
 
     File.open(Blazing::DEFAULT_CONFIG_LOCATION,"wb") do |f|
