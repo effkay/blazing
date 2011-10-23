@@ -7,7 +7,7 @@ class Blazing::Config
   extend Blazing::DSLSetter
 
   attr_reader :file
-  attr_accessor :targets
+  attr_accessor :targets, :recipes
   dsl_setter :repository, :rvm, :rake
 
   class << self
@@ -32,14 +32,8 @@ class Blazing::Config
     targets << Blazing::Target.new(name, location, self, options)
   end
 
-  def recipes(recipes = nil)
-    if recipes.kind_of? Symbol
-      @recipes << Blazing::Recipe.init_by_name(recipes)
-    elsif recipes.kind_of? Array
-      @recipes = recipes.map { |r| Blazing::Recipe.init_by_name(r) }
-    else
-      @recipes
-    end
+  def recipe(name, options = {})
+    @recipes << Blazing::Recipe.init_by_name(name, options)
   end
 
   def default_target

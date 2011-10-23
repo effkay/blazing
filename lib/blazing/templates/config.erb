@@ -2,20 +2,31 @@
 # Blazing Configuration File
 #
 
+#
 # Specify the location of your repository:
-#   repository 'git@github.com:path/to/your/repository'
+#
+# repository 'git@github.com:path/to/your/repository'
 
+#
 # Define possible deploy targets:
-#   target :production, 'blazing@production.server.com:/where/your/code/is/shipped/to'
-#   target :staging, 'blazing@production.server.com:/where/your/code/is/shipped/to', :default => true
+#
+# target :production, 'blazing@production.server.com:/where/your/code/is/shipped/to'
+# target :staging, 'blazing@production.server.com:/where/your/code/is/shipped/to', :default => true
 
-# Define which recipes should be used
-#   recipes [:rvm, :bundler]
+#
+# Define which recipes should be used. The recipes are run in the order that they are defined
+#
 
-# Define an rvm ruby/gemset to be used remotely
-#   rvm 'ruby-1.9.2@agemset'
-# Or use the rvm specified in .rvmrc
-#   rvm :rvmrc
+# Use Ruby Enterprise Edition and gemset 123
+# recipe :rvm, :use => 'ree@123'
 
-# Defina a rake task that should be run after deployment
-#   rake :a_rake_task_to_call_after_deployment
+# Or use the rvmrc
+# recipe :rvm, :use => :rvmrc
+
+# Bundle after deploying
+# recipe :bundler
+
+#
+# Define a rake task that should be run after deployment. The rake task will run after the recipes have run.
+#
+# rake :a_rake_task_to_call_after_deployment

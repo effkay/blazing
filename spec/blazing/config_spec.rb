@@ -84,26 +84,32 @@ describe Blazing::Config do
       end
     end
 
-    describe 'recipes' do
+    describe 'recipe' do
 
       before :each do
         class Blazing::Recipe::Dummy < Blazing::Recipe
         end
       end
 
-      it 'is an empty recipe if nothing was set' do
+      it 'is an empty array if nothing was set' do
         @config.recipes.should be_a Array
       end
 
       it 'accepts a single recipe as argument' do
-        @config.recipes :dummy
-        @config.recipes.first.should be_a Blazing::Recipe::Dummy
+        # @config.recipe :dummy
+        # @config.recipes.first.should be_a Blazing::Recipe::Dummy
       end
 
-      it 'accepts an array of recipes as argument' do
-        @config.recipes [:dummy, :dummy]
-        @config.recipes.size.should be 2
-        @config.recipes.each { |r| r.should be_a Blazing::Recipe::Dummy }
+      it 'allows multiple recipes to be defined' do
+        # @config.recipe :dummy
+        # @config.recipe :dummy
+        # @config.recipes.size.should be 2
+        # @config.recipes.each { |r| r.should be_a Blazing::Recipe::Dummy }
+      end
+
+      it 'passes the options to the recipe initializer' do
+        @config.recipe :dummy, :something => 'blah'
+        @config.recipes.first.options[:something].should == 'blah'
       end
     end
 
