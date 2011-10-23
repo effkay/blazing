@@ -18,6 +18,8 @@
 
 * recipes at all
 * recipes with options
+* read origin and set it as repository automatically
+* use grit for git commands
 
 ## Authors
 
