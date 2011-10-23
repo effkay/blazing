@@ -32,16 +32,16 @@ describe Blazing::Config do
     describe 'target' do
 
       it 'creates a target object for each target call' do
-        @config.target :somename, :location => 'someuser@somehost:/path/to/deploy/to'
-        @config.target :someothername, :location => 'someuser@somehost:/path/to/deploy/to'
+        @config.target :somename, 'someuser@somehost:/path/to/deploy/to'
+        @config.target :someothername, 'someuser@somehost:/path/to/deploy/to'
 
         @config.targets.each { |t| t.should be_a Blazing::Target }
         @config.targets.size.should be 2
       end
 
       it 'does not allow the creation of two targets with the same name' do
-        @config.target :somename, :location => 'someuser@somehost:/path/to/deploy/to'
-        lambda { @config.target :somename, :location => 'someuser@somehost:/path/to/deploy/to' }.should raise_error
+        @config.target :somename, 'someuser@somehost:/path/to/deploy/to'
+        lambda { @config.target :somename, 'someuser@somehost:/path/to/deploy/to' }.should raise_error
       end
     end
 

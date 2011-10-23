@@ -1,9 +1,10 @@
 class Blazing::Target
 
-  attr_accessor :name, :options
+  attr_accessor :name, :location, :options
 
-  def initialize(name, options)
+  def initialize(name, location, options = {})
     @name = name
+    @location = location
     @options = options
   end
 
