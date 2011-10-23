@@ -1,5 +1,6 @@
 require 'erb'
 require 'blazing/cli_logging'
+require 'grit'
 
 class Blazing::Runner
 
