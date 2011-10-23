@@ -1,3 +1,5 @@
+require 'blazing'
+
 #
 # Stuff borrowed from carlhuda/bundler
 #
