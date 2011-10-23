@@ -8,7 +8,8 @@ require 'blazing/runner'
 describe Blazing::Runner do
 
   before :each do
-    @config = double('config')
+    @config = Blazing::Config.new
+    @config.target :sometarget, 'somewhere', :default => true
   end
 
   describe '#exec' do

@@ -23,6 +23,33 @@ describe Blazing::Config do
 
   end
 
+  describe '#default_target' do
+
+    it 'retunrs a target object if only one is present' do
+      config = Blazing::Config.new
+      config.target :sometarget, 'somewhere'
+      config.default_target.name.should be :sometarget
+    end
+
+    context 'when more than 1 target defined in config' do
+
+      it 'raises an error when none is default' do
+        config = Blazing::Config.new
+        config.target :sometarget, 'somewhere'
+        config.target :someothertarget, 'somewhere'
+        lambda { config.default_target }.should raise_error
+      end
+
+      it 'retunrs the target object with :default => true option if more than 1 target present' do
+        config = Blazing::Config.new
+        config.target :sometarget, 'somewhere', :default => true
+        config.target :someothertarget, 'somewhere'
+        config.default_target.name.should be :sometarget
+      end
+
+    end
+  end
+
   describe 'DSL' do
 
     before :each do

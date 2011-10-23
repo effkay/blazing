@@ -11,18 +11,19 @@ require 'blazing/runner'
 
 include Methadone::Main
 
-main do |command|
+main do |command, target|
   if command == 'init'
-    config = {}
+    config = nil
   else
     config = Blazing::Config.parse(options[:file])
   end
 
-  runner = Blazing::Runner.new(config)
+  runner = Blazing::Runner.new(config, target)
   runner.exec(command)
 end
 
 arg :command
+arg :target, :optional
 on("-f configuration", "--file configuration", "config file location (defaults to config/blazing.rb)")
 
 go!

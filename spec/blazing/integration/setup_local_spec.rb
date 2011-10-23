@@ -12,7 +12,7 @@ describe 'blazing setup:local' do
 
     @config = Blazing::Config.new
     @config.target :production, @production_url
-    @config.target :staging, @staging_url
+    @config.target :staging, @staging_url, :default => true
     capture(:stdout) { Blazing::Runner.new(@config).exec('setup:local') }
   end
 

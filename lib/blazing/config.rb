@@ -27,9 +27,9 @@ class Blazing::Config
     @recipes = []
   end
 
-  def target(name, options = {})
+  def target(name, location, options = {})
     raise "Name already taken" if targets.find { |t| t.name == name }
-    targets << Blazing::Target.new(name, options)
+    targets << Blazing::Target.new(name, location, options)
   end
 
   def recipes(recipes = nil)
@@ -39,6 +39,16 @@ class Blazing::Config
       @recipes = recipes.map { |r| Blazing::Recipe.init_by_name(r) }
     else
       @recipes
+    end
+  end
+
+  def default_target
+    if @targets.size > 1
+      default = @targets.find { |t| t.options[:default] == true }
+      raise 'could not find default target' unless default
+      default
+    else
+      @targets.first
     end
   end
 
