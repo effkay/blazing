@@ -28,9 +28,10 @@ class Blazing::Runner
   end
 
   def setup_local_command
+    repository = Grit::Repo.new(Dir.pwd)
     @config.targets.each do |target|
       info("Adding new remote #{target.name} pointing to #{target.location}")
-      `git remote add #{target.name} #{target.location}`
+      repository.config["remote.#{target.name}.url"] = target.location
     end
   end
 
