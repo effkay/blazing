@@ -10,8 +10,6 @@ class Blazing::Config
   attr_accessor :targets
   dsl_setter :repository, :rvm, :rake
 
-  DEFAULT_CONFIG_LOCATION = 'config/blazing.rb'
-
   class << self
 
     def parse(configuration_file = nil)
@@ -24,7 +22,7 @@ class Blazing::Config
   end
 
   def initialize(configuration_file = nil)
-    @file = configuration_file || DEFAULT_CONFIG_LOCATION
+    @file = configuration_file || Blazing::DEFAULT_CONFIG_LOCATION
     @targets = []
     @recipes = []
   end
