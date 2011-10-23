@@ -81,6 +81,6 @@ Felipe Kaufmann ([@effkay][])
 
 ## License
 
-See the `MIT-LICENSE` file
+See the [MIT-LICENSE file](https://github.com/effkay/blazing/blob/master/MIT-LICENCE)
 
 [@effkay]: https://github.com/effkay
