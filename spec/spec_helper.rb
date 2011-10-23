@@ -17,6 +17,25 @@ RSpec.configure do |config|
     result
   end
 
+  def setup_sandbox
+    @blazing_root = Dir.pwd
+    @sandbox_directory = File.join(@blazing_root, '/tmp/blazing_sandbox')
+
+    # Sometimes, when specs failed, the sandbox would stick around
+    FileUtils.rm_rf(@sandbox_directory) if Dir.exists?(@sandbox_directory)
+
+    # Setup Sandbox and cd into it
+    Dir.mkdir(@sandbox_directory)
+    Dir.chdir(@sandbox_directory)
+    `git init .`
+  end
+
+  def teardown_sandbox
+    # Teardown Sandbox
+    Dir.chdir(@blazing_root)
+    FileUtils.rm_rf(@sandbox_directory)
+  end
+
   def destination_root
     File.join(File.dirname(__FILE__), 'sandbox')
   end
