@@ -72,13 +72,39 @@ describe Blazing::Config do
         @config.recipes :dummy
         @config.recipes.first.should be_a Blazing::Recipe::Dummy
       end
+
+      it 'accepts an array of recipes as argument' do
+        @config.recipes [:dummy, :dummy]
+        @config.recipes.size.should be 2
+        @config.recipes.each { |r| r.should be_a Blazing::Recipe::Dummy }
+      end
     end
 
     describe 'rake' do
 
+      it 'takes the name of the rake task as argument' do
+        @config.rake :post_deploy
+        @config.instance_variable_get('@rake').should be :post_deploy
+      end
+
+      it 'returns the name of the task if no argument given' do
+        @config.rake :post_deploy
+        @config.rake.should be :post_deploy
+      end
+
     end
 
     describe 'rvm' do
+
+      it 'takes an rvm string as argument' do
+        @config.rvm 'ruby-1.9.2@rails31'
+        @config.instance_variable_get('@rvm').should == 'ruby-1.9.2@rails31'
+      end
+
+      it 'returns the rvm string if no argument given' do
+        @config.rvm 'ruby-1.9.2@rails31'
+        @config.rvm.should == 'ruby-1.9.2@rails31'
+      end
 
     end
   end

@@ -31,9 +31,25 @@ class Blazing::Config
     if recipes.kind_of? Symbol
       @recipes << Blazing::Recipe.init_by_name(recipes)
     elsif recipes.kind_of? Array
-      @recipes << recipes.map { |r| Blazing::Recipe.init_by_name(r) }
+      @recipes = recipes.map { |r| Blazing::Recipe.init_by_name(r) }
     else
       @recipes
+    end
+  end
+
+  def rake(task = nil)
+    if task
+      @rake = task
+    else
+      @rake
+    end
+  end
+
+  def rvm(rvm_string = nil)
+    if rvm_string
+      @rvm = rvm_string
+    else
+      @rvm
     end
   end
 
