@@ -1,3 +1,5 @@
+require 'erb'
+
 class Blazing::Runner
 
   def initialize(config)
@@ -11,6 +13,12 @@ class Blazing::Runner
   end
 
   def init_command
+    Dir.mkdir 'config' unless Dir.exists? 'config'
+    configuration_file = ERB.new(File.read("#{Blazing::TEMPLATE_ROOT}/config.erb")).result
+
+    File.open(Blazing::DEFAULT_CONFIG_LOCATION,"wb") do |f|
+      f.puts configuration_file
+    end
   end
 
   def setup_local_command

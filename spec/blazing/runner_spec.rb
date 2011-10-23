@@ -1,6 +1,10 @@
 require 'spec_helper'
 require 'blazing/runner'
 
+#
+# Note: More specs for Runner in the integration directory.
+#
+
 describe Blazing::Runner do
 
   before :each do
