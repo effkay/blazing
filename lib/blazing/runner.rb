@@ -47,4 +47,12 @@ class Blazing::Runner
     @config.default_target.update
   end
 
+  def recipes_run_command
+    @config.recipes.each { |recipe| recipe.run }
+  end
+
+  def recipes_list_command
+    Blazing::Recipe.list.each { |r| puts r.to_s.demodulize.underscore }
+  end
+
 end

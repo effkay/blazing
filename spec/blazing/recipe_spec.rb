@@ -14,4 +14,10 @@ describe Blazing::Recipe do
     end
   end
 
+  describe '.list' do
+    it 'retunrs an array of the available recipe classes' do
+      Blazing::Recipe.list.first.should be Blazing::Recipe::Dummy
+    end
+  end
+
 end

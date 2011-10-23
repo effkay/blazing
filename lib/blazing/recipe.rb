@@ -14,6 +14,14 @@ class Blazing::Recipe
       "Blazing::Recipe::#{name.to_s.camelize}".constantize.new(options)
     end
 
+    def list
+      descendants = []
+      ObjectSpace.each_object(Class) do |k|
+        descendants.unshift k if k < self
+      end
+      descendants
+    end
+
   end
 
 end
