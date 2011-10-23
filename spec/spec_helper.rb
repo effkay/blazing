@@ -19,7 +19,7 @@ RSpec.configure do |config|
 
   def setup_sandbox
     @blazing_root = Dir.pwd
-    @sandbox_directory = File.join(@blazing_root, '/tmp/blazing_sandbox')
+    @sandbox_directory = File.join('/tmp/blazing_sandbox')
 
     # Sometimes, when specs failed, the sandbox would stick around
     FileUtils.rm_rf(@sandbox_directory) if File.exists?(@sandbox_directory)
