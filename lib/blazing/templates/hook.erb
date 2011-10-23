@@ -3,7 +3,12 @@
 cd ..
 GIT_DIR='.git'
 
-git reset --hard HEAD
+while read oldrev newrev refname
+do
+  # Reset so we dont have unstaged changes... and then checkout the pushed ref
+  git reset --hard HEAD
+  git checkout $refname
+done
 
 <% if @config.rvm %>
   # Load RVM into a shell session *as a function*
