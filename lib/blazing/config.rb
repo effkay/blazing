@@ -13,6 +13,7 @@ class Blazing::Config
   class << self
 
     def parse(configuration_file = nil)
+      Blazing::Recipe.load_gem_recipes
       config = self.new(configuration_file)
       config.instance_eval(File.read(config.file))
 
