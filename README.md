@@ -31,7 +31,7 @@ When I started working on blazing, I had some design goals in mind which I think
  
 I looked at [Inploy](https://github.com/dcrec1/inploy) and [Vlad](https://github.com/seattlerb/vlad) after having used [Capistrano](https://github.com/capistrano/capistrano) for several
 years. Then got inspired by defunkt's
-[blog post](https://github.com/blog/470-deployment-script-spring-cleaning) about deployment script spring cleaning. Other's doing a similar thing with git push deployments are Mislav's [git-deploy](https://github.com/mislav/git-deploy) and [pushand](https://github.com/remi/pushand.git) by remi. If you don't like blazing, you might give them a try.
+[blog post](https://github.com/blog/470-deployment-script-spring-cleaning) about deployment script spring cleaning. Other's doing a similar thing with git push deployments are Mislav's [git-deploy](https://github.com/mislav/git-deploy) (which was a great inspiration and resource) and [pushand](https://github.com/remi/pushand.git) by remi. If you don't like blazing, you might give them a try.
 
 ## Installation
 
@@ -45,7 +45,7 @@ Run `blazing init` in your project root to create a sample config file.
 
 ### Configuration
 
-See the generated configuration file or [the template file](https://github.com/effkay/blazing/blob/master/lib/blazing/templates/config.erb) for availabel configuration options.
+See the generated configuration file or [the template file](https://github.com/effkay/blazing/blob/master/lib/blazing/templates/config.erb) for available configuration options.
 
 ### Setup
 
@@ -65,15 +65,40 @@ Whenever you change something in your blazing config file you can run the update
 
 Just push to your remote… so if you set up a target named `:production`, use `git push production master` to deploy your master branch there.
 
+### Recipes
+
+Right now blazing does the following things out of the box:
+
+* use rvm if you specify it in your config (by passing an rvm string or just `:rvmrc`, which will load the rvmrc)
+* checkout the pushed ref… so if you do git push production master, the last commit of the master branch will be checked out. Before doing a checkout blazing will reset to HEAD so no errors happen due to changed files. **This means that you will loose any uncommited changes on the production repository. Having changes there is a bad idea anyway!**
+* run bundle --deployment so the dependencies are installed
+* run all recipes, in the order that they are defined
+* run the rake task if one was specified
+
+Run all recipes? Well yes, blazing can be extended by recipes. So far, these are available:
+
+* [blazing-passenger](https://github.com/effkay/blazing-passenger)
+	* `:passenger_restart` will touch `tmp/retart.txt`
+	* `:passenger_kickstart, :url => 'http:://somehost'` will do a get requst on somehost to kickstart passenger
+* [blazing-rails](https://github.com/effkay/blazing-rails)
+	* `:precompile_assets` will precompile the assets when deploying
+
+Feel free to roll your own recipes!
+
 ## Development & Contribution
 
 ### Improving Blazing itself
 
 If you like blazing and want to improve/fix something, feel free, I'm glad for every pull request. Maybe contact me beforehand so we don't fix the same bugs twice and make sure you stick with a similar code style and have tests in your pull request. 
 
-### Blazing Recipes
+### Creating custom Blazing Recipes
 
-I would like to add recipes that encapuslate common deployment strategies to blazing. If you have an idea for that, you are welcome to contribute. Right now I am still working on a clever API for this so no futher documentation yet.
+I would like to add recipes that encapuslate common deployment strategies to blazing. If you have an idea for that, you are welcome to contribute. Right now I am still working on a clever API for this. At the moment the recipe API works as follows:
+
+* recipes should live in gems called `blazing-<somename>`
+* blazing converts the symbol given in the config to the class name and calls run on it. So if you have `recipe :passenger_restart` blazing will try to run `Blazing::Recipe::PassengerRestart.run` with the options provided.
+* Recipes should live in the `Blazing::Recipe` namespace and inherit from `Blazing::Recipe` as well
+* Recipes are run in the order they are specified in the config, so there is no way to handle inter-recipe dependencies yet. 
 
 ## Authors
 
