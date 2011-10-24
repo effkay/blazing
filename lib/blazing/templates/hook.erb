@@ -39,14 +39,12 @@ done
   fi
 <% end %>
 
+bundle --deployment
+
 <% unless @config.recipes.empty? %>
-  blazing recipes:run
+  bundle exec blazing recipes:run
 <% end %>
 
 <% if @config.rake %>
   rake <%= @config.rake %>
 <% end %>
-
-<%# bundle --deployment%>
-<%# bundle exec rake RAILS_ENV=production RAILS_GROUPS=assets assets:precompile%>
-<%# touch tmp/restart.txt%>
