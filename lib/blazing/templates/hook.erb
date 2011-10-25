@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "------> [blazing] Entering post-receive hook for <%= name %>"
+
 cd ..
 GIT_DIR='.git'
 
@@ -18,8 +20,10 @@ done
     source "$HOME/.rvm/scripts/rvm"
 
     <% if @config.rvm == :rvmrc %>
+      echo "------> [blazing] Loading rvm from .rvmrc"
       source .rvmrc
     <% else %>
+      echo "------> [blazing] Loading rvm string: <%= @config.rvm %>"
       rvm use <%= @config.rvm %>
     <% end %>
 
@@ -29,22 +33,27 @@ done
     source "/usr/local/rvm/scripts/rvm"
 
     <% if @config.rvm == :rvmrc %>
+      echo "------> [blazing] Loading rvm from .rvmrc"
       source .rvmrc
     <% else %>
+      echo "------> [blazing] Loading rvm string: <%= @config.rvm %>"
       rvm use <%= @config.rvm %>
     <% end %>
 
   else
-    printf "ERROR: RVM was enabled in config but no RVM installation was not found.\n"
+    echo '------> [blazing] ERROR: RVM was enabled in config but no RVM installation was not found\n'
   fi
 <% end %>
 
+echo "------> [blazing] Bundling gems"
 bundle --deployment --quiet --without development test
 
 <% unless @config.recipes.empty? %>
-  bundle exec blazing recipes:run
+  echo "------> [blazing] Running recipes for <%= name.to_s %>"
+  bundle exec blazing recipes:run <%= name.to_s %>
 <% end %>
 
 <% if @config.rake %>
+  echo "------> [blazing] running rake <%= @config.rake %>"
   rake <%= @config.rake %>
 <% end %>
