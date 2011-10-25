@@ -4,7 +4,7 @@
 
 *Oh no, yet another deployer!*
 
-Not everyone can or wants to deploy on heroku. But now you can have the same awesomely smooth git push deploys on whatever server you have SSH access to.
+Not everyone can or wants to deploy on heroku. But now you can have the same (well, almost the same, since we're not gonna patch SSH) awesomely smooth git push deploys on whatever server you have SSH access to.
 
 ## Quickstart
 
