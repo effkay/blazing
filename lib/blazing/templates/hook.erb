@@ -39,7 +39,7 @@ done
   fi
 <% end %>
 
-bundle --deployment
+bundle --deployment --quiet --without development test
 
 <% unless @config.recipes.empty? %>
   bundle exec blazing recipes:run
