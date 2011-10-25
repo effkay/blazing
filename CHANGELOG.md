@@ -2,6 +2,10 @@
 
 ...
 
+## 0.1.3 - October 25, 2011
+
+* fix erros in hook and improve its logging
+
 ## 0.1.2 - October 25, 2011
 
 * setup initializes an empty repository, so first push will work (#47)
