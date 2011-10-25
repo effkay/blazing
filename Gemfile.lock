@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    blazing (0.1.3)
+    blazing (0.1.4)
       activesupport
       grit
       i18n
