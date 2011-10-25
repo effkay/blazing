@@ -40,11 +40,11 @@ class Blazing::Runner
   end
 
   def setup_remote_command
-    @config.default_target.setup
+    @target.setup
   end
 
   def update_command
-    @config.default_target.update
+    @target.update
   end
 
   def recipes_run_command
