@@ -13,7 +13,7 @@ class Blazing::Target
   end
 
   def setup
-    @shell.run "ssh #{user}@#{host} '#{clone_repository} && #{setup_repository}'"
+    @shell.run "ssh #{user}@#{host} '#{init_repository} && #{setup_repository}'"
   end
 
   def apply_hook
@@ -41,8 +41,8 @@ class Blazing::Target
     user[1] unless user.nil?
   end
 
-  def clone_repository
-    "git clone #{@config.repository} #{path}"
+  def init_repository
+    "git init #{path}"
   end
 
   def copy_hook

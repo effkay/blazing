@@ -96,15 +96,15 @@ describe Blazing::Config do
       end
 
       it 'accepts a single recipe as argument' do
-        # @config.recipe :dummy
-        # @config.recipes.first.should be_a Blazing::Recipe::Dummy
+        @config.recipe :dummy
+        @config.recipes.first.should be_a Blazing::Recipe::Dummy
       end
 
       it 'allows multiple recipes to be defined' do
-        # @config.recipe :dummy
-        # @config.recipe :dummy
-        # @config.recipes.size.should be 2
-        # @config.recipes.each { |r| r.should be_a Blazing::Recipe::Dummy }
+        @config.recipe :dummy
+        @config.recipe :dummy
+        @config.recipes.size.should be 2
+        @config.recipes.each { |r| r.should be_a Blazing::Recipe::Dummy }
       end
 
       it 'passes the options to the recipe initializer' do

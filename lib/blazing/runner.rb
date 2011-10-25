@@ -9,7 +9,7 @@ class Blazing::Runner
   def initialize(config = nil, target = nil)
     if config
       @config = config
-      @target = @config.targets.find { |t| t.name == target.to_s } || @config.default_target
+      @target = @config.targets.find { |t| t.name.to_s == target } || @config.default_target
     end
   end
 
