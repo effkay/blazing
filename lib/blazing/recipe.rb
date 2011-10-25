@@ -25,9 +25,15 @@ class Blazing::Recipe
       descendants
     end
 
-    def load_gem_recipes
-      # TODO: I'm sure there is a better way to do this...
-      gems = open('Gemfile').grep(/blazing-/).map { |l| l.match(/(blazing-.*)\'\,/)[1] }
+    def load_recipes
+      load_recipe_gems(parse_gemfile)
+    end
+
+    def parse_gemfile(gemfile = 'Gemfile')
+      open(gemfile).grep(/blazing-/).map { |l| l.match(/blazing-(\w+)/)[0] }
+    end
+
+    def load_recipe_gems(gems)
       gems.each do |gem|
         gem_lib_path = $:.find { |p| p.include? gem }
         recipes_path = File.join(gem_lib_path, gem, 'recipes')
@@ -37,5 +43,4 @@ class Blazing::Recipe
     end
 
   end
-
 end
