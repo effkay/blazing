@@ -78,10 +78,7 @@ Right now blazing does the following things out of the box:
 Run all recipes? Well yes, blazing can be extended by recipes. So far, these are available:
 
 * [blazing-passenger](https://github.com/effkay/blazing-passenger)
-	* `:passenger_restart` will touch `tmp/retart.txt`
-	* `:passenger_kickstart, :url => 'http:://somehost'` will do a get requst on somehost to kickstart passenger
 * [blazing-rails](https://github.com/effkay/blazing-rails)
-	* `:precompile_assets` will precompile the assets when deploying
 
 Feel free to roll your own recipes!
 
