@@ -39,4 +39,9 @@ describe 'blazing update' do
     capture(:stdout) { @runner.exec('update') }
   end
 
+  it 'adds a git remote for each target' do
+    capture(:stdout) { @runner.exec('update') }
+    Grit::Repo.new(Dir.pwd).config['remote.production.url'].should == @production_url
+  end
+
 end

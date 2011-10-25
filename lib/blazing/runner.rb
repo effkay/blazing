@@ -31,7 +31,7 @@ class Blazing::Runner
     end
   end
 
-  def setup_local_command
+  def setup_git_remotes
     repository = Grit::Repo.new(Dir.pwd)
     @config.targets.each do |target|
       info("Adding new remote #{target.name} pointing to #{target.location}")
@@ -39,12 +39,14 @@ class Blazing::Runner
     end
   end
 
-  def setup_remote_command
+  def setup_command
     @target.setup
+    update_command
   end
 
   def update_command
-    @target.update
+    setup_git_remotes
+    @target.apply_hook
   end
 
   def recipes_run_command

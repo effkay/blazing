@@ -3,7 +3,7 @@ require 'blazing/config'
 require 'blazing/runner'
 require 'grit'
 
-describe 'blazing setup:remote' do
+describe 'blazing setup' do
 
   before :each do
     setup_sandbox
@@ -25,8 +25,8 @@ describe 'blazing setup:remote' do
     @target = @config.default_target
     @target.instance_variable_set('@shell', @shell)
     @shell.should_receive(:run).with("ssh user@host 'git clone  /some/where/else && cd /some/where/else && git config receive.denyCurrentBranch ignore'")
-    @target.should_receive(:update)
-    capture(:stdout) { @runner.exec('setup:remote') }
+    @target.should_receive(:apply_hook)
+    capture(:stdout) { @runner.exec('setup') }
   end
 
 end

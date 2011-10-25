@@ -8,7 +8,7 @@ Not everyone can or wants to deploy on heroku. But now you can have the same awe
 
 ## Quickstart
 
-`blazing init`, edit the configuration, run `blazing setup:local` and `blazing setup:remote <target>` and you're set. Deploy with `git push <target> <branch>` or setup git to always push your current branch.
+`blazing init`, edit the configuration, run `blazing setup [target]` and you're set. Deploy with `git push <target> <branch>` or setup git to always push your current branch.
 
 ## Overview & Background
 
@@ -49,17 +49,13 @@ See the generated configuration file or [the template file](https://github.com/e
 
 ### Setup
 
-`blazing setup:local` will setup your local repository for deployment with blazing/git push. Basically, it will add a remote for each target you defined in the configuration file.
+`blazing setup` will:
 
-`blazing setup:remote <target>` will setup the project on the server side. It will:
-
+* setup your local repository for deployment with blazing/git push. Basically, it will add a remote for each target you defined in the configuration file.
 * clone the repository to the specified location
 * setup the repository to allow a currently checked out branch to be pushed to it
-* run ``blazing update``
 
-`blazing update <target>`
-
-Whenever you change something in your blazing config file you can run the update command so your git post-receive hook gets updated.
+Whenever you change something in your blazing config file you can run the `update` command so your git post-receive hook and your git remotess get updated.
 
 ### Deploying
 

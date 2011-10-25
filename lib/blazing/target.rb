@@ -14,10 +14,9 @@ class Blazing::Target
 
   def setup
     @shell.run "ssh #{user}@#{host} '#{clone_repository} && #{setup_repository}'"
-    self.update
   end
 
-  def update
+  def apply_hook
     hook = ERB.new(File.read("#{Blazing::TEMPLATE_ROOT}/hook.erb")).result(binding)
 
     File.open(Blazing::TMP_HOOK, "wb") do |f|
