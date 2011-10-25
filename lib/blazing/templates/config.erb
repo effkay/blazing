@@ -14,17 +14,20 @@
 # target :staging, 'blazing@production.server.com:/where/your/code/is/shipped/to', :default => true
 
 #
-# Define which recipes should be used. The recipes are run in the order that they are defined
+# Optional: RVM handling
 #
-
 # Use Ruby Enterprise Edition and gemset 123
-# recipe :rvm, :use => 'ree@123'
+# rvm 'ree@123'
 
 # Or use the rvmrc
-# recipe :rvm, :use => :rvmrc
+# rvm :rvmrc
+#
 
-# Bundle after deploying
-# recipe :bundler
+#
+# Define Recipes to be used (See the README for available recipes).
+# Recipes are run in the order they are specified
+#
+# recipe :recipe_name
 
 #
 # Define a rake task that should be run after deployment. The rake task will run after the recipes have run.
