@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Felipe Kaufmann"]
   s.email       = ["felipekaufmann@gmail.com"]
   s.homepage    = "https://github.com/effkay/blazing"
-  s.summary     = %q{blazing fast deployment}
-  s.description = %q{git push deployent utility, ready to be extended by your own recipes}
+  s.summary     = %q{git push deployment helper}
+  s.description = %q{painless git push deployments for everyone}
 
   s.rubyforge_project = "blazing"
 
