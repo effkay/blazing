@@ -1,6 +1,8 @@
 #!/bin/bash
 
-echo "------> [blazing] Entering post-receive hook for <%= name %>"
+echo "------"
+echo "------  [blazing] ENTERING POST RECEIVE HOOK FOR: <%= name %>"
+echo "------"
 
 cd ..
 GIT_DIR='.git'
@@ -8,6 +10,7 @@ GIT_DIR='.git'
 while read oldrev newrev refname
 do
   # Reset so we dont have unstaged changes... and then checkout the pushed ref
+  echo "------> [blazing] Doing a hard reset and checking out $refname since thats what you pushed"
   git reset --hard HEAD
   git checkout $refname
 done
