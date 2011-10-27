@@ -40,6 +40,9 @@ describe 'blazing update' do
   end
 
   it 'adds a git remote for each target' do
+    @shell_double = double('shell', :run => true)
+    @target = @config.default_target
+    @target.instance_variable_set('@shell', @shell_double)
     capture(:stdout) { @runner.exec('update') }
     Grit::Repo.new(Dir.pwd).config['remote.production.url'].should == @production_url
   end
