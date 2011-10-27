@@ -99,6 +99,7 @@ class Blazing::Recipe::Example < Blazing::Recipe
   def run(target_options = {})
     super target_options
     # do some stuff
+    # access options with @options[:key]
   end
 end
 ```
