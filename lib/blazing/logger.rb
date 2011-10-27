@@ -16,7 +16,7 @@ Logging.color_scheme( 'bright',
 Logging.appenders.stdout(
   'stdout',
   :layout => Logging.layouts.pattern(
-    :pattern => '[%d] %-5l [blazing]: %m\n',
+    :pattern => ' ------> [blazing] %-5l: %m\n',
     :color_scheme => 'bright'
   )
 )
