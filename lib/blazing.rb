@@ -1,4 +1,5 @@
 require "blazing/version"
+require "blazing/logger"
 
 module Blazing
 
