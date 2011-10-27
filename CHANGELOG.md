@@ -2,6 +2,10 @@
 
 ...
 
+## 0.2.0 - October 27, 2011
+
+* Recipes accept target specific options (RECIPE API CHANGED! See [this commit](https://github.com/effkay/blazing/commit/f7fe22b822c00b55db6f2a870d67b449fcb7fce1) for details)
+
 ## 0.1.3 - October 25, 2011
 
 * fix erros in hook and improve its logging
