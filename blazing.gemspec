@@ -28,7 +28,9 @@ Gem::Specification.new do |s|
   s.add_development_dependency('guard-rspec')
   s.add_development_dependency('growl')
   s.add_development_dependency('rb-fsevent')
+
   s.add_dependency('grit')
+  s.add_dependency('logging')
 
   # TODO: Get rid of those, just used for guessing recipe names etc in lib/recipes.rb
   s.add_dependency "activesupport"

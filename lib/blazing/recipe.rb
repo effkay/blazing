@@ -1,9 +1,6 @@
 require 'active_support/inflector'
-require 'blazing/cli_logging'
 
 class Blazing::Recipe
-
-  include Blazing::CLILogging
 
   attr_reader :options
 

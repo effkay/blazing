@@ -5,6 +5,7 @@ PATH
       activesupport
       grit
       i18n
+      logging
 
 GEM
   remote: http://rubygems.org/
@@ -22,7 +23,10 @@ GEM
       guard (>= 0.8.4)
     i18n (0.6.0)
     json (1.6.1)
-    mime-types (1.16)
+    little-plugger (1.1.2)
+    logging (1.6.1)
+      little-plugger (>= 1.1.2)
+    mime-types (1.17.2)
     multi_json (1.0.3)
     rake (0.9.2)
     rb-fsevent (0.4.0)
