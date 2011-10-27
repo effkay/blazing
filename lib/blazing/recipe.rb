@@ -11,6 +11,10 @@ class Blazing::Recipe
     @options = options
   end
 
+  def run(target_options = {})
+    @options.merge! target_options
+  end
+
   class << self
 
     def init_by_name(name, options = {})

@@ -50,7 +50,7 @@ class Blazing::Runner
   end
 
   def recipes_run_command
-    @config.recipes.each { |recipe| recipe.run }
+    @config.recipes.each { |recipe| recipe.run(@target.options) }
   end
 
   def recipes_list_command
