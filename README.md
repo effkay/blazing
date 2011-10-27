@@ -91,7 +91,17 @@ I would like to add recipes that encapuslate common deployment strategies to bla
 * recipes should live in gems called `blazing-<somename>`
 * blazing converts the symbol given in the config to the class name and calls run on it. So if you have `recipe :passenger_restart` blazing will try to run `Blazing::Recipe::PassengerRestart.run` with the options provided.
 * Recipes should live in the `Blazing::Recipe` namespace and inherit from `Blazing::Recipe` as well
-* Recipes are run in the order they are specified in the config, so there is no way to handle inter-recipe dependencies yet. 
+* Recipes are run in the order they are specified in the config, so there is no way to handle inter-recipe dependencies yet.
+* A minimal recipe implementation might look like this:
+
+```ruby
+class Blazing::Recipe::Example < Blazing::Recipe
+  def run(target_options = {})
+    super target_options
+    # do some stuff
+  end
+end
+```
 
 ## Authors
 
