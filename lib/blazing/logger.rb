@@ -23,5 +23,4 @@ Logging.appenders.stdout(
 
 Logging.logger.root.appenders = 'stdout'
 Logging.logger.root.level = :info
-
 Logging.consolidate :root

@@ -6,6 +6,21 @@ ENV['PATH'] = "#{File.expand_path(File.dirname(__FILE__) + '/../../bin')}#{File:
 # Stuff borrowed from carlhuda/bundler
 #
 RSpec.configure do |config|
+
+  #
+  # Reset Logger
+  #
+  Logging.appenders.reset
+  Logging.appenders.string_io(
+    'string_io',
+    :layout => Logging.layouts.pattern(
+      :pattern => ' ------> [blazing] %-5l: %m\n',
+      :color_scheme => 'bright'
+    )
+  )
+
+  Logging.logger.root.appenders = 'string_io'
+
   def capture(stream)
     begin
       stream = stream.to_s

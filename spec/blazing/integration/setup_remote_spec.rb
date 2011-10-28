@@ -26,7 +26,7 @@ describe 'blazing setup' do
     @target.instance_variable_set('@shell', @shell)
     @shell.should_receive(:run).with("ssh user@host 'git init /some/where/else && cd /some/where/else && git config receive.denyCurrentBranch ignore'")
     @target.should_receive(:apply_hook)
-    capture(:stdout) { @runner.exec('setup') }
+    @runner.exec('setup')
   end
 
 end

@@ -21,7 +21,7 @@ describe 'blazing init' do
 
   it 'runs the configured recipes' do
     @dummy_recipe.should_receive(:run)
-    capture(:stdout) { @runner.exec('recipes:run') }
+    @runner.exec('recipes:run')
   end
 
 end
