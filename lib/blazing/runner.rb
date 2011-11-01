@@ -1,59 +1,63 @@
 require 'erb'
 require 'grit'
+require 'blazing/config'
+
+# TODO: HANDLE NONEXISTENT TARGET
 
 class Blazing::Runner
 
-  include Blazing::Logger
+  class << self
 
-  def initialize(config = nil, target = nil)
-    if config
-      @config = config
-      @target = @config.targets.find { |t| t.name.to_s == target } || @config.default_target
+    def init
+      logger.info "Creating an example config file in #{Blazing::DEFAULT_CONFIG_LOCATION}"
+      logger.info "Customize it to your needs"
+
+      Dir.mkdir 'config' unless File.exists? 'config'
+      configuration_file = ERB.new(File.read("#{Blazing::TEMPLATE_ROOT}/config.erb")).result
+
+      File.open(Blazing::DEFAULT_CONFIG_LOCATION,"wb") do |f|
+        f.puts configuration_file
+      end
     end
-  end
 
-  def exec(command)
-    command_method = "#{command.gsub(':', '_')}_command"
-    raise "Unknown Command: #{command}" unless self.respond_to? command_method
-    self.send command_method
-  end
-
-  def init_command
-    info "Creating an example config file in #{Blazing::DEFAULT_CONFIG_LOCATION}"
-    info "Customize it to your needs"
-
-    Dir.mkdir 'config' unless File.exists? 'config'
-    configuration_file = ERB.new(File.read("#{Blazing::TEMPLATE_ROOT}/config.erb")).result
-
-    File.open(Blazing::DEFAULT_CONFIG_LOCATION,"wb") do |f|
-      f.puts configuration_file
+    def setup(target, options)
+      prepare_config(target, options)
+      @@targets.each { |t| t.setup }
+      update(target, options)
     end
-  end
 
-  def setup_git_remotes
-    repository = Grit::Repo.new(Dir.pwd)
-    @config.targets.each do |target|
-      info "Adding new remote #{target.name} pointing to #{target.location}"
-      repository.config["remote.#{target.name}.url"] = target.location
+    def update(target, options)
+      prepare_config(target, options)
+      setup_git_remotes
+      @@targets.each { |t| t.apply_hook }
     end
-  end
 
-  def setup_command
-    @target.setup
-    update_command
-  end
+    def recipes(target)
+      prepare_config(target)
+      @config.recipes.each { |recipe| recipe.run(@targets.options) }
+    end
 
-  def update_command
-    setup_git_remotes
-    @target.apply_hook
-  end
+    def list
+      Blazing::Recipe.list.each { |r| puts r.to_s.demodulize.underscore }
+    end
 
-  def recipes_run_command
-    @config.recipes.each { |recipe| recipe.run(@target.options) }
-  end
+    def prepare_config(target, options)
+      @@config = Blazing::Config.parse(options[:file])
+      @@targets = []
+      if target == :all
+        @@targets << @config.targets
+      else
+        @@targets << (@@config.targets.find { |t| t.name.to_s == target } || @@config.default_target)
+      end
+    end
 
-  def recipes_list_command
-    Blazing::Recipe.list.each { |r| puts r.to_s.demodulize.underscore }
-  end
+    def setup_git_remotes
+      repository = Grit::Repo.new(Dir.pwd)
+      @@config.targets.each do |target|
+        logger.info "Adding new remote #{target.name} pointing to #{target.location}"
+        repository.config["remote.#{target.name}.url"] = target.location
+      end
+    end
 
+  end
 end

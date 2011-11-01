@@ -1,19 +1,44 @@
 require 'thor'
+require 'blazing/runner'
 
 module Blazing
   class CLI < Thor
 
     default_task :help
 
-    desc 'help', 'Shows this help screen'
+    desc 'init', 'Generate a blazing config file'
+    def init
+      Blazing::Runner.init
+    end
 
     method_option :file,
       :type    => :string,
       :aliases => '-f',
       :banner  => 'Specify a configuration file'
 
-    def help
-      
+    desc 'setup [TARGET]', 'Setup local and remote repository/repositories for deployment'
+    def setup(target = nil)
+      Blazing::Runner.setup(target, options)
+    end
+
+    method_option :file,
+      :type    => :string,
+      :aliases => '-f',
+      :banner  => 'Specify a configuration file'
+
+    desc 'update [TARGET]', 'Re-Generate and uplaod hook based on current configuration'
+    def update(target = nil)
+      Blazing::Runner.update(target, options)
+    end
+
+    desc 'recipes', 'Run the Recipes (used on remote machine)'
+    def recipes
+      Blazing::Runner.recipes(options)
+    end
+
+    desc 'list', 'List available Recipes'
+    def list
+      Blazing::Runner.list
     end
 
   end

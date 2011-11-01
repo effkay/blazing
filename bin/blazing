@@ -3,41 +3,4 @@
 require 'blazing'
 require 'blazing/cli'
 
-Guard::CLI.start
-
-# require 'bundler'
-# Bundler.setup
-
-# require 'blazing'
-# require 'blazing/config'
-# require 'blazing/runner'
-# require 'optparse'
-
-# options = {}
-
-# optparse = OptionParser.new do|opts|
-#   opts.banner = "Usage: blazing <command> [options]"
-
-#   opts.on( '-h', '--help', 'Display this screen' ) do
-#     puts opts
-#     exit
-#   end
-
-#   opts.on( '-f config', '--file config', 'specify config file location (defaults to config/blazing.rb)' ) do |file|
-#     options[:file] = file
-#   end
-# end
-
-# optparse.parse!(ARGV)
-
-# command = ARGV[0]
-# target = ARGV[1]
-
-# if command == 'init'
-#   config = nil
-# else
-#   config = Blazing::Config.parse(options[:file])
-# end
-
-# runner = Blazing::Runner.new(config, target)
-# runner.exec(command)
+Blazing::CLI.start
