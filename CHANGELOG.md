@@ -1,5 +1,10 @@
 ## master
 
+## 0.2.3 - November 1, 2011
+
+* Don't run in -w (warnings) mode, as warnings scare people when they
+  are deploying ;-)
+
 ## 0.2.2 - November 1, 2011
 
 * Changed the way the target repository is initialized so it works on
