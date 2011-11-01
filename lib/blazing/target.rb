@@ -44,8 +44,13 @@ class Blazing::Target
     user[1] unless user.nil?
   end
 
+  #
+  # Initialize an empty repository, so we can push to it
+  #
   def init_repository
-    "git init #{path}"
+    # Instead of git init with a path, so it does not fail on older
+    # git versions (https://github.com/effkay/blazing/issues/53)
+    "mkdir #{path} && cd #{path} && git init"
   end
 
   def copy_hook
