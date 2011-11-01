@@ -1,6 +1,15 @@
 ## master
 
-...
+## 0.2.2 - November 1, 2011
+
+* Changed the way the target repository is initialized so it works on
+  older git versions (Old git versions don't take a path as parameter
+  when doing git init)
+
+## 0.2.1 - October 27, 2011
+
+* Improved Logging: Hook and recipes are much more verbose, colored
+  output
 
 ## 0.2.0 - October 27, 2011
 
