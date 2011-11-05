@@ -6,7 +6,7 @@ describe 'blazing init' do
 
   before :each do
     setup_sandbox
-    Blazing::Runner.new.exec('init')
+    Blazing::Runner.init
   end
 
   after :each do

@@ -13,7 +13,7 @@ describe 'blazing update' do
     @config = Blazing::Config.new
     @config.target :production, @production_url
     @config.target :staging, @staging_url, :default => true
-    @runner = Blazing::Runner.new(@config)
+    @runner = Blazing::Runner
   end
 
   after :each do
@@ -21,11 +21,11 @@ describe 'blazing update' do
   end
 
   it 'generates the hook' do
-    @shell_double = double('shell')#Blazing::Shell.new
+    @shell_double = double('shell')
     @target = @config.default_target
     @target.instance_variable_set('@shell', @shell_double)
     @shell_double.stub(:run)
-    @runner.exec('update')
+    @runner.update
     File.exists?(Blazing::TMP_HOOK).should be true
   end
 
@@ -36,14 +36,14 @@ describe 'blazing update' do
 
     @shell_double.should_receive(:run).once.with("scp /tmp/post-receive user@host:/some/where/else/.git/hooks/post-receive")
     @shell_double.should_receive(:run).once.with('ssh user@host chmod +x /some/where/else/.git/hooks/post-receive')
-    @runner.exec('update')
+    @runner.update
   end
 
   it 'adds a git remote for each target' do
     @shell_double = double('shell', :run => true)
     @target = @config.default_target
     @target.instance_variable_set('@shell', @shell_double)
-    @runner.exec('update')
+    @runner.update
     Grit::Repo.new(Dir.pwd).config['remote.production.url'].should == @production_url
   end
 
