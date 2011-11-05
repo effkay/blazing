@@ -13,7 +13,7 @@ describe 'blazing setup' do
     @config = Blazing::Config.new
     @config.target :production, @production_url
     @config.target :staging, @staging_url, :default => true
-    @runner = Blazing::Runner.new(@config)
+    @runner = Blazing::Runner
   end
 
   after :each do
@@ -26,7 +26,7 @@ describe 'blazing setup' do
     @target.instance_variable_set('@shell', @shell)
     @shell.should_receive(:run).with("ssh user@host 'mkdir /some/where/else; cd /some/where/else && git init && cd /some/where/else && git config receive.denyCurrentBranch ignore'")
     @target.should_receive(:apply_hook)
-    @runner.exec('setup')
+    @runner.setup
   end
 
 end

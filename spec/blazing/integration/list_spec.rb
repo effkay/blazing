@@ -15,7 +15,7 @@ describe 'blazing init' do
   it 'prints a list of the available recipes' do
     class Blazing::Recipe::Dummy < Blazing::Recipe
     end
-    capture(:stdout) { Blazing::Runner.new.exec('recipes:list') }.should == "dummy\n"
+    capture(:stdout) { Blazing::Runner.list }.should == "dummy\n"
   end
 
 end
