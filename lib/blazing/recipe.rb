@@ -21,6 +21,7 @@ class Blazing::Recipe
     end
 
     def list
+      load_recipes!
       descendants = []
       ObjectSpace.each_object(Class) do |k|
         descendants.unshift k if k < self
@@ -28,21 +29,9 @@ class Blazing::Recipe
       descendants
     end
 
-    def load_recipes
-      load_recipe_gems(parse_gemfile)
-    end
-
-    def parse_gemfile(gemfile = 'Gemfile')
-      open(gemfile).grep(/blazing-/).map { |l| l.match(/blazing-(\w+)/)[0] }
-    end
-
-    def load_recipe_gems(gems)
-      gems.each do |gem|
-        gem_lib_path = $:.find { |p| p.include? gem }
-        recipes_path = File.join(gem_lib_path, gem, 'recipes')
-        recipes = Dir.entries(recipes_path).delete_if { |r| r == '.' || r == '..' }
-        recipes.each { |recipe| require File.join(gem, 'recipes', recipe) }
-      end
+    def load_recipes!
+      gems = $:.select{|p| p.match /blazing-\w+-\d\.\d\.\d\\lib/}.map { |r| r.scan(/blazing-\w+/)[0] }
+      gems.each { |gem| require gem }
     end
 
   end
