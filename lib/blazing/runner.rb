@@ -20,34 +20,34 @@ class Blazing::Runner
       end
     end
 
-    def setup(target, options)
-      prepare_config(target, options)
+    def setup(target_name, options)
+      prepare_config(target_name, options)
       @@targets.each { |t| t.setup }
       update(target, options)
     end
 
-    def update(target, options)
-      prepare_config(target, options)
+    def update(target_name, options)
+      prepare_config(target_name, options)
       setup_git_remotes
       @@targets.each { |t| t.apply_hook }
     end
 
-    def recipes(target)
-      prepare_config(target)
-      @config.recipes.each { |recipe| recipe.run(@targets.options) }
+    def recipes(target_name)
+      prepare_config(target_name)
+      @@config.recipes.each { |recipe| recipe.run(@targets.options) }
     end
 
     def list
       Blazing::Recipe.list.each { |r| puts r.to_s.demodulize.underscore }
     end
 
-    def prepare_config(target, options)
+    def prepare_config(target_name, options = {})
       @@config = Blazing::Config.parse(options[:file])
       @@targets = []
-      if target == :all
+      if target_name == :all
         @@targets << @config.targets
       else
-        @@targets << (@@config.targets.find { |t| t.name.to_s == target } || @@config.default_target)
+        @@targets << (@@config.targets.find { |t| t.name.to_s == target_name } || @@config.default_target)
       end
     end
 
