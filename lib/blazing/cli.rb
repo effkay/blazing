@@ -32,8 +32,8 @@ module Blazing
     end
 
     desc 'recipes', 'Run the Recipes (used on remote machine)'
-    def recipes
-      Blazing::Runner.recipes(options)
+    def recipes(target_name)
+      Blazing::Runner.recipes(target_name, options)
     end
 
     desc 'list', 'List available Recipes'

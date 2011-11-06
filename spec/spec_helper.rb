@@ -53,7 +53,14 @@ RSpec.configure do |config|
     FileUtils.rm_rf(@sandbox_directory)
   end
 
-  def destination_root
-    File.join(File.dirname(__FILE__), 'sandbox')
+  def spec_root
+    File.dirname(__FILE__)
   end
+
+  def prepare_sample_config
+    sample_config = File.join(spec_root, 'support', 'sample_config_1.rb')
+    Dir.mkdir(@sandbox_directory + '/config')
+    FileUtils.cp(sample_config, @sandbox_directory + '/config/blazing.rb')
+  end
+
 end

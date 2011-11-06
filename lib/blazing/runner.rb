@@ -32,8 +32,8 @@ class Blazing::Runner
       @@targets.each { |t| t.apply_hook }
     end
 
-    def recipes(target_name)
-      prepare_config(target_name)
+    def recipes(target_name, options)
+      prepare_config(target_name, options)
       @@config.recipes.each { |recipe| recipe.run(@targets.options) }
     end
 

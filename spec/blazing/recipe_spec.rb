@@ -23,26 +23,6 @@ describe Blazing::Recipe do
     end
   end
 
-  describe '.parse_gemfile' do
-
-    it 'works when the recipe gems are specified with versions' do
-      gemfile = 'spec/support/gemfile_with_versions'
-      Blazing::Recipe.parse_gemfile(gemfile).should == ["blazing-passenger", "blazing-rails"]
-    end
-
-    it 'works when the recipe gems are specified without' do
-      gemfile = 'spec/support/gemfile_without_versions'
-      Blazing::Recipe.parse_gemfile(gemfile).should == ["blazing-passenger", "blazing-rails"]
-    end
-
-    it 'does not load gems that are commented out' do
-      pending
-      gemfile = 'spec/support/gemfile_with_comments'
-      Blazing::Recipe.parse_gemfile(gemfile).should == ["blazing-passenger"]
-    end
-
-  end
-
   describe '#run' do
 
     before :each do

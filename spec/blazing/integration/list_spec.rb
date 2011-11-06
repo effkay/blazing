@@ -1,6 +1,4 @@
 require 'spec_helper'
-require 'blazing/config'
-require 'blazing/runner'
 
 describe 'blazing init' do
 
