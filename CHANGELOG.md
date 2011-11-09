@@ -1,5 +1,10 @@
 ## master
 
+## 0.2.4 - November 9, 2011
+
+* Fix logger, so the formatting does not get carried over to apps using
+  blazing. (#55)
+
 ## 0.2.3 - November 1, 2011
 
 * Don't run in -w (warnings) mode, as warnings scare people when they

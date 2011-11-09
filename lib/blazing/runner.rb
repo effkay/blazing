@@ -3,6 +3,8 @@ require 'grit'
 
 class Blazing::Runner
 
+  include Blazing::Logger
+
   def initialize(config = nil, target = nil)
     if config
       @config = config
@@ -17,8 +19,8 @@ class Blazing::Runner
   end
 
   def init_command
-    logger.info "Creating an example config file in #{Blazing::DEFAULT_CONFIG_LOCATION}"
-    logger.info "Customize it to your needs"
+    info "Creating an example config file in #{Blazing::DEFAULT_CONFIG_LOCATION}"
+    info "Customize it to your needs"
 
     Dir.mkdir 'config' unless File.exists? 'config'
     configuration_file = ERB.new(File.read("#{Blazing::TEMPLATE_ROOT}/config.erb")).result
@@ -31,7 +33,7 @@ class Blazing::Runner
   def setup_git_remotes
     repository = Grit::Repo.new(Dir.pwd)
     @config.targets.each do |target|
-      logger.info "Adding new remote #{target.name} pointing to #{target.location}"
+      info "Adding new remote #{target.name} pointing to #{target.location}"
       repository.config["remote.#{target.name}.url"] = target.location
     end
   end

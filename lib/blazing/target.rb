@@ -2,6 +2,8 @@ require 'blazing/shell'
 
 class Blazing::Target
 
+  include Blazing::Logger
+
   attr_accessor :name, :location, :options
 
   def initialize(name, location, config, options = {})
@@ -13,19 +15,19 @@ class Blazing::Target
   end
 
   def setup
-    logger.info "Setting up repository for #{name} in #{location}"
+    info "Setting up repository for #{name} in #{location}"
     @shell.run "ssh #{user}@#{host} '#{init_repository} && #{setup_repository}'"
   end
 
   def apply_hook
-    logger.info "Generating and uploading post-receive hook for #{name}"
+    info "Generating and uploading post-receive hook for #{name}"
     hook = ERB.new(File.read("#{Blazing::TEMPLATE_ROOT}/hook.erb")).result(binding)
 
     File.open(Blazing::TMP_HOOK, "wb") do |f|
       f.puts hook
     end
 
-    logger.debug "Copying hook for #{name} to #{location}"
+    debug "Copying hook for #{name} to #{location}"
     copy_hook
     @shell.run "ssh #{user}@#{host} #{make_hook_executable}"
   end
@@ -54,7 +56,7 @@ class Blazing::Target
   end
 
   def copy_hook
-    logger.debug "Making hook executable"
+    debug "Making hook executable"
     @shell.run "scp #{Blazing::TMP_HOOK} #{user}@#{host}:#{path}/.git/hooks/post-receive"
   end
 
