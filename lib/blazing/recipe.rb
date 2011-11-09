@@ -2,6 +2,8 @@ require 'active_support/inflector'
 
 class Blazing::Recipe
 
+  include Blazing::Logger
+
   attr_reader :options
 
   def initialize(options = {})

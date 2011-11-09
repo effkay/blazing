@@ -1,5 +1,9 @@
 ## master
 
+## 0.2.5 - November 9, 2011
+
+* Fix missing logger include in Recipe
+
 ## 0.2.4 - November 9, 2011
 
 * Fix logger, so the formatting does not get carried over to apps using
