@@ -8,7 +8,7 @@ class Blazing::Config
 
   attr_reader :file
   attr_accessor :targets, :recipes
-  dsl_setter :repository, :rvm, :rake
+  dsl_setter :repository, :rvm, :rvm_scripts, :rake
 
   class << self
 

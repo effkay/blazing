@@ -1,5 +1,9 @@
 ## master
 
+## 0.2.6 - November 24, 2011
+
+* Add option to specify custom rvm scripts location
+
 ## 0.2.5 - November 9, 2011
 
 * Fix missing logger include in Recipe
