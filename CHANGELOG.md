@@ -3,6 +3,7 @@
 ## 0.2.6 - November 24, 2011
 
 * Add option to specify custom rvm scripts location
+* Fix failing setup command when target directory already exists
 
 ## 0.2.5 - November 9, 2011
 

@@ -52,7 +52,7 @@ class Blazing::Target
   def init_repository
     # Instead of git init with a path, so it does not fail on older
     # git versions (https://github.com/effkay/blazing/issues/53)
-    "mkdir #{path} && cd #{path} && git init"
+    "mkdir #{path}; cd #{path} && git init"
   end
 
   def copy_hook
