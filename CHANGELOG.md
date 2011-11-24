@@ -1,5 +1,9 @@
 ## master
 
+## 0.2.7 - November 24, 2011
+
+* fix hook rake call, run it with bundle exec like the rest
+
 ## 0.2.6 - November 24, 2011
 
 * Add option to specify custom rvm scripts location

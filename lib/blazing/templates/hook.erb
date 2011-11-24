@@ -68,5 +68,5 @@ bundle --deployment --quiet --without development test
 
 <% if @config.rake %>
   echo "------> [blazing] running rake <%= @config.rake %>"
-  rake <%= @config.rake %>
+  bundle exec rake <%= @config.rake %>
 <% end %>
