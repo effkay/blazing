@@ -1,4 +1,4 @@
-[![Build Status](https://secure.travis-ci.org/effkay/blazing.png)](http://travis-ci.org/effkay/blazing)
+[![Build Status](https://secure.travis-ci.org/effkay/blazing.png?branch=master)](http://travis-ci.org/effkay/blazing)
 
 # Blazing fast and painless git push deploys
 
