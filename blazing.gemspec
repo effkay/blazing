@@ -28,6 +28,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency('guard-rspec')
   s.add_development_dependency('ruby_gntp')
   s.add_development_dependency('rb-fsevent')
+  s.add_development_dependency('pry')
 
   s.add_dependency('grit')
   s.add_dependency('logging')
