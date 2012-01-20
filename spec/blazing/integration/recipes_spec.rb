@@ -22,10 +22,8 @@ describe 'blazing recipes' do
   end
 
   it 'runs the configured recipes' do
-    capture(:stdout) { @cli.recipes(:production) }
-    # File.exists?(@sandbox_directory + '/config/blazing.rb').should be true
-    # capture(:stdout) { system 'ls' }.should == "dummy\n"
-    # `blazing recipes`.should == 'da'
+    output = capture(:stdout) { @cli.recipes(:production) }
+    output.should == "dummy recipe was run\n"
   end
 
 end
