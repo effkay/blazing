@@ -9,13 +9,12 @@ describe 'blazing recipes' do
         puts 'dummy recipe was run'
       end
     end
-    # @dummy_recipe = Blazing::Recipe::Dummy.new
-    # @config = Blazing::Config.new
-    # @config.target :production, @production_url
-    # @config.instance_variable_set('@recipes', [@dummy_recipe])
-    # @runner = Blazing::Runner
+    @dummy_recipe = Blazing::Recipe::Dummy.new
+    @config = Blazing::Config.new
+    @config.target :production, @production_url
+    @config.instance_variable_set('@recipes', [@dummy_recipe])
     @cli = Blazing::CLI.new
-    prepare_sample_config
+    Blazing::Runner.class_variable_set('@@config', @config)
   end
 
   after :each do

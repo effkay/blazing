@@ -34,7 +34,7 @@ class Blazing::Runner
 
     def recipes(target_name, options)
       prepare_config(target_name, options)
-      @@config.recipes.each { |recipe| recipe.run(@targets.options) }
+      @@config.recipes.each { |recipe| recipe.run }
     end
 
     def list
@@ -42,7 +42,7 @@ class Blazing::Runner
     end
 
     def prepare_config(target_name, options = {})
-      @@config = Blazing::Config.parse(options[:file])
+      @@config ||= Blazing::Config.parse(options[:file])
       @@targets = []
       if target_name == :all
         @@targets << @config.targets
