@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'blazing init' do
+describe 'blazing recipes' do
 
   before :each do
     setup_sandbox
