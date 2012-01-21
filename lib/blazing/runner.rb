@@ -8,6 +8,9 @@ class Blazing::Runner
 
   class << self
 
+    #
+    # Bootstrap blazing by creating config file
+    #
     def init
       logger.info "Creating an example config file in #{Blazing::DEFAULT_CONFIG_LOCATION}"
       logger.info "Customize it to your needs"
@@ -34,18 +37,21 @@ class Blazing::Runner
 
     def recipes(target_name, options)
       prepare_config(target_name, options)
-      @@config.recipes.each { |recipe| recipe.run }
+      config.recipes.each { |recipe| recipe.run }
     end
 
     def list
       Blazing::Recipe.list.each { |r| puts r.to_s.demodulize.underscore }
     end
 
+    #
+    # Parse config and set up options
+    #
     def prepare_config(target_name, options = {})
       @@config ||= Blazing::Config.parse(options[:file])
       @@targets = []
       if target_name == :all
-        @@targets << @config.targets
+        @@targets << @@config.targets
       else
         @@targets << (@@config.targets.find { |t| t.name.to_s == target_name } || @@config.default_target)
       end
