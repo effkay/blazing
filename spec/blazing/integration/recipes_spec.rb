@@ -14,7 +14,7 @@ describe 'blazing recipes' do
     @config.target :production, @production_url
     @config.instance_variable_set('@recipes', [@dummy_recipe])
     @cli = Blazing::CLI.new
-    #Blazing::Runner.class_eval { class_variable_set(:@@config, @config) }
+    Blazing::Config.stub(:parse).and_return @config
   end
 
   after :each do

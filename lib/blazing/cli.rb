@@ -26,7 +26,7 @@ module Blazing
     # Setup a target to be deployed with blazing
     #
     def setup(target_name = nil)
-      Blazing::Runner.setup(target_name, options)
+      Blazing::Runner.new(target_name, options).setup
     end
 
     desc 'update [TARGET]', 'Re-Generate and uplaod hook based on current configuration'
@@ -40,7 +40,7 @@ module Blazing
     # Update the target hook so it matches the settings in the config
     #
     def update(target_name = nil)
-      Blazing::Runner.update(target_name, options)
+      Blazing::Runner.new(target_name, options).update
     end
 
     desc 'recipes', 'Run the recipes'
@@ -49,7 +49,7 @@ module Blazing
     # Run the configured blazing recipes (used on remote machien)
     #
     def recipes(target_name)
-      Blazing::Runner.recipes(target_name, options)
+      Blazing::Runner.new(target_name, options).recipes
     end
 
     desc 'list', 'List available recipes'

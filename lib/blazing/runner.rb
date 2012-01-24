@@ -6,6 +6,47 @@ require 'blazing/config'
 
 class Blazing::Runner
 
+  def initialize(target_name, options)
+    prepare_config(target_name, options)
+  end
+
+  #
+  # Parse config and set up options
+  #
+  def prepare_config(target_name, options = {})
+    @config ||= Blazing::Config.parse(options[:file])
+    @targets = []
+    if target_name == :all
+      @targets << @config.targets
+    else
+      @targets << (@config.targets.find { |t| t.name.to_s == target_name } || @config.default_target)
+    end
+  end
+
+  def setup_git_remotes
+    repository = Grit::Repo.new(Dir.pwd)
+    @config.targets.each do |target|
+      logger.info "Adding new remote #{target.name} pointing to #{target.location}"
+      repository.config["remote.#{target.name}.url"] = target.location
+    end
+  end
+
+  def setup
+    @targets.each do |target|
+      target.setup
+      update(target, options)
+    end
+  end
+
+  def update
+    setup_git_remotes
+    @targets.each { |t| t.apply_hook }
+  end
+
+  def recipes
+    @config.recipes.each { |recipe| recipe.run }
+  end
+
   class << self
 
     #
@@ -23,46 +64,11 @@ class Blazing::Runner
       end
     end
 
-    def setup(target_name, options)
-      prepare_config(target_name, options)
-      @@targets.each { |t| t.setup }
-      update(target, options)
-    end
-
-    def update(target_name, options)
-      prepare_config(target_name, options)
-      setup_git_remotes
-      @@targets.each { |t| t.apply_hook }
-    end
-
-    def recipes(target_name, options)
-      prepare_config(target_name, options)
-      config.recipes.each { |recipe| recipe.run }
-    end
-
+    #
+    # List available blazing recipes
+    #
     def list
       Blazing::Recipe.list.each { |r| puts r.to_s.demodulize.underscore }
-    end
-
-    #
-    # Parse config and set up options
-    #
-    def prepare_config(target_name, options = {})
-      @@config ||= Blazing::Config.parse(options[:file])
-      @@targets = []
-      if target_name == :all
-        @@targets << @@config.targets
-      else
-        @@targets << (@@config.targets.find { |t| t.name.to_s == target_name } || @@config.default_target)
-      end
-    end
-
-    def setup_git_remotes
-      repository = Grit::Repo.new(Dir.pwd)
-      @@config.targets.each do |target|
-        logger.info "Adding new remote #{target.name} pointing to #{target.location}"
-        repository.config["remote.#{target.name}.url"] = target.location
-      end
     end
 
   end
