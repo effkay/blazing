@@ -1,7 +1,7 @@
 class Blazing::Shell
 
   def run(command)
-    system command
+    `#{command}`
   end
 
 end
