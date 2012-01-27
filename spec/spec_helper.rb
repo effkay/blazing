@@ -45,7 +45,20 @@ RSpec.configure do |config|
     # Setup Sandbox and cd into it
     Dir.mkdir(@sandbox_directory)
     Dir.chdir(@sandbox_directory)
-    #`git init .`
+
+    # Setup dummy target
+    Dir.mkdir('target')
+
+    # Setup dummy repository
+    Dir.mkdir('repository')
+    `git init repository`
+
+    # Setup dummy project
+    Dir.mkdir('project')
+    `git init project`
+
+    # cd into project
+    Dir.chdir('project')
   end
 
   def teardown_sandbox
@@ -58,10 +71,10 @@ RSpec.configure do |config|
     File.dirname(__FILE__)
   end
 
-  def prepare_sample_config
-    sample_config = File.join(spec_root, 'support', 'sample_config_1.rb')
-    Dir.mkdir(@sandbox_directory + '/config')
-    FileUtils.cp(sample_config, @sandbox_directory + '/config/blazing.rb')
-  end
+  #def prepare_sample_config
+    #sample_config = File.join(spec_root, 'support', 'sample_config_1.rb')
+    #Dir.mkdir(@sandbox_directory + '/config')
+    #FileUtils.cp(sample_config, @sandbox_directory + '/config/blazing.rb')
+  #end
 
 end

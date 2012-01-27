@@ -5,7 +5,7 @@ require 'spec_helper'
     before :each do
       setup_sandbox
       @config = Blazing::Config.new
-      @config.target :production, "#{@sandbox_directory}/remote"
+      @config.target :production, "#{@sandbox_directory}/target"
       @cli = Blazing::CLI.new
       Blazing::Config.stub(:parse).and_return @config
     end
@@ -16,7 +16,7 @@ require 'spec_helper'
 
     it 'prepares the repository on the target location' do
       @output = capture(:stdout) { @cli.setup(:production) }
-      File.exists?("#{@sandbox_directory}/remote/.git").should be true
+      File.exists?("#{@sandbox_directory}/target/.git").should be true
     end
 
     it 'configures the repository to allow pushing to the checked out branch'
