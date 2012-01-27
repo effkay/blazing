@@ -1,4 +1,5 @@
 require 'blazing'
+require 'stringio'
 require 'pry'
 
 ENV['PATH'] = "#{File.expand_path(File.dirname(__FILE__) + '/../../bin')}#{File::PATH_SEPARATOR}#{ENV['PATH']}"
@@ -22,17 +23,16 @@ RSpec.configure do |config|
 
   Logging.logger.root.appenders = 'string_io'
 
-  def capture(stream)
+  def capture(*streams)
+    streams.map! { |stream| stream.to_s }
     begin
-      stream = stream.to_s
-      eval "$#{stream} = StringIO.new"
+      result = StringIO.new
+      streams.each { |stream| eval "$#{stream} = result" }
       yield
-      result = eval("$#{stream}").string
     ensure
-      eval("$#{stream} = #{stream.upcase}")
+      streams.each { |stream| eval("$#{stream} = #{stream.upcase}") }
     end
-
-    result
+    result.string
   end
 
   def setup_sandbox
@@ -45,9 +45,6 @@ RSpec.configure do |config|
     # Setup Sandbox and cd into it
     Dir.mkdir(@sandbox_directory)
     Dir.chdir(@sandbox_directory)
-
-    # Setup dummy target
-    Dir.mkdir('target')
 
     # Setup dummy repository
     Dir.mkdir('repository')
