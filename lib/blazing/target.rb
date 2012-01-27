@@ -15,8 +15,14 @@ class Blazing::Target
   end
 
   def setup
-    info "Setting up repository for #{name} in #{location}"
-    @shell.run "ssh #{user}@#{host} '#{init_repository} && #{setup_repository}'"
+    logger.info "Setting up repository for #{name} in #{location}"
+
+    # TODO: Handle case where user is empty
+    if host
+      @shell.run "ssh #{user}@#{host} '#{init_repository} && #{setup_repository}'"
+    else
+      @shell.run "#{init_repository} && #{setup_repository}"
+    end
   end
 
   def apply_hook
@@ -29,11 +35,19 @@ class Blazing::Target
 
     debug "Copying hook for #{name} to #{location}"
     copy_hook
-    @shell.run "ssh #{user}@#{host} #{make_hook_executable}"
+    if host
+      @shell.run "ssh #{user}@#{host} #{make_hook_executable}"
+    else
+      @shell.run "#{make_hook_executable}"
+    end
   end
 
   def path
-    @location.match(/:(.*)$/)[1]
+    if host
+      @location.match(/:(.*)$/)[1]
+    else
+      @location
+    end
   end
 
   def host
@@ -57,10 +71,16 @@ class Blazing::Target
 
   def copy_hook
     debug "Making hook executable"
-    @shell.run "scp #{Blazing::TMP_HOOK} #{user}@#{host}:#{path}/.git/hooks/post-receive"
+    # TODO: handle missing user?
+    if host
+      @shell.run "scp #{Blazing::TMP_HOOK} #{user}@#{host}:#{path}/.git/hooks/post-receive"
+    else
+      @shell.run "cp #{Blazing::TMP_HOOK} #{path}/.git/hooks/post-receive"
+    end
   end
 
   def make_hook_executable
+    logger.debug "Making hook executable"
     "chmod +x #{path}/.git/hooks/post-receive"
   end
 

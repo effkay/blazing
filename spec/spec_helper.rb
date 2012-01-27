@@ -45,7 +45,7 @@ RSpec.configure do |config|
     # Setup Sandbox and cd into it
     Dir.mkdir(@sandbox_directory)
     Dir.chdir(@sandbox_directory)
-    `git init .`
+    #`git init .`
   end
 
   def teardown_sandbox

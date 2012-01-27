@@ -34,7 +34,7 @@ class Blazing::Runner
   def setup
     @targets.each do |target|
       target.setup
-      update(target, options)
+      update
     end
   end
 
