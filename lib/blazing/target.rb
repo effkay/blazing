@@ -15,7 +15,7 @@ class Blazing::Target
   end
 
   def setup
-    logger.info "Setting up repository for #{name} in #{location}"
+    info "Setting up repository for #{name} in #{location}"
 
     # TODO: Handle case where user is empty
     if host
@@ -80,7 +80,7 @@ class Blazing::Target
   end
 
   def make_hook_executable
-    logger.debug "Making hook executable"
+    debug "Making hook executable"
     "chmod +x #{path}/.git/hooks/post-receive"
   end
 
