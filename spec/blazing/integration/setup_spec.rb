@@ -8,6 +8,7 @@ require 'spec_helper'
       @config.target :production, "#{@sandbox_directory}/target"
       @cli = Blazing::CLI.new
       Blazing::Config.stub(:parse).and_return @config
+      @output = capture(:stdout, :stderr) { @cli.setup(:production) }
     end
 
     after :each do
@@ -15,11 +16,11 @@ require 'spec_helper'
     end
 
     it 'prepares the repository on the target location' do
-      @output = capture(:stdout) { @cli.setup(:production) }
       File.exists?("#{@sandbox_directory}/target/.git").should be true
     end
 
-    it 'configures the repository to allow pushing to the checked out branch'
-    it 'runs blazing update for the target'
+    it 'configures the repository to allow pushing to the checked out branch' do
+      Grit::Repo.new("#{@sandbox_directory}/target").config['receive.denycurrentbranch'].should == 'ignore'
+    end
 
  end
