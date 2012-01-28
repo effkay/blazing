@@ -18,31 +18,28 @@ class Blazing::Runner
   def prepare_config(target_name, options = {})
     @config ||= Blazing::Config.parse(options[:file])
     @targets = []
-    if target_name == :all
-      @targets << @config.targets
-    else
-      @targets << (@config.targets.find { |t| t.name.to_s == target_name } || @config.default_target)
-    end
-  end
 
-  def setup_git_remotes
-    repository = Grit::Repo.new(Dir.pwd)
-    @config.targets.each do |target|
-      info "Adding new remote #{target.name} pointing to #{target.location}"
-      repository.config["remote.#{target.name}.url"] = target.location
+    if target_name == :all
+      @targets = @config.targets
+    else
+      @targets  << (@config.targets.find { |t| t.name.to_s == target_name.to_s } || @config.default_target)
     end
+
+    raise 'could not find determine target' if @targets.empty?
   end
 
   def setup
     @targets.each do |target|
       target.setup
-      update
     end
+    update
   end
 
   def update
-    setup_git_remotes
-    @targets.each { |t| t.apply_hook }
+    @targets.each do |t|
+      t.setup_git_remote
+      t.apply_hook
+    end
   end
 
   def recipes

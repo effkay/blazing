@@ -42,6 +42,12 @@ class Blazing::Target
     end
   end
 
+  def setup_git_remote
+    repository = Grit::Repo.new(Dir.pwd)
+    info "Adding new remote #{name} pointing to #{location}"
+    repository.config["remote.#{name}.url"] = location
+  end
+
   def path
     if host
       @location.match(/:(.*)$/)[1]

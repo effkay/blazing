@@ -38,11 +38,7 @@ class Blazing::Config
   end
 
   def default_target
-    if @targets.size > 1
-      default = @targets.find { |t| t.options[:default] == true }
-      raise 'could not find default target' unless default
-      default
-    else
+    if @targets.size == 1
       @targets.first
     end
   end
