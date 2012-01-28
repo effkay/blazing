@@ -1,8 +1,6 @@
 require 'erb'
 require 'blazing/config'
 
-# TODO: HANDLE NONEXISTENT TARGET
-
 class Blazing::Runner
 
   include Blazing::Logger
