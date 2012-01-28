@@ -1,5 +1,10 @@
 ## master
 
+* no default target unless there is only one in config
+* ability to run seutp and update on all targets by specifiying all as target on command line
+* rewrite CLI interface, uses Thor
+* basic integration specs
+
 ## 0.2.7 - November 24, 2011
 
 * fix hook rake call, run it with bundle exec like the rest
