@@ -1,5 +1,4 @@
 require 'erb'
-require 'grit'
 require 'blazing/config'
 
 # TODO: HANDLE NONEXISTENT TARGET

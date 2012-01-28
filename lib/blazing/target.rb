@@ -1,4 +1,5 @@
 require 'blazing/shell'
+require 'grit'
 
 class Blazing::Target
 
