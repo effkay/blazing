@@ -19,13 +19,14 @@ describe Blazing::Recipe do
 
   describe '.list' do
     it 'retunrs an array of the available recipe classes' do
-      Blazing::Recipe.list.first.should be Blazing::Recipe::Dummy
+      Blazing::Recipe.list.first.should == Blazing::Recipe::Dummy
     end
   end
 
   describe '#run' do
 
     before :each do
+      @production_url = '/some/target'
       @dummy_recipe = Blazing::Recipe::Dummy.new(:some_option => 'global')
       @config = Blazing::Config.new
       @config.target(:production, @production_url, :some_option => 'target-specific')
