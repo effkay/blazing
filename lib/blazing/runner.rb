@@ -18,13 +18,13 @@ class Blazing::Runner
     @config ||= Blazing::Config.parse(options[:file])
     @targets = []
 
-    if target_name == :all
+    if target_name == 'all'
       @targets = @config.targets
     else
       @targets  << (@config.targets.find { |t| t.name.to_s == target_name.to_s } || @config.default_target)
     end
 
-    raise 'could not find determine target' if @targets.empty?
+    raise 'could not determine target' if @targets.compact.empty?
   end
 
   def setup

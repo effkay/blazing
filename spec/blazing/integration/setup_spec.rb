@@ -30,9 +30,9 @@ require 'spec_helper'
       end
     end
 
-    context 'when :all is specified as target' do
+    context 'when all is specified as target' do
       it 'updates all targets' do
-        capture(:stdout, :stderr) { @cli.setup(:all) }
+        capture(:stdout, :stderr) { @cli.setup('all') }
         File.exists?("#{@sandbox_directory}/target/.git/hooks/post-receive").should be true
         File.exists?("#{@sandbox_directory}/staging/.git/hooks/post-receive").should be true
       end
