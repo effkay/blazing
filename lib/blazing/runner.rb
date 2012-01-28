@@ -24,10 +24,14 @@ class Blazing::Runner
       @targets  << (@config.targets.find { |t| t.name.to_s == target_name.to_s } || @config.default_target)
     end
 
-    raise 'could not determine target' if @targets.compact.empty?
+    @targets.compact!
+
+    error 'no target given or found' if @targets.empty?
   end
 
   def setup
+    return if @targets.empty?
+
     @targets.each do |target|
       target.setup
     end
@@ -35,6 +39,8 @@ class Blazing::Runner
   end
 
   def update
+    return if @targets.empty?
+
     @targets.each do |t|
       t.setup_git_remote
       t.apply_hook
