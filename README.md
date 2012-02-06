@@ -121,6 +121,7 @@ rvm_scripts '/opt/rvm/scripts/rvm'
 # The given recipe will be called with the provided options. Refer to each
 # recipe's documentation for available options. Options provided here
 # may be overridden by target specific options.
+# Recipes will be executed in the order they are defined!yy
 
 recipe :precompile_assets, :recipe_specific_option => 'bar'
 
