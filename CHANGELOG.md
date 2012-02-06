@@ -4,6 +4,8 @@
 * ability to run seutp and update on all targets by specifiying all as target on command line
 * rewrite CLI interface, uses Thor
 * basic integration specs
+* update and improve readme and sample configuration
+* deprecate `repository` DSL method
 
 ## 0.2.7 - November 24, 2011
 
