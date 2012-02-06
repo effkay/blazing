@@ -1,4 +1,5 @@
 require 'blazing'
+require 'rspec'
 require 'stringio'
 require 'pry'
 
