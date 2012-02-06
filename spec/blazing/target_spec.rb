@@ -62,6 +62,12 @@ describe Blazing::Target do
       target.rake_command.should == ' RAILS_ENV=production bundle exec rake deploy'
     end
 
+    it 'returns nil when no rake task was specified in config' do
+      config = Blazing::Config.new
+      target = Blazing::Target.new(:sometarget, '/path', config, :rails_env => 'production')
+      target.rake_command.should be nil
+    end
+
   end
 
 end
