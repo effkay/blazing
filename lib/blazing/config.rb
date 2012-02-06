@@ -7,13 +7,11 @@ class Blazing::Config
   extend Blazing::DSLSetter
   include Blazing::Logger
 
-
   attr_reader :file
   attr_accessor :targets, :recipes
   dsl_setter :rvm, :rvm_scripts, :rake
 
   class << self
-
     def parse(configuration_file = nil)
       Blazing::Recipe.load_recipes!
       config = self.new(configuration_file)
@@ -21,7 +19,6 @@ class Blazing::Config
 
       config
     end
-
   end
 
   def initialize(configuration_file = nil)
