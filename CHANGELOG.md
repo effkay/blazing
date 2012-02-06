@@ -6,6 +6,10 @@
 * basic integration specs
 * update and improve readme and sample configuration
 * deprecate `repository` DSL method
+* allow environment variables to be defined in config when setting the
+  rake task (#58)
+* allow the rails_env to be specified for a target (will be used when
+  calling rake) (#58)
 
 ## 0.2.7 - November 24, 2011
 

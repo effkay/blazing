@@ -30,9 +30,9 @@ Overview & Background
 Blazing is a deployment tool written in Ruby. It provides helpers to setup your project with a git post-receive hook, which is triggered every time you push to your production repository.
 
 I initially started working on an extension to capistrano which would cover most of my needs and the nees of my team. After a short while I noticed that bolting more functionality on top of capistrano was just going to be messy (and a PTA to maintain). We were alerady using tons of own recipes and customizations, capistrano multistage, capistrano-ext, etc.
- 
+
 I had a look at what others were doing and after a round of trying around and not getting what I wanted, I started this.
- 
+
 #### Design Goals
 
 When I started working on blazing, I had some design goals in mind which I think should stay relevant for this project:
@@ -43,7 +43,7 @@ When I started working on blazing, I had some design goals in mind which I think
 - Deployments should be fast
 
 #### Inspiration & Alternatives
- 
+
 I looked at [Inploy](https://github.com/dcrec1/inploy) and [Vlad](https://github.com/seattlerb/vlad) after having used [Capistrano](https://github.com/capistrano/capistrano) for several
 years. Then got inspired by defunkt's
 [blog post](https://github.com/blog/470-deployment-script-spring-cleaning) about deployment script spring cleaning. Other's doing a similar thing with git push deployments are Mislav's [git-deploy](https://github.com/mislav/git-deploy) (which was a great inspiration and resource) and [pushand](https://github.com/remi/pushand.git) by remi. If you don't like blazing, you might give them a try.
@@ -88,8 +88,11 @@ The `setup` and `update` commands also take 'all' as an option. This .
 #
 # The options provided in the target definition will override any
 # options provided in the recipe call.
+#
+# Options recognized by blazing core:
+#   rails_env: used when calling the rake task after deployment
 
-target :staging, 'screenconcept@ruby:/var/www/vischer.ruby.screenconcept.ch', :recipe_specific_option => 'foo'
+target :staging, 'screenconcept@ruby:/var/www/vischer.ruby.screenconcept.ch', :recipe_specific_option => 'foo', :rails_env => 'production'
 
 
 # Sample rvm setup:
@@ -101,11 +104,11 @@ target :staging, 'screenconcept@ruby:/var/www/vischer.ruby.screenconcept.ch', :r
 # Use :rvmrc as rvm string if you want blazing to use the rvm
 # environment specified in your project's .rvmrc file.
 
-rvm 'ruby-1.9.3@some-gemset' 
+rvm 'ruby-1.9.3@some-gemset'
 
 
 # Sample config for custom rvm location:
-#    
+#
 #    rvm_scripts <path_to_rvm_scripts>
 #
 # If you have installed rvm to a custom location, use this method to
@@ -128,13 +131,13 @@ recipe :precompile_assets, :recipe_specific_option => 'bar'
 
 # Sample rake file config:
 #
-#     rake <task> [environment variables]
+#     rake <task>, [environment variables]
 #
 # The provided rake task will be run after all recipes have run.
 # Note: you can only call a single rake task. If you need to run several
 # tasks just create one task that wrapps all the others.
 
-rake 'post_deploy RAILS_ENV=production'
+rake :post_deploy, 'RAILS_ENV=production'
 ```
 
 #### Deploying

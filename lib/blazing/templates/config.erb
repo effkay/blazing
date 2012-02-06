@@ -7,8 +7,11 @@
 #
 # The options provided in the target definition will override any
 # options provided in the recipe call.
+#
+# Options recognized by blazing core:
+#   rails_env: used when calling the rake task after deployment
 
-target :staging, 'screenconcept@ruby:/var/www/vischer.ruby.screenconcept.ch', :recipe_specific_option => 'foo'
+target :staging, 'screenconcept@ruby:/var/www/vischer.ruby.screenconcept.ch', :recipe_specific_option => 'foo', :rails_env => 'production'
 
 
 # Sample rvm setup:
@@ -20,11 +23,11 @@ target :staging, 'screenconcept@ruby:/var/www/vischer.ruby.screenconcept.ch', :r
 # Use :rvmrc as rvm string if you want blazing to use the rvm
 # environment specified in your project's .rvmrc file.
 
-rvm 'ruby-1.9.3@some-gemset' 
+rvm 'ruby-1.9.3@some-gemset'
 
 
 # Sample config for custom rvm location:
-#    
+#
 #    rvm_scripts <path_to_rvm_scripts>
 #
 # If you have installed rvm to a custom location, use this method to
@@ -47,10 +50,11 @@ recipe :precompile_assets, :recipe_specific_option => 'bar'
 
 # Sample rake file config:
 #
-#     rake <task> [environment variables]
+#     rake <task>, [environment variables]
 #
 # The provided rake task will be run after all recipes have run.
 # Note: you can only call a single rake task. If you need to run several
 # tasks just create one task that wrapps all the others.
 
-rake 'post_deploy RAILS_ENV=production'
+rake :post_deploy, 'RAILS_ENV=production'
+

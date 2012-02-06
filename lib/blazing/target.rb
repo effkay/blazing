@@ -13,6 +13,7 @@ class Blazing::Target
     @config = config
     @options = options
     @shell = Blazing::Shell.new
+    @target = self
   end
 
   def setup
@@ -93,6 +94,12 @@ class Blazing::Target
 
   def setup_repository
     "cd #{path} && git config receive.denyCurrentBranch ignore"
+  end
+
+  def rake_command
+    rake_config = @config.instance_variable_get("@rake") || {}
+    rails_env = "RAILS_ENV=#{@options[:rails_env]}" if @options[:rails_env]
+    "#{rake_config[:env]} #{rails_env} bundle exec rake #{rake_config[:task]}"
   end
 
 end

@@ -9,7 +9,7 @@ class Blazing::Config
 
   attr_reader :file
   attr_accessor :targets, :recipes
-  dsl_setter :rvm, :rvm_scripts, :rake
+  dsl_setter :rvm, :rvm_scripts
 
   class << self
     def parse(configuration_file = nil)
@@ -34,6 +34,11 @@ class Blazing::Config
 
   def recipe(name, options = {})
     @recipes << Blazing::Recipe.init_by_name(name, options)
+  end
+
+  def rake(task_name, env = nil)
+    @rake = { :task => task_name }
+    @rake[:env] = env if env
   end
 
   def repository(*args)
