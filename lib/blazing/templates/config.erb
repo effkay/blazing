@@ -1,35 +1,59 @@
 #
 # Blazing Configuration File
 #
-
+# Sample target definition:
 #
-# Specify the location of your repository:
+#   target :staging, 'screenconcept@ruby:/var/www/vischer.ruby.screenconcept.ch', :recipe_specific_option => 'foo'
 #
-# repository 'git@github.com:path/to/your/repository'
-
+#   target <target_name>, <target_location>, [options]
 #
-# Define possible deploy targets:
+# The options provided in the target definition will override any
+# options provided in the recipe call.
 #
-# target :production, 'blazing@production.server.com:/where/your/code/is/shipped/to'
-# target :staging, 'blazing@production.server.com:/where/your/code/is/shipped/to', :default => true, :some_option => 'foo' # note: options defined here will override options defined globally for a recipe
-
 #
-# Optional: RVM handling
 #
-# Use Ruby Enterprise Edition and gemset 123
-# rvm 'ree@123'
-
-# Or use the rvmrc
-# rvm :rvmrc
+# Sample rvm setup:
 #
-
+#    rvm 'ruby-1.9.3@some-gemset'
 #
-# Define Recipes to be used (See the README for available recipes).
-# Recipes are run in the order they are specified
+#    rvm <rvm-string>
 #
-# recipe :recipe_name
-
+# Setting the rvm string will make sure that the correct rvm ruby and
+# gemset is used before the post-receive hook does anything at all.
+# Use :rvmrc as rvm string if you want blazing to use the rvm
+# environment specified in your project's .rvmrc file.
 #
-# Define a rake task that should be run after deployment. The rake task will run after the recipes have run.
 #
-# rake :a_rake_task_to_call_after_deployment
+#
+# Sample config for custom rvm location:
+#
+#    rvm_scripts '/opt/rvm/scripts/rvm'
+#
+#    rvm_scripts <path_to_rvm_scripts>
+#
+# If you have installed rvm to a custom location, use this method to
+# specify where the rvm scripts are located.
+#
+#
+#
+# Sample recipe setup:
+#
+#     recipe :precompile_assets, :recipe_specific_option => 'bar'
+#
+#     recipe <recipe_name>, [options]
+#
+# The given recipe will be called with the provided options. Refer to each
+# recipe's documentation for available options. Options provided here
+# may be overridden by target specific options.
+#
+#
+#
+# Sample rake file config:
+#
+#     rake 'post_deploy RAILS_ENV=production'
+#
+#     rake <task> [environment variables]
+#
+# The provided rake task will be run after all recipes have run.
+# Note: you can only call a single rake task. If you need to run several
+# tasks just create one task that wrapps all the others.

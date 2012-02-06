@@ -1,16 +1,31 @@
 [![Build Status](https://secure.travis-ci.org/effkay/blazing.png?branch=master)](http://travis-ci.org/effkay/blazing)
 
-# Blazing fast and painless git push deploys
+Blazing fast and painless git push deploys
+==========================================
 
 *Oh no, yet another deployer!*
 
-Not everyone can or wants to deploy on heroku. But now you can have the same (well, almost the same, since we're not gonna patch SSH) awesomely smooth git push deploys on whatever server you have SSH access to.
+Not everyone can or wants to deploy on heroku. But now you can have the same (well, almost the same, since we're not gonna patch SSH) awesomely smooth git push deploys on whatever server you have SSH access to. In short, blazing helps you create nice git post-receive hooks and is extendable by plugins.
 
-## Quickstart
+Quickstart
+----------
 
-`blazing init`, edit the configuration, run `blazing setup [target]` and you're set. Deploy with `git push <target> <branch>` or setup git to always push your current branch.
+`blazing init`, edit your blaing config, run `blazing setup [target]` to deploy your post-receive hook and you're set. Deploy with `git push <target> <branch>`.
 
-## Overview & Background
+Features
+--------
+
+Out of the box, blazing can do the following:
+
+* set up a repository you can push to for deployment
+* set up a git post-receive hook, configurable by a simple DSL
+* works with rvm
+* uses bundler for dependency management
+* allows you to run custom rake tasks after deployment
+* is extendable by blazing recipes
+
+Overview & Background
+---------------------
 
 Blazing is a deployment tool written in Ruby. It provides helpers to setup your project with a git post-receive hook, which is triggered every time you push to your production repository.
 
@@ -18,7 +33,7 @@ I initially started working on an extension to capistrano which would cover most
  
 I had a look at what others were doing and after a round of trying around and not getting what I wanted, I started this.
  
-## Design Goals
+#### Design Goals
 
 When I started working on blazing, I had some design goals in mind which I think should stay relevant for this project:
 
@@ -27,66 +42,121 @@ When I started working on blazing, I had some design goals in mind which I think
 - no messy rake scripts: Define the desired behavior trough a DSL, and extensions add to this DSL in a clean and modular way
 - Deployments should be fast
 
-### Inspiration & Alternatives
+#### Inspiration & Alternatives
  
 I looked at [Inploy](https://github.com/dcrec1/inploy) and [Vlad](https://github.com/seattlerb/vlad) after having used [Capistrano](https://github.com/capistrano/capistrano) for several
 years. Then got inspired by defunkt's
 [blog post](https://github.com/blog/470-deployment-script-spring-cleaning) about deployment script spring cleaning. Other's doing a similar thing with git push deployments are Mislav's [git-deploy](https://github.com/mislav/git-deploy) (which was a great inspiration and resource) and [pushand](https://github.com/remi/pushand.git) by remi. If you don't like blazing, you might give them a try.
 
-## Installation
+Usage
+-----
 
-Your machine should be setup with ruby, rubygems, bundler and git. Install blazing by adding it to your `Gemfile` or run `gem install blazing`. The basic assumption from now on will be that you are working on a project with bundler and a Gemfile. Support for other ways to handle dependencies might be added in the future, but for now bundler is required.
+#### Installation
 
-## Usage
+Your machine should be setup with ruby, rubygems, bundler and git. Install blazing by adding it to your `Gemfile` or run `gem install blazing`. The basic assumption from now on will be that you are working on a project with bundler and a Gemfile. Support for other ways to handle dependencies might be added in the future but **at the moment bundler is required**.
 
-### Init
+#### blazing Commands
 
-Run `blazing init` in your project root to create a sample config file. 
+##### `blazing init`
 
-### Configuration
+Generate a blazing config file
 
-See the generated configuration file or [the template file](https://github.com/effkay/blazing/blob/master/lib/blazing/templates/config.erb) for available configuration options.
+##### `blazing setup <target>`
 
-### Setup
+Setup target repository for deployment and add git remote localy. Use 'all' as target name to update all configured targets at once.
 
-`blazing setup` will:
+##### `blazing update <target>`
 
-* setup your local repository for deployment with blazing/git push. Basically, it will add a remote for each target you defined in the configuration file.
-* clone the repository to the specified location
-* setup the repository to allow a currently checked out branch to be pushed to it
+Update post-receive hook according to current config. Run it after changing the blazing config. Use 'all' as target name to update all configured targets at once.
 
-Whenever you change something in your blazing config file you can run the `update` command so your git post-receive hook and your git remotess get updated.
+##### `blazing list`
 
-### Deploying
+List available recipes
 
-Just push to your remote… so if you set up a target named `:production`, use `git push production master` to deploy your master branch there.
+##### `blazing recipes`
 
-### Recipes
+Run the configured recipes (used on deployment target, can be used to test recipes localy)
 
-Right now blazing does the following things out of the box:
+The `setup` and `update` commands also take 'all' as an option. This .
 
-* use rvm if you specify it in your config (by passing an rvm string or just `:rvmrc`, which will load the rvmrc)
-* checkout the pushed ref… so if you do git push production master, the last commit of the master branch will be checked out. Before doing a checkout blazing will reset to HEAD so no errors happen due to changed files. **This means that you will loose any uncommited changes on the production repository. Having changes there is a bad idea anyway!**
-* run bundle --deployment so the dependencies are installed
-* run all recipes, in the order that they are defined
-* run the rake task if one was specified
+#### Configuration (blazing DSL)
 
-Run all recipes? Well yes, blazing can be extended by recipes. So far, these are available:
+```ruby
+# Sample target definition:
+#
+#   target :staging, 'screenconcept@ruby:/var/www/vischer.ruby.screenconcept.ch', :recipe_specific_option => 'foo'
+#
+#   target <target_name>, <target_location>, [options]
+#
+# The options provided in the target definition will override any
+# options provided in the recipe call.
+#
+#
+#
+# Sample rvm setup:
+#
+#    rvm 'ruby-1.9.3@some-gemset' 
+#
+#    rvm <rvm-string>
+#
+# Setting the rvm string will make sure that the correct rvm ruby and
+# gemset is used before the post-receive hook does anything at all.
+# Use :rvmrc as rvm string if you want blazing to use the rvm
+# environment specified in your project's .rvmrc file.
+#
+#
+#
+# Sample config for custom rvm location:
+#
+#    rvm_scripts '/opt/rvm/scripts/rvm'
+#    
+#    rvm_scripts <path_to_rvm_scripts>
+#
+# If you have installed rvm to a custom location, use this method to
+# specify where the rvm scripts are located.
+#
+#
+#
+# Sample recipe setup:
+#
+#     recipe :precompile_assets, :recipe_specific_option => 'bar'
+#
+#     recipe <recipe_name>, [options]
+#
+# The given recipe will be called with the provided options. Refer to each
+# recipe's documentation for available options. Options provided here
+# may be overridden by target specific options.
+#
+#
+#
+# Sample rake file config:
+#
+#     rake 'post_deploy RAILS_ENV=production'
+#
+#     rake <task> [environment variables]
+#
+# The provided rake task will be run after all recipes have run.
+# Note: you can only call a single rake task. If you need to run several
+# tasks just create one task that wrapps all the others.
+```
+
+#### Deploying
+
+Just push to your remote… so if you set up a target named `production`, use `git push production master` to deploy your master branch there.
+
+Recipes
+-------
+
+Blazing only offers a small set of core features. However, it is extendable by recipes.
+
+#### Available Recipes
 
 * [blazing-passenger](https://github.com/effkay/blazing-passenger)
 * [blazing-rails](https://github.com/effkay/blazing-rails)
 
-Feel free to roll your own recipes!
+#### Creating a blazing Recipe
 
-## Development & Contribution
-
-### Improving Blazing itself
-
-If you like blazing and want to improve/fix something, feel free, I'm glad for every pull request. Maybe contact me beforehand so we don't fix the same bugs twice and make sure you stick with a similar code style and have tests in your pull request. 
-
-### Creating custom Blazing Recipes
-
-I would like to add recipes that encapuslate common deployment strategies to blazing. If you have an idea for that, you are welcome to contribute. Right now I am still working on a clever API for this. At the moment the recipe API works as follows:
+Creating a blazing recipe is very easy. There are some ground rules:
 
 * recipes should live in gems called `blazing-<somename>`
 * blazing converts the symbol given in the config to the class name and calls run on it. So if you have `recipe :passenger_restart` blazing will try to run `Blazing::Recipe::PassengerRestart.run` with the options provided.
@@ -103,12 +173,30 @@ class Blazing::Recipe::Example < Blazing::Recipe
   end
 end
 ```
+Please have a look at [blazing-passenger](https://github.com/effkay/blazing-passenger) to get an idea of how to implement your recipe.
 
-## Authors
+Development
+-----------
+
+Pull requests are very welcome! Please try to follow these simple rules if applicable:
+
+* Please create a topic branch for every separate change you make.
+* Make sure your patches are well tested.
+* Update the README.
+* Update the CHANGELOG for noteworthy changes.
+* Please **do not change** the version number.
+
+#### Creating custom Blazing Recipes
+
+I would like to add recipes that encapuslate common deployment strategies to blazing. If you have an idea for that, you are welcome to contribute. Right now I am still working on a clever API for this. At the moment the recipe API works as follows:
+
+Authors
+-------
 
 Felipe Kaufmann ([@effkay][])
 
-## License
+License
+-------
 
 See the [MIT-LICENSE file](https://github.com/effkay/blazing/blob/master/MIT-LICENCE)
 
