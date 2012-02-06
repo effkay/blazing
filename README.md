@@ -92,7 +92,8 @@ The `setup` and `update` commands also take 'all' as an option. This .
 # Options recognized by blazing core:
 #   rails_env: used when calling the rake task after deployment
 
-target :staging, 'screenconcept@ruby:/var/www/vischer.ruby.screenconcept.ch', :recipe_specific_option => 'foo', :rails_env => 'production'
+target :staging, 'screenconcept@ruby:/var/www/vischer.ruby.screenconcept.ch',
+       :recipe_specific_option => 'foo', :rails_env => 'production'
 
 
 # Sample rvm setup:
