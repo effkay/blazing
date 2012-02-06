@@ -55,18 +55,6 @@ describe Blazing::Config do
       end
     end
 
-    describe 'repository' do
-      it 'assigns the repository if a value is given' do
-        @config.repository('somewhere')
-        @config.instance_variable_get("@repository").should == 'somewhere'
-      end
-
-      it 'returns the repository string if no value is given' do
-        @config.repository('somewhere')
-        @config.repository.should == 'somewhere'
-      end
-    end
-
     describe 'recipe' do
 
       before :each do
