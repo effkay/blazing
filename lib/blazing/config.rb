@@ -5,10 +5,12 @@ require 'blazing/dsl_setter'
 class Blazing::Config
 
   extend Blazing::DSLSetter
+  include Blazing::Logger
+
 
   attr_reader :file
   attr_accessor :targets, :recipes
-  dsl_setter :repository, :rvm, :rvm_scripts, :rake
+  dsl_setter :rvm, :rvm_scripts, :rake
 
   class << self
 
@@ -35,6 +37,10 @@ class Blazing::Config
 
   def recipe(name, options = {})
     @recipes << Blazing::Recipe.init_by_name(name, options)
+  end
+
+  def repository(*args)
+    warn 'Ther repository DSL method has been deprecated and is no longer used. This method will be removed in Version 0.3'
   end
 
   def default_target
