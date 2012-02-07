@@ -30,7 +30,7 @@ class Blazing::Recipe
     end
 
     def load_recipes!
-      gems = $:.select{|p| p.match /blazing-\w+-\d\.\d\.\d\\lib/}.map { |r| r.scan(/blazing-\w+/)[0] }
+      gems = $:.select{|p| p.match /blazing-\w+(|-\d\.\d\.\d)\/lib/}.map { |r| r.scan(/blazing-\w+/)[0] }
       gems.each { |gem| require gem }
     end
 
