@@ -163,6 +163,8 @@ Creating a blazing recipe is very easy. There are some ground rules:
 * blazing converts the symbol given in the config to the class name and calls run on it. So if you have `recipe :passenger_restart` blazing will try to run `Blazing::Recipe::PassengerRestart.run` with the options provided.
 * Recipes should live in the `Blazing::Recipe` namespace and inherit from `Blazing::Recipe` as well
 * Recipes are run in the order they are specified in the config, so there is no way to handle inter-recipe dependencies yet.
+* Make sure your recipe classes are loaded when the recipe gem itself is
+  loaded
 * A minimal recipe implementation might look like this:
 
 ```ruby
@@ -186,10 +188,6 @@ Pull requests are very welcome! Please try to follow these simple rules if appli
 * Update the README.
 * Update the CHANGELOG for noteworthy changes.
 * Please **do not change** the version number.
-
-#### Creating custom Blazing Recipes
-
-I would like to add recipes that encapuslate common deployment strategies to blazing. If you have an idea for that, you are welcome to contribute. Right now I am still working on a clever API for this. At the moment the recipe API works as follows:
 
 Authors
 -------

@@ -1,5 +1,9 @@
 ## master
 
+## 0.2.9 - February 7, 2012
+
+* Fixes concerning recipe loading in blazing core and recipe gems.
+
 ## 0.2.8 - February 7, 2012
 
 * no default target unless there is only one in config
