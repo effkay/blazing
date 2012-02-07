@@ -43,7 +43,7 @@ module Blazing
       Blazing::Runner.new(target_name, options).update
     end
 
-    desc 'recipes', 'Run the recipes'
+    desc 'recipes [TARGET]', 'Run the recipes for the given target'
 
     #
     # Run the configured blazing recipes (used on remote machien)

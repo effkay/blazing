@@ -63,7 +63,7 @@ bundle --deployment --quiet --without development test
 
 <% unless @config.recipes.empty? %>
   echo "------> [blazing] Running recipes for <%= name.to_s %>"
-  bundle exec blazing recipes:run <%= name.to_s %>
+  bundle exec blazing recipes <%= name.to_s %>
 <% end %>
 
 <% if @target.rake_command %>
