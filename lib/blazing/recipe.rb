@@ -1,3 +1,4 @@
+require 'blazing/logger'
 require 'active_support/inflector'
 
 class Blazing::Recipe
