@@ -77,7 +77,7 @@ List available recipes
 
 Run the configured recipes (used on deployment target, can be used to test recipes localy)
 
-The `setup` and `update` commands also take 'all' as an option. This .
+The `setup` and `update` commands also take 'all' as an option. This will perform the action on all your defined targets.
 
 #### Configuration (blazing DSL)
 
