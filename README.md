@@ -10,7 +10,7 @@ Not everyone can or wants to deploy on heroku. But now you can have the same (we
 Quickstart
 ----------
 
-`blazing init`, edit your blaing config, run `blazing setup [target]` to deploy your post-receive hook and you're set. Deploy with `git push <target> <branch>`.
+`blazing init`, edit your blazing config, run `blazing setup [target]` to deploy your post-receive hook and you're set. Deploy with `git push <target> <branch>`.
 
 Features
 --------
