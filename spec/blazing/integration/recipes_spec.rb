@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'blazing recipes' do
+describe '$ blazing recipes' do
 
   before :each do
     setup_sandbox
@@ -25,5 +25,5 @@ describe 'blazing recipes' do
     output = capture(:stdout) { @cli.recipes(:production) }
     output.should == "dummy recipe was run\n"
   end
-
 end
+

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-  describe 'blazing update' do
+describe '$ blazing update' do
 
     before :each do
       setup_sandbox

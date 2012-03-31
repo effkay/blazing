@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'blazing/config'
 require 'blazing/runner'
 
-describe 'blazing init' do
+describe '$ blazing init' do
 
   before :each do
     setup_sandbox
@@ -20,5 +20,5 @@ describe 'blazing init' do
   it 'creates a config file in config/blazing.rb' do
     File.exists?('config/blazing.rb').should be true
   end
-
 end
+

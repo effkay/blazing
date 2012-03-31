@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-  describe 'blazing setup' do
+describe '$ blazing setup' do
 
     before :each do
       setup_sandbox
@@ -37,5 +37,5 @@ require 'spec_helper'
         File.exists?("#{@sandbox_directory}/staging/.git/hooks/post-receive").should be true
       end
     end
-
  end
+

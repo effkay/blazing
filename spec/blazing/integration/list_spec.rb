@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'blazing list' do
+describe '$ blazing list' do
 
   before :each do
     setup_sandbox
@@ -15,5 +15,5 @@ describe 'blazing list' do
     end
     capture(:stdout) { Blazing::Runner.list }.should == "dummy\n"
   end
-
 end
+
