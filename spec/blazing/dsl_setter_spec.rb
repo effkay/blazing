@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 module Blazing
+
   describe DSLSetter do
 
     let(:dummy) { class Dummy; extend DSLSetter; end }
