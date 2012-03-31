@@ -15,7 +15,6 @@ require 'spec_helper'
       teardown_sandbox
     end
 
-
    context 'when a target is specified' do
 
      before :each do
@@ -40,6 +39,5 @@ require 'spec_helper'
        File.exists?("#{@sandbox_directory}/staging/.git/hooks/post-receive").should be true
      end
    end
-
  end
 
