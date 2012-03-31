@@ -1,10 +1,14 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
-require "blazing/version"
 
 Gem::Specification.new do |s|
   s.name        = "blazing"
-  s.version     = Blazing::VERSION
+
+  #
+  # TODO: Remove Config.repository in 0.3
+  #
+  s.version     = '0.2.10'
+
   s.authors     = ["Felipe Kaufmann"]
   s.email       = ["felipekaufmann@gmail.com"]
   s.homepage    = "https://github.com/effkay/blazing"
@@ -13,6 +17,7 @@ Gem::Specification.new do |s|
 
   s.rubyforge_project = "blazing"
 
+  # TODO: Don't use git to look up files
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
@@ -25,7 +30,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency('rake','~> 0.9.2')
   s.add_development_dependency('rspec')
   s.add_development_dependency('guard')
-  s.add_development_dependency('guard-rspectacle')
+  s.add_development_dependency('guard-rspec')
   s.add_development_dependency('ruby_gntp')
   s.add_development_dependency('rb-fsevent')
   s.add_development_dependency('pry')

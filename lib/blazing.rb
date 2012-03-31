@@ -4,7 +4,6 @@ module Blazing
 
   autoload :CLI, 'blazing/cli'
   autoload :Config, 'blazing/config'
-  autoload :Version, 'blazing/version'
   autoload :DSLSetter, 'blazing/dsl_setter'
   autoload :Recipe, 'blazing/recipe'
   autoload :Runner, 'blazing/runner'

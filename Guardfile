@@ -1,4 +1,11 @@
-guard :rspectacle, :version => 2, :cli => "--colour --fail-fast --format nested" do
+guard :rspec, :version => 2, :cli => "--colour --fail-fast --format nested" do
+
+  # Generated: by guard-rspec
+  watch(%r{^spec/.+_spec\.rb})
+  watch(%r{^lib/(.+)\.rb})     { |m| "spec/lib/#{m[1]}_spec.rb" }
+  watch('spec/spec_helper.rb') { "spec" }
+
+  # Not Generated
   watch('spec/spec_helper.rb')                        { %w(spec/spec_helper spec) }
   watch(%r{^spec/.+_spec\.rb})
   watch(%r{^lib/(.+)\.rb})     { |m| "spec/#{m[1]}_spec.rb" }
