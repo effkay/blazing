@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 module Blazing
+
   describe CLI do
 
     let(:cli) { CLI.new }
