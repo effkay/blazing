@@ -14,10 +14,7 @@ Gem::Specification.new do |s|
   s.homepage    = "https://github.com/effkay/blazing"
   s.summary     = %q{git push deployment helper}
   s.description = %q{painless git push deployments for everyone}
-
   s.rubyforge_project = "blazing"
-
-  # TODO: Don't use git to look up files
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
