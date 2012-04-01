@@ -10,6 +10,7 @@ module Blazing
   autoload :Shell, 'blazing/shell'
   autoload :Target, 'blazing/target'
   autoload :Hook, 'blazing/hook'
+  autoload :Repository, 'blazing/repository'
 
   TEMPLATE_ROOT = File.expand_path(File.dirname(__FILE__) + File.join('/', 'blazing', 'templates'))
   DEFAULT_CONFIG_LOCATION = 'config/blazing.rb'
