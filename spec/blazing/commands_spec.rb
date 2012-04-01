@@ -66,6 +66,7 @@ module Blazing
       it 'creates a config directory if it does not exist' do
         Dir.should_receive(:mkdir).with('config')
         File.stub(:exists?).and_return(false)
+        File.stub(:open)
         commands.run(:init)
       end
 
