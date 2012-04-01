@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "------"
-echo "------  [blazing] ENTERING POST RECEIVE HOOK FOR: <%= name %>"
+echo "------  [blazing] ENTERING POST RECEIVE HOOK FOR: <%= @target.name %>"
 echo "------"
 
 cd ..
@@ -62,11 +62,11 @@ echo "------> [blazing] Bundling gems"
 bundle --deployment --quiet --without development test
 
 <% unless @config.recipes.empty? %>
-  echo "------> [blazing] Running recipes for <%= name.to_s %>"
-  bundle exec blazing recipes <%= name.to_s %>
+  echo "------> [blazing] Running recipes for <%= @target.name.to_s %>"
+  bundle exec blazing recipes <%= @target.name.to_s %>
 <% end %>
 
-<% if @target.rake_command %>
-  echo "------> [blazing] running <%= @target.rake_command %>"
-  <%= @target.rake_command %>
+<% if rake_command %>
+  echo "------> [blazing] running <%= rake_command %>"
+  <%= rake_command %>
 <% end %>

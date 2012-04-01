@@ -1,132 +1,96 @@
 require 'blazing/shell'
 require 'grit'
 
-class Blazing::Target
+module Blazing
 
-  include Blazing::Logger
+  class Target
 
-  attr_accessor :name, :location, :options
+    include Blazing::Logger
 
-  def initialize(name, location, config, options = {})
-    @name = name
-    @location = location
-    @config = config
-    @options = options
-    @shell = Blazing::Shell.new
-    @target = self
-  end
+    attr_accessor :name, :location, :options, :config
 
-  def setup
-    info "Setting up repository for #{name} in #{location}"
+    def initialize(name, location, config, options = {})
+      @name = name
+      @location = location
+      @config = config
+      @options = options
+      @shell = Blazing::Shell.new
+      @target = self
+    end
 
-    # TODO: Handle case where user is empty
-    if host
-      @shell.run "ssh #{user}@#{host} '#{init_repository} && #{setup_repository}'"
-    else
-      @shell.run "#{init_repository} && #{setup_repository}"
+    #
+    # Set up Repositories and Hook
+    #
+    def setup
+      info "Setting up repository for #{name} in #{location}"
+
+      # TODO: Handle case where user is empty
+      if host
+        @shell.run "ssh #{user}@#{host} '#{init_repository} && #{setup_repository}'"
+      else
+        @shell.run "#{init_repository} && #{setup_repository}"
+      end
+    end
+
+    #
+    # Update git remote and hook
+    #
+    def update
+      setup_git_remote
+      setup_hook
+    end
+
+    def path
+      if host
+        @location.match(/:(.*)$/)[1]
+      else
+        @location
+      end
+    end
+
+    def host
+      host = @location.match(/@(.*):/)
+      host[1] unless host.nil?
+    end
+
+    def user
+      user = @location.match(/(.*)@/)
+      user[1] unless user.nil?
+    end
+
+    private
+
+    #
+    # Set up and deploy Hook
+    #
+    def setup_hook
+      Hook.new(self).setup
+    end
+
+    #
+    # Add git remote for target
+    #
+    def setup_git_remote
+      repository = Grit::Repo.new(Dir.pwd)
+      info "Adding new remote #{name} pointing to #{location}"
+      repository.config["remote.#{name}.url"] = location
+    end
+
+    #
+    # Initialize an empty repository, so we can push to it
+    #
+    def init_repository
+      # Instead of git init with a path, so it does not fail on older
+      # git versions (https://github.com/effkay/blazing/issues/53)
+      "mkdir #{path}; cd #{path} && git init"
+    end
+
+    #
+    # Allow pushing to currently checked out branch
+    #
+    def setup_repository
+      "cd #{path} && git config receive.denyCurrentBranch ignore"
     end
   end
-
-  # TODO: Spec it
-  def update
-    setup_git_remote
-    setup_hook
-  end
-
-  def setup_hook
-    prepare_hook
-    deploy_hook
-  end
-
-  def prepare_hook
-    info "Generating and uploading post-receive hook for #{name}"
-    hook = generate_hook
-    write hook
-  end
-
-  def deploy_hook
-    debug "Copying hook for #{name} to #{location}"
-    copy_hook
-    set_hook_permissions
-  end
-
-   def generate_hook
-    ERB.new(File.read("#{Blazing::TEMPLATE_ROOT}/hook.erb")).result(binding)
-   end
-
-   def write(hook)
-    File.open(Blazing::TMP_HOOK, "wb") do |f|
-      f.puts hook
-    end
-   end
-
-   def set_hook_permissions
-    if host
-      @shell.run "ssh #{user}@#{host} #{make_hook_executable}"
-    else
-      @shell.run "#{make_hook_executable}"
-    end
-   end
-
-  def setup_git_remote
-    repository = Grit::Repo.new(Dir.pwd)
-    info "Adding new remote #{name} pointing to #{location}"
-    repository.config["remote.#{name}.url"] = location
-  end
-
-  def path
-    if host
-      @location.match(/:(.*)$/)[1]
-    else
-      @location
-    end
-  end
-
-  def host
-    host = @location.match(/@(.*):/)
-    host[1] unless host.nil?
-  end
-
-  def user
-    user = @location.match(/(.*)@/)
-    user[1] unless user.nil?
-  end
-
-  #
-  # Initialize an empty repository, so we can push to it
-  #
-  def init_repository
-    # Instead of git init with a path, so it does not fail on older
-    # git versions (https://github.com/effkay/blazing/issues/53)
-    "mkdir #{path}; cd #{path} && git init"
-  end
-
-  def copy_hook
-    debug "Making hook executable"
-    # TODO: handle missing user?
-    if host
-      @shell.run "scp #{Blazing::TMP_HOOK} #{user}@#{host}:#{path}/.git/hooks/post-receive"
-    else
-      @shell.run "cp #{Blazing::TMP_HOOK} #{path}/.git/hooks/post-receive"
-    end
-  end
-
-  def make_hook_executable
-    debug "Making hook executable"
-    "chmod +x #{path}/.git/hooks/post-receive"
-  end
-
-  def setup_repository
-    "cd #{path} && git config receive.denyCurrentBranch ignore"
-  end
-
-  def rake_command
-    rake_config = @config.instance_variable_get("@rake") || {}
-    rails_env = "RAILS_ENV=#{@options[:rails_env]}" if @options[:rails_env]
-
-    if rake_config[:task]
-      "#{rake_config[:env]} #{rails_env} bundle exec rake #{rake_config[:task]}"
-    end
-  end
-
 end
+
