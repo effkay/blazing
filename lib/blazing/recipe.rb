@@ -35,5 +35,9 @@ class Blazing::Recipe
       gems.each { |gem| require gem }
     end
 
+    def pretty_list
+      list.each { |r| puts r.to_s.demodulize.underscore }
+    end
+
   end
 end

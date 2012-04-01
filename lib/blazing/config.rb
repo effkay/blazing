@@ -51,4 +51,9 @@ class Blazing::Config
     end
   end
 
+  # TODO: Spec it!
+  def find_target(target_name)
+    targets.find { |t| t.name.to_s == target_name.to_s }
+  end
+
 end

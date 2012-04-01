@@ -19,7 +19,7 @@ describe Blazing::Recipe do
 
   describe '.list' do
     it 'retunrs an array of the available recipe classes' do
-      Blazing::Recipe.list.first.should == Blazing::Recipe::Dummy
+      Blazing::Recipe.list.should include Blazing::Recipe::Dummy
     end
   end
 

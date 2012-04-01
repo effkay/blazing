@@ -27,6 +27,12 @@ class Blazing::Target
     end
   end
 
+  # TODO: Spec it
+  def update
+    setup_git_remote
+    apply_hook
+  end
+
   def apply_hook
     info "Generating and uploading post-receive hook for #{name}"
     hook = ERB.new(File.read("#{Blazing::TEMPLATE_ROOT}/hook.erb")).result(binding)

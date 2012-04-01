@@ -12,7 +12,7 @@ module Blazing
     # Bootstrap blazing by creating a sample config file
     #
     def init
-      Blazing::Runner.init
+      Blazing::Commands.run(:init)
     end
 
     desc 'setup [TARGET]', 'Setup local and remote repository/repositories for deployment'
@@ -26,7 +26,7 @@ module Blazing
     # Setup a target to be deployed with blazing
     #
     def setup(target_name = nil)
-      Blazing::Runner.new(target_name, options).setup
+      Blazing::Commands.run(:setup, :target_name => target_name, :options => options)
     end
 
     desc 'update [TARGET]', 'Re-Generate and uplaod hook based on current configuration'
@@ -40,7 +40,7 @@ module Blazing
     # Update the target hook so it matches the settings in the config
     #
     def update(target_name = nil)
-      Blazing::Runner.new(target_name, options).update
+      Blazing::Commands.run(:update, :target_name => target_name, :options => options)
     end
 
     desc 'recipes [TARGET]', 'Run the recipes for the given target'
@@ -49,7 +49,7 @@ module Blazing
     # Run the configured blazing recipes (used on remote machien)
     #
     def recipes(target_name)
-      Blazing::Runner.new(target_name, options).recipes
+      Blazing::Commands.run(:recipes, :target_name => target_name, :options => options)
     end
 
     desc 'list', 'List available recipes'
@@ -58,8 +58,7 @@ module Blazing
     # List the available blazing recipes
     #
     def list
-      Blazing::Runner.list
+      Blazing::Commands.run(:list)
     end
-
   end
 end
