@@ -8,7 +8,6 @@ module Blazing
     let(:config_instance) { Blazing::Config.new }
 
     let(:config) do
-
       config = config_instance
 
       # TODO: Split dsl and config object so i can access stuff directly and mock better
@@ -24,17 +23,10 @@ module Blazing
     let(:commands_instance) { commands.new }
 
     before :each do
-      # TODO: Big Codesmell that I have to define those here!
+      # TODO: Big Codesmell that I have to define those here!?
       class Recipe::RecipeA < Blazing::Recipe; end
       class Recipe::RecipeB < Blazing::Recipe; end
       Config.stub(:parse).and_return(config)
-      #config.instance.stub(:recipe).and_return()
-    end
-
-    after :each do
-      #Recipe
-      #Recipe.send(:class)
-      #Recipe.send(:remove_const, :RecipeB)
     end
 
     describe '.new' do
@@ -81,6 +73,11 @@ module Blazing
       let(:targets) { config.instance_variable_get('@targets') }
       let(:specified_target) { targets.find { |t| t.name == :target_a } }
       let(:other_target) { targets.find { |t| t.name == :target_b } }
+
+      before :each do
+        specified_target.stub(:update)
+        other_target.stub(:update)
+      end
 
       it 'runs the setup method on the specified target' do
         specified_target.should_receive(:setup)
