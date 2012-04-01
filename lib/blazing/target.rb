@@ -30,25 +30,43 @@ class Blazing::Target
   # TODO: Spec it
   def update
     setup_git_remote
-    apply_hook
+    setup_hook
   end
 
-  def apply_hook
-    info "Generating and uploading post-receive hook for #{name}"
-    hook = ERB.new(File.read("#{Blazing::TEMPLATE_ROOT}/hook.erb")).result(binding)
+  def setup_hook
+    prepare_hook
+    deploy_hook
+  end
 
+  def prepare_hook
+    info "Generating and uploading post-receive hook for #{name}"
+    hook = generate_hook
+    write hook
+  end
+
+  def deploy_hook
+    debug "Copying hook for #{name} to #{location}"
+    copy_hook
+    set_hook_permissions
+  end
+
+   def generate_hook
+    ERB.new(File.read("#{Blazing::TEMPLATE_ROOT}/hook.erb")).result(binding)
+   end
+
+   def write(hook)
     File.open(Blazing::TMP_HOOK, "wb") do |f|
       f.puts hook
     end
+   end
 
-    debug "Copying hook for #{name} to #{location}"
-    copy_hook
+   def set_hook_permissions
     if host
       @shell.run "ssh #{user}@#{host} #{make_hook_executable}"
     else
       @shell.run "#{make_hook_executable}"
     end
-  end
+   end
 
   def setup_git_remote
     repository = Grit::Repo.new(Dir.pwd)
