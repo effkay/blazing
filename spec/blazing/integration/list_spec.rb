@@ -15,7 +15,6 @@ describe '$ blazing list' do
     class Blazing::Recipe::Dummy < Blazing::Recipe
     end
     capture(:stdout) { Blazing::Runner.list }.should == "dummy\n"
-    #capture(:stdout) { Blazing::Runner.list }.should == "recipe_a\nrecipe_b\ndummy\n"
   end
 end
 
