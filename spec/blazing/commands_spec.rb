@@ -7,14 +7,18 @@ module Blazing
 
     let(:config_instance) { Blazing::Config.new }
 
+    let(:target_a) { double('target_a', :name => 'target_a', :update => nil, :setup => nil) }
+    let(:target_b) { double('target_b', :name => 'target_b', :update => nil, :setup => nil) }
+    let(:targets)  { [target_a, target_b] }
+
+    let(:recipe_a) { double('recipe_a', :name => 'recipe_a', :run => nil) }
+    let(:recipe_b) { double('recipe_b', :name => 'recipe_b', :run => nil) }
+    let(:recipes)  { [recipe_a, recipe_b] }
+
     let(:config) do
       config = config_instance
-
-      # TODO: Split dsl and config object so i can access stuff directly and mock better
-      config.target :target_a, 'somewhere'
-      config.target :target_b, 'somewhere'
-      config.recipe :recipe_a
-      config.recipe :recipe_b
+      config.targets = targets
+      config.recipes = recipes
 
       config
     end
@@ -23,9 +27,6 @@ module Blazing
     let(:commands_instance) { commands.new }
 
     before :each do
-      # TODO: Big Codesmell that I have to define those here!?
-      class Recipe::RecipeA < Blazing::Recipe; end
-      class Recipe::RecipeB < Blazing::Recipe; end
       Config.stub(:parse).and_return(config)
     end
 
@@ -70,30 +71,21 @@ module Blazing
     end
 
     describe '#setup' do
-      let(:targets) { config.instance_variable_get('@targets') }
-      let(:specified_target) { targets.find { |t| t.name == :target_a } }
-      let(:other_target) { targets.find { |t| t.name == :target_b } }
-
-      before :each do
-        specified_target.stub(:update)
-        other_target.stub(:update)
-      end
-
       it 'runs the setup method on the specified target' do
-        specified_target.should_receive(:setup)
-        other_target.should_not_receive(:setup)
-        commands.run(:setup, :target_name => specified_target.name)
+        target_a.should_receive(:setup)
+        target_b.should_not_receive(:setup)
+        commands.run(:setup, :target_name => target_a.name)
       end
 
       it 'does nothing when no target is specified' do
-        specified_target.should_not_receive(:setup)
-        other_target.should_not_receive(:setup)
+        target_a.should_not_receive(:setup)
+        target_b.should_not_receive(:setup)
         commands.run(:setup)
       end
 
       it 'runs setup on all targets if "all" is specified' do
-        specified_target.should_receive(:setup)
-        other_target.should_receive(:setup)
+        target_a.should_receive(:setup)
+        target_b.should_receive(:setup)
         commands.run(:setup, :target_name => 'all')
       end
 
@@ -105,32 +97,26 @@ module Blazing
     end
 
     describe '#update' do
-      let(:targets) { config.instance_variable_get('@targets') }
-      let(:specified_target) { targets.find { |t| t.name == :target_a } }
-      let(:other_target) { targets.find { |t| t.name == :target_b } }
-
       it 'runs the update method on the specified target' do
-        specified_target.should_receive(:update)
-        other_target.should_not_receive(:update)
-        commands.run(:update, :target_name => specified_target.name)
+        target_a.should_receive(:update)
+        target_b.should_not_receive(:update)
+        commands.run(:update, :target_name => target_a.name)
       end
 
       it 'does nothing when no target is specified' do
-        specified_target.should_not_receive(:update)
-        other_target.should_not_receive(:update)
+        target_a.should_not_receive(:update)
+        target_b.should_not_receive(:update)
         commands.run(:update)
       end
 
       it 'runs update on all targets if "all" is specified' do
-        specified_target.should_receive(:update)
-        other_target.should_receive(:update)
+        target_a.should_receive(:update)
+        target_b.should_receive(:update)
         commands.run(:update, :target_name => 'all')
       end
     end
 
     describe '#recipes' do
-      let(:recipes) { config.instance_variable_get('@recipes') }
-
       it 'runs each recipe' do
         recipes.each { |r| r.should_receive(:run) }
         commands.run(:recipes)
@@ -138,8 +124,6 @@ module Blazing
     end
 
     describe '#list' do
-      let(:recipes) { config.instance_variable_get('@recipes') }
-
       it 'lists each recipe' do
         Blazing::Recipe.should_receive(:pretty_list)
         commands.run(:list)
