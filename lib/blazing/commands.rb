@@ -13,7 +13,7 @@ module Blazing
       warn 'The :default Target option has been deprecated and will be ignored' if options.has_key?(:default)
 
       @target_name = options[:target_name]
-      @config_file = options[:file] # TODO: Does this not have to be mandatory? where is this set?
+      @config_file = options[:file]
 
       @config ||= Config.parse(@config_file)
       @targets = determine_targets
