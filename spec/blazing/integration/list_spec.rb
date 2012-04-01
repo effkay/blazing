@@ -14,7 +14,7 @@ describe '$ blazing list' do
   it 'prints a list of the available recipes' do
     class Blazing::Recipe::Dummy < Blazing::Recipe
     end
-    capture(:stdout) { Blazing::Runner.list }.should == "dummy\n"
+    capture(:stdout) { Blazing::Commands.new(:file => File.join(File.dirname(__FILE__), '../../support/empty_config.rb')).list }.should == "dummy\n"
   end
 end
 

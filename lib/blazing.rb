@@ -6,7 +6,7 @@ module Blazing
   autoload :Config, 'blazing/config'
   autoload :DSLSetter, 'blazing/dsl_setter'
   autoload :Recipe, 'blazing/recipe'
-  autoload :Runner, 'blazing/runner'
+  autoload :COmmands, 'blazing/commands'
   autoload :Shell, 'blazing/shell'
   autoload :Target, 'blazing/target'
 

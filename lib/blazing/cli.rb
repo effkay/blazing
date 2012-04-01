@@ -1,5 +1,5 @@
 require 'thor'
-require 'blazing/runner'
+require 'blazing/commands'
 
 module Blazing
   class CLI < Thor
