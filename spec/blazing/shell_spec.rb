@@ -8,6 +8,7 @@ module Blazing
 
     describe '#run' do
       it 'runs the provided command' do
+        shell.should_receive(:`)
         shell.run('command')
       end
 
