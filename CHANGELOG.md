@@ -1,5 +1,13 @@
 ## master
 
+## 0.2.11 - ???
+
+* deprecate `:default` option for target
+* pull hook out of target
+* refactor and improve specs
+* use `Blazing::Commands` in favor of `Blazing::Runner`
+* other misc refactorings
+
 ## 0.2.10 - February 7, 2012
 
 * Fix post-receive hook (use new syntax)
