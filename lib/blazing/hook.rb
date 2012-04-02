@@ -28,8 +28,12 @@ module Blazing
 
     private
 
-    def load_template(file)
-      ERB.new(File.read(file)).result(binding)
+    def load_template(template_name)
+      ERB.new(File.read(find_template(template_name))).result(binding)
+    end
+
+    def find_template(template_name)
+      "#{Blazing::TEMPLATE_ROOT}/#{template_name}.erb"
     end
 
     def prepare_hook
@@ -44,23 +48,23 @@ module Blazing
       set_hook_permissions
     end
 
-     def generate_hook
-      load_template "#{Blazing::TEMPLATE_ROOT}/hook.erb"
-     end
+    def generate_hook
+      load_template 'hook'
+    end
 
-     def write(hook)
+    def write(hook)
       File.open(Blazing::TMP_HOOK, "wb") do |f|
         f.puts hook
       end
-     end
+    end
 
-     def set_hook_permissions
+    def set_hook_permissions
       if @target.host
         @shell.run "ssh #{@target.user}@#{@target.host} #{make_hook_executable}"
       else
         @shell.run "#{make_hook_executable}"
       end
-     end
+    end
 
     def copy_hook
       debug "Making hook executable"
