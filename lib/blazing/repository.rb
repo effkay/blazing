@@ -20,15 +20,14 @@ module Blazing
     end
 
     def add_git_remote
-      repository = Grit::Repo.new(Dir.pwd)
       info "Adding new remote #{@target.name} pointing to #{@target.location}"
-      repository.config["remote.#{@target.name}.url"] = @target.location
+      set_git_remote!
     end
 
     private
 
     #
-    # Initialize an empty repository, so we can push to it
+    # Initialize an empty repository
     #
     def init_repository
       # Instead of git init with a path, so it does not fail on older
@@ -41,6 +40,14 @@ module Blazing
     #
     def setup_repository
       "cd #{@target.path} && git config receive.denyCurrentBranch ignore"
+    end
+
+    def grit_repository_object
+      @grit_object ||= Grit::Repo.new(Dir.pwd)
+    end
+
+    def set_git_remote!
+      grit_repository_object.config["remote.#{@target.name}.url"] = @target.location
     end
   end
 end
