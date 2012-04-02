@@ -2,6 +2,9 @@ require 'spec_helper'
 
 module Blazing
 
+  class Recipe::Dummy < Blazing::Recipe
+  end
+
   describe Hook do
 
     let(:config) { Config.new }
@@ -29,10 +32,11 @@ module Blazing
     end
 
     describe 'Generated Hook' do
-      context 'Always' do
-        let(:target) { Blazing::Target.new(:sometarget, '/path', config, :rails_env => 'production') }
-        let(:hook_file) { Hook.new(target).send(:generate_hook) }
 
+      let(:target) { Blazing::Target.new(:sometarget, '/path', config, :rails_env => 'production') }
+      let(:hook_file) { Hook.new(target).send(:generate_hook) }
+
+      context 'Always' do
         it 'logs the header with the target name' do
           hook_file.should  include("ENTERING POST RECEIVE HOOK FOR: sometarget")
         end
@@ -60,46 +64,77 @@ module Blazing
 
       context 'RVM Setup' do
         context 'when rvm is enabled' do
-          context 'when the rvm scripts are in the default locations' do
-            it 'uses the load mechanism suggested by rvm'
+          context 'loading rvm' do
+            it 'uses the load mechanism suggested by rvm' do
+              config.rvm 'someruby@somegemset'
+              hook_file.should include("source \"$HOME/.rvm/scripts/rvm\"")
+              hook_file.should include("source \"/usr/local/rvm/scripts/rvm\"")
+            end
+
+            it 'sources the rvm_scripts directory when rvm_scripts is specified' do
+              config.rvm 'someruby@somegemset'
+              config.rvm_scripts '/location/of/rvm/scripts'
+              hook_file.should include("source /location/of/rvm/scripts")
+            end
           end
 
-          context 'when rvm_scripts is set' do
-            it 'sources the rvm_scripts directory'
-          end
+          context 'loading the rvm ruby and gemset' do
+            it 'sources the rvmrc to load the env' do
+              config.rvm 'someruby@somegemset'
+              hook_file.should include("rvm use someruby@somegemset")
+            end
 
-          context 'when rvm is set to load from rvmrc' do
-            'it sources the rvmrc to load the env'
-          end
-
-          context 'when an rvm string was specified' do
-            it 'uses rvm use to load the env'
+            it 'uses rvm use to load the env when an rvm string was specified' do
+              config.rvm :rvmrc
+              hook_file.should include("source .rvmrc")
+            end
           end
         end
 
         context 'when rvm is disabled' do
-          it 'does not include any rvm handling'
+          it 'does not include any rvm handling' do
+            hook_file.should_not include("Loading rvm")
+          end
         end
       end
 
       context 'Recipes Handling' do
+
         context 'when there are no recipes configured' do
-          it 'does not run blazing recipes'
+          it 'does not run blazing recipes' do
+            hook_file.should_not include("bundle exec blazing recipes")
+          end
         end
 
         context 'when there are recipes configured' do
-          it 'runs the blazing recipes command with the correct target name'
+          before :each do
+            config.recipe :dummy
+          end
+
+          it 'runs the blazing recipes command with the correct target name' do
+            hook_file.should include("bundle exec blazing recipes sometarget")
+          end
         end
       end
 
       context 'Rake Command Handling' do
         context 'when the rake_command is specified' do
-          it 'runs the rake command'
+          before :each do
+            config.rake :deploy
+          end
+
+          it 'runs the rake command' do
+            hook_file.should include(' RAILS_ENV=production bundle exec rake deploy')
+          end
         end
+
         context 'when no rake_command is specified' do
-          it 'does not run the rake_command'
+          it 'does not run the rake_command' do
+            hook_file.should_not include(" RAILS_ENV=production bundle exec rake")
+          end
         end
       end
     end
   end
 end
+
