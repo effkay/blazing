@@ -76,3 +76,4 @@ module Blazing
     end
   end
 end
+
