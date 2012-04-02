@@ -7,8 +7,6 @@ module Blazing
 
     def initialize(target)
       @target = target
-
-      # TODO: Wrap these into target?
       @config = target.config
       @options = target.options
       @shell = Blazing::Shell.new
@@ -30,6 +28,10 @@ module Blazing
 
     private
 
+    def load_template(file)
+      ERB.new(File.read(file)).result(binding)
+    end
+
     def prepare_hook
       info "Generating and uploading post-receive hook for #{@target.name}"
       hook = generate_hook
@@ -43,7 +45,7 @@ module Blazing
     end
 
      def generate_hook
-      ERB.new(File.read("#{Blazing::TEMPLATE_ROOT}/hook.erb")).result(binding)
+      load_template "#{Blazing::TEMPLATE_ROOT}/hook.erb"
      end
 
      def write(hook)
