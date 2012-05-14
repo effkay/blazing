@@ -57,6 +57,14 @@ module Blazing
           hook_file.should include("git checkout $refname")
         end
 
+        it 'resets the GIT_DIR variable' do
+          hook_file.should include("unset GIT_DIR")
+        end
+
+        it 'resets the GIT_WORK_TREE variable' do
+          hook_file.should include("unset GIT_WORK_TREE")
+        end
+
         it 'runs bundler with the correct options' do
           hook_file.should include("bundle --deployment --quiet --without development test")
         end
