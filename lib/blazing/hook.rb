@@ -49,7 +49,7 @@ module Blazing
     end
 
     def generate_hook
-      load_template 'hook'
+      load_template 'hook/base'
     end
 
     def write(hook)
