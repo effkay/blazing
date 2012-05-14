@@ -2,6 +2,7 @@
 
 ## 0.2.11 - ???
 
+* fix git/bundler related issue (#60)
 * deprecate `:default` option for target
 * pull hook out of target
 * refactor and improve specs
