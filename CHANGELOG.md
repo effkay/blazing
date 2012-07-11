@@ -1,5 +1,11 @@
 ## master
 
+## 0.2.12 - July 11, 2012
+
+* fix [#68][] (Error in Hook generation)
+* add quick and dirty fix for [#69][] (blazing requiring itself when using
+  git as source in Gemfile)
+
 ## 0.2.11 - July 11, 2012 
 
 * add pimpmychangelog and pimp changelog
@@ -101,4 +107,6 @@
 [#55]: https://github.com/effkay/blazing/issues/55
 [#58]: https://github.com/effkay/blazing/issues/58
 [#60]: https://github.com/effkay/blazing/issues/60
+[#68]: https://github.com/effkay/blazing/issues/68
+[#69]: https://github.com/effkay/blazing/issues/69
 [@effkay]: https://github.com/effkay
