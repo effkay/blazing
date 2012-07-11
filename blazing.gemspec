@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   #
   # TODO: Remove Config.repository in 0.3
   #
-  s.version     = '0.2.10'
+  s.version     = '0.2.11'
 
   s.authors     = ["Felipe Kaufmann"]
   s.email       = ["felipekaufmann@gmail.com"]
@@ -31,6 +31,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency('ruby_gntp')
   s.add_development_dependency('rb-fsevent')
   s.add_development_dependency('pry')
+  s.add_development_dependency('pimpmychangelog')
 
   s.add_dependency('grit')
   s.add_dependency('logging')
