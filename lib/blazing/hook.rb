@@ -29,7 +29,7 @@ module Blazing
     private
 
     def load_template(template_name)
-      ERB.new(File.read(find_template(template_name))).result(binding)
+      ::ERB.new(File.read(find_template(template_name))).result(binding)
     end
 
     def find_template(template_name)
