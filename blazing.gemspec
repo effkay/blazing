@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   #
   # TODO: Remove Config.repository in 0.3
   #
-  s.version     = '0.2.11'
+  s.version     = '0.2.12'
 
   s.authors     = ["Felipe Kaufmann"]
   s.email       = ["felipekaufmann@gmail.com"]
