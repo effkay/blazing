@@ -33,6 +33,8 @@ class Blazing::Recipe
     def load_recipes!
       gems = $:.select{|p| p.match /blazing-\w+(|-\d\.\d\.\d)\/lib/}.map { |r| r.scan(/blazing-\w+/)[0] }
       gems.each { |gem| require gem }
+    rescue LoadError
+      # Here because using blazing from git now produces a match like 'blazing-269ee17d65d1'
     end
 
     def pretty_list
