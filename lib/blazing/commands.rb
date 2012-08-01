@@ -1,3 +1,5 @@
+require 'erb'
+
 module Blazing
   class Commands
 
@@ -5,7 +7,7 @@ module Blazing
 
     class << self
       def run(command, options = {})
-        self.new(options).send(command)
+        self.new(options.merge({ :command => command })).send(command)
       end
     end
 
@@ -14,14 +16,14 @@ module Blazing
 
       @target_name = options[:target_name]
       @config_file = options[:file]
+      @command = options[:command]
+      @targets = []
 
-      @config ||= Config.parse(@config_file)
-      @targets = determine_targets
-
-      error 'no target given or found' if @targets.empty?
-
-      # TODO: better exception handling, like this?
-      #raise RuntimeError if @targets.empty?
+      if command_requires_config?
+        @config ||= Config.parse(@config_file)
+        @targets = determine_targets
+        error 'no target given or found' if @targets.empty?
+      end
     end
 
     def init
@@ -68,5 +70,10 @@ module Blazing
         targets.compact
       end
     end
+
+    def command_requires_config?
+      [:setup, :update, :recipes].include? @command
+    end
   end
 end
+

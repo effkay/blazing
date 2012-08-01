@@ -1,11 +1,12 @@
 require 'spec_helper'
 require 'blazing/config'
+require 'blazing/commands'
 
 describe '$ blazing init' do
 
   before :each do
     setup_sandbox
-    Blazing::Commands.new(:file => File.join(File.dirname(__FILE__), '../../support/empty_config.rb')).init
+    Blazing::Commands.new.init
   end
 
   after :each do

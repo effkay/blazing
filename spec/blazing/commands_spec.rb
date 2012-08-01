@@ -31,22 +31,27 @@ module Blazing
     end
 
     describe '.new' do
-      it 'reads to config file' do
+      it 'reads the config file when the command requires it' do
         Config.should_receive(:parse).and_return(config)
-        commands.new
+        commands.new(:command => :setup)
+      end
+
+      it 'does not read the config file when the command does not need it' do
+        Config.should_not_receive(:parse)
+        commands.new(:command => :init)
       end
     end
 
     describe '#run' do
       it 'creates an instance of itself' do
         commands_instance.stub!(:dummy_command)
-        commands.should_receive(:new).with({}).and_return(commands_instance)
+        commands.should_receive(:new).with({ :command => :dummy_command }).and_return(commands_instance)
         commands.run(:dummy_command)
       end
 
       it 'runs the specified command' do
         commands_instance.should_receive(:dummy_command)
-        commands.stub(:new).with({}).and_return(commands_instance)
+        commands.stub(:new).with({ :command => :dummy_command }).and_return(commands_instance)
         commands.run(:dummy_command)
       end
 
@@ -91,7 +96,7 @@ module Blazing
 
       it 'runs the update command' do
         commands_instance.should_receive(:update)
-        commands.stub(:new).with({}).and_return(commands_instance)
+        commands.stub(:new).and_return(commands_instance)
         commands.run(:setup)
       end
     end
