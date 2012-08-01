@@ -5,7 +5,7 @@ Blazing fast and painless git push deploys
 
 *Oh no, yet another deployer!*
 
-Not everyone can or wants to deploy on heroku. But now you can have the same (well, almost the same, since we're not gonna patch SSH) awesomely smooth git push deploys on whatever server you have SSH access to. In short, blazing helps you create nice git post-receive hooks and is extendable by plugins.
+Not everyone can or wants to deploy on heroku. But now you can have the same (well, almost the same, since we're not gonna patch SSH) awesomely smooth git push deploys on whatever server you have SSH access to. Blazing helps you to create and distribute your post-receive hooks, which are executed on the remote server after you successfully pushed to it. It also helps you to easily set up remote repositories for deploying to, is extendable by recipes and is configured by a nice DSL.
 
 Quickstart
 ----------
