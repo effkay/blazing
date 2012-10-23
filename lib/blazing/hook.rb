@@ -62,7 +62,7 @@ module Blazing
 
     def set_hook_permissions
       if @target.host
-        @shell.run "ssh #{@target.user}@#{@target.host} #{make_hook_executable}"
+        @shell.run "ssh #{@target.user}@#{@target.host} '#{make_hook_executable}'"
       else
         @shell.run "#{make_hook_executable}"
       end
