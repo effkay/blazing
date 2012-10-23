@@ -1,5 +1,15 @@
 ## master
 
+## 0.2.14 - October 23, 2012
+
+* readme tweaks
+* add contributing guidelines
+* fix issue #72
+
+## 0.2.13 - August 1, 2012
+
+* refactor some CLI handling and fix issue #71
+
 ## 0.2.12 - July 11, 2012
 
 * fix [#68][] (Error in Hook generation)
