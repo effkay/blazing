@@ -178,17 +178,6 @@ end
 ```
 Please have a look at [blazing-passenger](https://github.com/effkay/blazing-passenger) to get an idea of how to implement your recipe.
 
-Development
------------
-
-Pull requests are very welcome! Please try to follow these simple rules if applicable:
-
-* Please create a topic branch for every separate change you make.
-* Make sure your patches are well tested.
-* Update the README.
-* Update the CHANGELOG for noteworthy changes.
-* Please **do not change** the version number.
-
 Authors
 -------
 
