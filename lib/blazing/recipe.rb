@@ -15,6 +15,12 @@ class Blazing::Recipe
     @options.merge! target_options
   end
 
+  private
+
+  def sudo
+    options[:sudo] || 'sudo'
+  end
+
   class << self
 
     def init_by_name(name, options = {})
