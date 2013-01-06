@@ -39,4 +39,16 @@ describe Blazing::Recipe do
     end
   end
 
+  describe '#sudo' do
+    it 'returns value passed as :sudo' do
+      @dummy_recipe = Blazing::Recipe::Dummy.new(:sudo => 'rvmsudo')
+      @dummy_recipe.send(:sudo).should == 'rvmsudo'
+    end
+
+    it 'returns sudo if no value passed' do
+      @dummy_recipe = Blazing::Recipe::Dummy.new
+      @dummy_recipe.send(:sudo).should == 'sudo'
+    end
+  end
+
 end
