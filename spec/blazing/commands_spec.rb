@@ -126,6 +126,11 @@ module Blazing
         recipes.each { |r| r.should_receive(:run) }
         commands.run(:recipes)
       end
+
+      it 'passes in target_name' do
+        recipes.each { |r| r.should_receive(:run).with({:target_name => :testing}) }
+        commands.run(:recipes, :target_name => :testing)
+      end
     end
 
     describe '#list' do

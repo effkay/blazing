@@ -43,7 +43,7 @@ module Blazing
     end
 
     def recipes
-      @config.recipes.each { |recipe| recipe.run }
+      @config.recipes.each { |recipe| recipe.run({:target_name => @target_name}) }
     end
 
     def list
