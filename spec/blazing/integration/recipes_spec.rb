@@ -5,7 +5,7 @@ describe '$ blazing recipes' do
   before :each do
     setup_sandbox
     class Blazing::Recipe::Dummy < Blazing::Recipe
-      def run
+      def run(target_options={})
         puts 'dummy recipe was run'
       end
     end
