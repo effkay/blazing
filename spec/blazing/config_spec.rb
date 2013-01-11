@@ -116,7 +116,7 @@ describe Blazing::Config do
 
       it 'takes an string as argument' do
         @config.rvm_scripts '/opt/rvm/scripts'
-        @config.instance_variable_get('@rvm_scripts').should == '/opt/rvm/scripts'
+        @config.instance_variable_get('@env_scripts').should == '/opt/rvm/scripts'
       end
 
       it 'returns the string if no argument given' do

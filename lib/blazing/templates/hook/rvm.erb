@@ -1,17 +1,9 @@
 <% if @config.rvm %>
 
   #
-  # Custom RVM script location?
-  #
-  <% if @config.rvm_scripts %>
-
-    source <%= @config.rvm_scripts %>
-    echo "------> [blazing] Loading rvmscripts from custom location"
-
-  #
   # Normal RVM installation
   #
-  <% else %>
+  <% unless @config.rvm_scripts %>
     # Load RVM into a shell session *as a function*
     if [[ -s "$HOME/.rvm/scripts/rvm" ]] ; then
 
