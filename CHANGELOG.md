@@ -1,5 +1,7 @@
 ## master
 
+* target name is passed to recipe at runtime
+
 ## 0.2.14 - October 23, 2012
 
 * readme tweaks
