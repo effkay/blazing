@@ -19,7 +19,7 @@ Out of the box, blazing can do the following:
 
 * set up a repository you can push to for deployment
 * set up a git post-receive hook, configurable by a simple DSL
-* works with rvm
+* works with rvm/rbenv/chruby(and probably others)
 * uses bundler for dependency management
 * allows you to run custom rake tasks after deployment
 * is extendable by blazing recipes
@@ -116,6 +116,15 @@ rvm 'ruby-1.9.3@some-gemset'
 # specify where the rvm scripts are located.
 
 rvm_scripts '/opt/rvm/scripts/rvm'
+
+
+# Sample rbenv/chruby/other setup:
+#
+#    env_scripts <path_to_version_manager_script>
+#
+# If you need to source a file for your non-rvm version manager to
+# work(which you probably do), you can do that with env_scripts. You
+# should also remove the rvm/rvm_scripts options above.
 
 
 # Sample recipe setup:
