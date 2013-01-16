@@ -9,7 +9,8 @@ class Blazing::Config
 
   attr_reader :file
   attr_accessor :targets, :recipes
-  dsl_setter :rvm, :rvm_scripts
+  dsl_setter :rvm, :env_scripts
+  alias :rvm_scripts :env_scripts
 
   class << self
     def parse(configuration_file = nil)
