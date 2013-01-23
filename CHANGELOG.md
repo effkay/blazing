@@ -1,5 +1,7 @@
 ## master
 
+## 0.3.0 - January 23, 2013
+
 * target name is passed to recipe at runtime
 * Add alias for rvm_scripts (env_scripts) which enables the use of rbenv et al. 
 
