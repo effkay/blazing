@@ -123,9 +123,10 @@ rvm_scripts '/opt/rvm/scripts/rvm'
 #    env_scripts <path_to_version_manager_script>
 #
 # If you need to source a file for your non-rvm version manager to
-# work(which you probably do), you can do that with env_scripts. You
-# should also remove the rvm/rvm_scripts options above.
+# you can do that with env_scripts. You should also remove the
+# rvm/rvm_scripts options above.
 
+env_scripts '/etc/profile.d/rbenv.sh'
 
 # Sample recipe setup:
 #
