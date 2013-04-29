@@ -46,6 +46,13 @@ module Blazing
       @config.recipes.each { |recipe| recipe.run({:target_name => @target_name}) }
     end
 
+    def goto
+      # TODO: Would be nice to detect zsh and use it instead of bash?
+      @targets.each do |target|
+        system "ssh -t #{target.user}@#{target.host} 'cd #{target.path} && RAILS_ENV=#{target.options[:rails_env]} bash --login'"
+      end
+    end
+
     def list
       Blazing::Recipe.pretty_list
     end
@@ -72,7 +79,7 @@ module Blazing
     end
 
     def command_requires_config?
-      [:setup, :update, :recipes].include? @command
+      [:setup, :update, :recipes, :goto].include? @command
     end
   end
 end
