@@ -1,5 +1,9 @@
 ## master
 
+## 0.4.0.beta1 - April 29, 2013 (features/goto_server)
+
+* add goto command. `blazing goto production` gives you a shell on the server, with the app root as current directory and RAILS_ENV set.
+
 ## 0.3.0 - January 23, 2013
 
 * target name is passed to recipe at runtime
