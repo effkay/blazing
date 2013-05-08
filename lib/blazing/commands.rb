@@ -50,7 +50,7 @@ module Blazing
       # TODO: Would be nice to detect zsh and use it instead of bash?
       @targets.each do |target|
         if @cli_options[:run]
-          system "ssh -t #{target.user}@#{target.host} 'cd #{target.path} && RAILS_ENV=#{target.options[:rails_env]} #{@cli_options[:run]}'"
+          system "ssh -t #{target.user}@#{target.host} 'cd #{target.path} && RAILS_ENV=#{target.options[:rails_env]} bash --login -c \"#{@cli_options[:run]}\"'"
         else
           system "ssh -t #{target.user}@#{target.host} 'cd #{target.path} && RAILS_ENV=#{target.options[:rails_env]} bash --login'"
         end
