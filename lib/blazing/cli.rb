@@ -52,6 +52,20 @@ module Blazing
       Blazing::Commands.run(:recipes, :target_name => target_name, :options => options)
     end
 
+    desc 'goto [TARGET]', 'Open a shell for specified target'
+
+    method_option :run,
+      :type    => :string,
+      :aliases => '-c',
+      :banner  => 'Specify a command'
+
+    #
+    # SSH to the server and cd into the app directory. Of course it also sets the appropriate RAILS_ENV
+    #
+    def goto(target_name)
+      Blazing::Commands.run(:goto, :target_name => target_name, :options => options)
+    end
+
     desc 'list', 'List available recipes'
 
     #
