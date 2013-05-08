@@ -13,7 +13,7 @@ module Blazing
 
     def initialize(options = {})
       warn 'The :default Target option has been deprecated and will be ignored' if options.has_key?(:default)
-
+      @cli_options = options[:options] # that stinks! TODO: clean up options handling.
       @target_name = options[:target_name]
       @config_file = options[:file]
       @command = options[:command]
@@ -49,7 +49,11 @@ module Blazing
     def goto
       # TODO: Would be nice to detect zsh and use it instead of bash?
       @targets.each do |target|
-        system "ssh -t #{target.user}@#{target.host} 'cd #{target.path} && RAILS_ENV=#{target.options[:rails_env]} bash --login'"
+        if @cli_options[:run]
+          system "ssh -t #{target.user}@#{target.host} 'cd #{target.path} && RAILS_ENV=#{target.options[:rails_env]} #{@cli_options[:run]}'"
+        else
+          system "ssh -t #{target.user}@#{target.host} 'cd #{target.path} && RAILS_ENV=#{target.options[:rails_env]} bash --login'"
+        end
       end
     end
 
