@@ -35,10 +35,6 @@ class Blazing::Config
     @rake[:env] = env if env
   end
 
-  def repository(*args)
-    warn 'Ther repository DSL method has been deprecated and is no longer used. This method will be removed in Version 0.3'
-  end
-
   def default_target
     if @targets.size == 1
       @targets.first
