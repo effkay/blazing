@@ -1,12 +1,13 @@
+# CHANGELOG
+
 ## master
 
-## 0.4.0.beta2 - May 8, 2013 (features/goto_server)
+## 0.4.0 - August 3, 2013
 
-* Improve goto command: use `blazing goto production -c "do stuff"` to run commands on the server
-
-## 0.4.0.beta1 - April 29, 2013 (features/goto_server)
-
-* add goto command. `blazing goto production` gives you a shell on the server, with the app root as current directory and RAILS_ENV set.
+* Implement blazing goto command:
+  - `blazing goto production` gives you a shell on the server,
+     with the app root as current directory and RAILS_ENV set.
+  - use `-c "command"` to execute command on server
 
 ## 0.3.0 - January 23, 2013
 
