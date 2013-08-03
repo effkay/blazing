@@ -5,14 +5,11 @@
 #
 #   target <target_name>, <target_location>, [options]
 #
-# The options provided in the target definition will override any
-# options provided in the recipe call.
-#
 # Options recognized by blazing core:
 #   rails_env: used when calling the rake task after deployment
 
 target :staging, 'user@server:/var/www/someproject.com',
-       :recipe_specific_option => 'foo', :rails_env => 'production'
+       :rails_env => 'production'
 
 
 # Sample rvm setup:
@@ -46,23 +43,11 @@ rvm_scripts '/opt/rvm/scripts/rvm'
 
 env_scripts '/etc/profile.d/rbenv.sh'
 
-# Sample recipe setup:
-#
-#     recipe <recipe_name>, [options]
-#
-# The given recipe will be called with the provided options. Refer to each
-# recipe's documentation for available options. Options provided here
-# may be overridden by target specific options.
-# Recipes will be executed in the order they are defined!yy
-
-recipe :precompile_assets, :recipe_specific_option => 'bar'
-
-
 # Sample rake file config:
 #
 #     rake <task>, [environment variables]
 #
-# The provided rake task will be run after all recipes have run.
+# The provided rake task will be run after blazing has done its stuff.
 # Note: you can only call a single rake task. If you need to run several
 # tasks just create one task that wrapps all the others.
 

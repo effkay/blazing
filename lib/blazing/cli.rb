@@ -43,15 +43,6 @@ module Blazing
       Blazing::Commands.run(:update, :target_name => target_name, :options => options)
     end
 
-    desc 'recipes [TARGET]', 'Run the recipes for the given target'
-
-    #
-    # Run the configured blazing recipes (used on remote machien)
-    #
-    def recipes(target_name)
-      Blazing::Commands.run(:recipes, :target_name => target_name, :options => options)
-    end
-
     desc 'goto [TARGET]', 'Open a shell for specified target'
 
     method_option :run,
@@ -64,15 +55,6 @@ module Blazing
     #
     def goto(target_name)
       Blazing::Commands.run(:goto, :target_name => target_name, :options => options)
-    end
-
-    desc 'list', 'List available recipes'
-
-    #
-    # List the available blazing recipes
-    #
-    def list
-      Blazing::Commands.run(:list)
     end
   end
 end

@@ -36,8 +36,4 @@ Gem::Specification.new do |s|
   s.add_dependency('grit')
   s.add_dependency('logging')
   s.add_dependency('thor')
-
-  # TODO: Get rid of those, just used for guessing recipe names etc in lib/recipes.rb
-  s.add_dependency "activesupport"
-  s.add_dependency "i18n"
 end

@@ -1,5 +1,4 @@
 require 'blazing/target'
-require 'blazing/recipe'
 require 'blazing/dsl_setter'
 
 class Blazing::Config
@@ -8,13 +7,12 @@ class Blazing::Config
   include Blazing::Logger
 
   attr_reader :file
-  attr_accessor :targets, :recipes
+  attr_accessor :targets
   dsl_setter :rvm, :env_scripts
   alias :rvm_scripts :env_scripts
 
   class << self
     def parse(configuration_file = nil)
-      Blazing::Recipe.load_recipes!
       config = self.new(configuration_file)
       config.instance_eval(File.read(config.file))
 
@@ -25,16 +23,11 @@ class Blazing::Config
   def initialize(configuration_file = nil)
     @file = configuration_file || Blazing::DEFAULT_CONFIG_LOCATION
     @targets = []
-    @recipes = []
   end
 
   def target(name, location, options = {})
     raise "Name already taken" if targets.find { |t| t.name == name }
     targets << Blazing::Target.new(name, location, self, options)
-  end
-
-  def recipe(name, options = {})
-    @recipes << Blazing::Recipe.init_by_name(name, options)
   end
 
   def rake(task_name, env = nil)

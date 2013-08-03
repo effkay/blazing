@@ -5,7 +5,7 @@ Blazing fast and painless git push deploys
 
 *Oh no, yet another deployer!*
 
-Not everyone can or wants to deploy on heroku. But now you can have the same (well, almost the same, since we're not gonna patch SSH) awesomely smooth git push deploys on whatever server you have SSH access to. Blazing helps you to create and distribute your post-receive hooks, which are executed on the remote server after you successfully pushed to it. It also helps you to easily set up remote repositories for deploying to, is extendable by recipes and is configured by a nice DSL.
+Not everyone can or wants to deploy on heroku. But now you can have the same (well, almost the same, since we're not gonna patch SSH) awesomely smooth git push deploys on whatever server you have SSH access to. Blazing helps you to create and distribute your post-receive hooks, which are executed on the remote server after you successfully pushed to it. It also helps you to easily set up remote repositories for deploying to, is extendable by simple rake tasks and is configured by a nice DSL.
 
 Quickstart
 ----------
@@ -17,12 +17,11 @@ Features
 
 Out of the box, blazing can do the following:
 
+* **uses ruby, but works for deploying pretty much anything else just as well**
 * set up a repository you can push to for deployment
 * set up a git post-receive hook, configurable by a simple DSL
 * works with rvm/rbenv/chruby(and probably others)
-* uses bundler for dependency management
-* allows you to run custom rake tasks after deployment
-* is extendable by blazing recipes
+* allows you to run custom rake tasks during deployment
 
 Overview & Background
 ---------------------
@@ -69,16 +68,6 @@ Setup target repository for deployment and add git remote localy. Use 'all' as t
 
 Update post-receive hook according to current config. Run it after changing the blazing config. Use 'all' as target name to update all configured targets at once.
 
-##### `blazing list`
-
-List available recipes
-
-##### `blazing recipes`
-
-Run the configured recipes (used on deployment target, can be used to test recipes localy)
-
-The `setup` and `update` commands also take 'all' as an option. This will perform the action on all your defined targets.
-
 #### Configuration (blazing DSL)
 
 ```ruby
@@ -93,7 +82,7 @@ The `setup` and `update` commands also take 'all' as an option. This will perfor
 #   rails_env: used when calling the rake task after deployment
 
 target :staging, 'user@server:/var/www/someproject.com',
-       :recipe_specific_option => 'foo', :rails_env => 'production'
+       :rails_env => 'production'
 
 
 # Sample rvm setup:
@@ -128,23 +117,11 @@ rvm_scripts '/opt/rvm/scripts/rvm'
 
 env_scripts '/etc/profile.d/rbenv.sh'
 
-# Sample recipe setup:
-#
-#     recipe <recipe_name>, [options]
-#
-# The given recipe will be called with the provided options. Refer to each
-# recipe's documentation for available options. Options provided here
-# may be overridden by target specific options.
-# Recipes will be executed in the order they are defined!yy
-
-recipe :precompile_assets, :recipe_specific_option => 'bar'
-
-
 # Sample rake file config:
 #
 #     rake <task>, [environment variables]
 #
-# The provided rake task will be run after all recipes have run.
+# The provided rake task will be run after blazing has done its stuff.
 # Note: you can only call a single rake task. If you need to run several
 # tasks just create one task that wrapps all the others.
 
@@ -158,35 +135,7 @@ Just push to your remote… so if you set up a target named `production`, use `g
 Recipes
 -------
 
-Blazing only offers a small set of core features. However, it is extendable by recipes.
-
-#### Available Recipes
-
-* [blazing-passenger](https://github.com/effkay/blazing-passenger)
-* [blazing-rails](https://github.com/effkay/blazing-rails)
-
-#### Creating a blazing Recipe
-
-Creating a blazing recipe is very easy. There are some ground rules:
-
-* recipes should live in gems called `blazing-<somename>`
-* blazing converts the symbol given in the config to the class name and calls run on it. So if you have `recipe :passenger_restart` blazing will try to run `Blazing::Recipe::PassengerRestart.run` with the options provided.
-* Recipes should live in the `Blazing::Recipe` namespace and inherit from `Blazing::Recipe` as well
-* Recipes are run in the order they are specified in the config, so there is no way to handle inter-recipe dependencies yet.
-* Make sure your recipe classes are loaded when the recipe gem itself is
-  loaded
-* A minimal recipe implementation might look like this:
-
-```ruby
-class Blazing::Recipe::Example < Blazing::Recipe
-  def run(target_options = {})
-    super target_options
-    # do some stuff
-    # access options with @options[:key]
-  end
-end
-```
-Please have a look at [blazing-passenger](https://github.com/effkay/blazing-passenger) to get an idea of how to implement your recipe.
+Recipes have been removed from blazing.
 
 Authors
 -------

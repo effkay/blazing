@@ -11,14 +11,9 @@ module Blazing
     let(:target_b) { double('target_b', :name => 'target_b', :update => nil, :setup => nil) }
     let(:targets)  { [target_a, target_b] }
 
-    let(:recipe_a) { double('recipe_a', :name => 'recipe_a', :run => nil) }
-    let(:recipe_b) { double('recipe_b', :name => 'recipe_b', :run => nil) }
-    let(:recipes)  { [recipe_a, recipe_b] }
-
     let(:config) do
       config = config_instance
       config.targets = targets
-      config.recipes = recipes
 
       config
     end
@@ -120,25 +115,5 @@ module Blazing
         commands.run(:update, :target_name => 'all')
       end
     end
-
-    describe '#recipes' do
-      it 'runs each recipe' do
-        recipes.each { |r| r.should_receive(:run) }
-        commands.run(:recipes)
-      end
-
-      it 'passes in target_name' do
-        recipes.each { |r| r.should_receive(:run).with({:target_name => :testing}) }
-        commands.run(:recipes, :target_name => :testing)
-      end
-    end
-
-    describe '#list' do
-      it 'lists each recipe' do
-        Blazing::Recipe.should_receive(:pretty_list)
-        commands.run(:list)
-      end
-    end
   end
 end
-

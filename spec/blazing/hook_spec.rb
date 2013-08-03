@@ -2,9 +2,6 @@ require 'spec_helper'
 
 module Blazing
 
-  class Recipe::Dummy < Blazing::Recipe
-  end
-
   describe Hook do
 
     let(:config) { Config.new }
@@ -102,25 +99,6 @@ module Blazing
         context 'when rvm is disabled' do
           it 'does not include any rvm handling' do
             hook_file.should_not include("Loading rvm")
-          end
-        end
-      end
-
-      context 'Recipes Handling' do
-
-        context 'when there are no recipes configured' do
-          it 'does not run blazing recipes' do
-            hook_file.should_not include("bundle exec blazing recipes")
-          end
-        end
-
-        context 'when there are recipes configured' do
-          before :each do
-            config.recipe :dummy
-          end
-
-          it 'runs the blazing recipes command with the correct target name' do
-            hook_file.should include("bundle exec blazing recipes sometarget")
           end
         end
       end
