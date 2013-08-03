@@ -1,15 +1,11 @@
 require 'blazing/target'
-require 'blazing/dsl_setter'
 
 class Blazing::Config
 
-  extend Blazing::DSLSetter
   include Blazing::Logger
 
   attr_reader :file
   attr_accessor :targets
-  dsl_setter :rvm, :env_scripts
-  alias :rvm_scripts :env_scripts
 
   class << self
     def parse(configuration_file = nil)
@@ -46,4 +42,23 @@ class Blazing::Config
     targets.find { |t| t.name.to_s == target_name.to_s }
   end
 
+  def rvm_scripts(value = nil)
+    warn "rvm_scripts in config has been deprecated and no longer works. Use env_scripts!"
+  end
+
+  def env_scripts(value = nil)
+    if value
+      instance_variable_set("@env_scripts", value)
+    else
+      instance_variable_get("@env_scripts")
+    end
+  end
+
+  def source_rvmrc
+    @legacy_rvm = true
+  end
+
+  def rvm?
+    @legacy_rvm ||= false
+  end
 end

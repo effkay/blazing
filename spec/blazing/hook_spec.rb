@@ -67,33 +67,17 @@ module Blazing
         end
       end
 
-      context 'RVM Setup' do
-        context 'when rvm is enabled' do
-          context 'loading rvm' do
-            it 'uses the load mechanism suggested by rvm' do
-              config.rvm 'someruby@somegemset'
-              hook_file.should include("source \"$HOME/.rvm/scripts/rvm\"")
-              hook_file.should include("source \"/usr/local/rvm/scripts/rvm\"")
-            end
+      context 'env scripts' do
+        it 'sources the specified directory when env_scripts is specified' do
+          config.env_scripts '/location/of/scripts'
+          hook_file.should include("source /location/of/scripts")
+        end
+      end
 
-            it 'sources the rvm_scripts directory when rvm_scripts is specified' do
-              config.rvm 'someruby@somegemset'
-              config.rvm_scripts '/location/of/rvm/scripts'
-              hook_file.should include("source /location/of/rvm/scripts")
-            end
-          end
-
-          context 'loading the rvm ruby and gemset' do
-            it 'sources the rvmrc to load the env' do
-              config.rvm 'someruby@somegemset'
-              hook_file.should include("rvm use someruby@somegemset")
-            end
-
-            it 'uses rvm use to load the env when an rvm string was specified' do
-              config.rvm :rvmrc
-              hook_file.should include("source .rvmrc")
-            end
-          end
+      context 'source_rvmrc' do
+        it 'sources the rvmrc to load the env' do
+          config.source_rvmrc
+          hook_file.should include("source .rvmrc")
         end
 
         context 'when rvm is disabled' do

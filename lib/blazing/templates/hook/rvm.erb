@@ -1,35 +1,7 @@
-<% if @config.rvm %>
+<% if @config.rvm? %>
 
-  #
-  # Normal RVM installation
-  #
-  <% unless @config.rvm_scripts %>
-    # Load RVM into a shell session *as a function*
-    if [[ -s "$HOME/.rvm/scripts/rvm" ]] ; then
-
-      # First try to load from a user install
-      source "$HOME/.rvm/scripts/rvm"
-
-    elif [[ -s "/usr/local/rvm/scripts/rvm" ]] ; then
-
-      # Then try to load from a root install
-      source "/usr/local/rvm/scripts/rvm"
-
-    else
-      echo '------> [blazing] ERROR: RVM was enabled in config but no RVM installation was not found\n'
-    fi
-  <% end %>
-
-  #
-  # Apply rvm env
-  #
-  <% if @config.rvm == :rvmrc %>
-    echo "------> [blazing] Loading rvm from .rvmrc"
-    source .rvmrc
-  <% else %>
-    echo "------> [blazing] Loading rvm string: <%= @config.rvm %>"
-    rvm use <%= @config.rvm %>
-  <% end %>
+  echo "------> [blazing] Loading rvm from .rvmrc"
+  source .rvmrc
 
 <% end %>
 

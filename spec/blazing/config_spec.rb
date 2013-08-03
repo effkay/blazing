@@ -68,33 +68,5 @@ describe Blazing::Config do
       end
 
     end
-
-    describe 'rvm' do
-
-      it 'takes an rvm string as argument' do
-        @config.rvm 'ruby-1.9.2@rails31'
-        @config.instance_variable_get('@rvm').should == 'ruby-1.9.2@rails31'
-      end
-
-      it 'returns the rvm string if no argument given' do
-        @config.rvm 'ruby-1.9.2@rails31'
-        @config.rvm.should == 'ruby-1.9.2@rails31'
-      end
-
-    end
-
-    describe 'rvm_scripts' do
-
-      it 'takes an string as argument' do
-        @config.rvm_scripts '/opt/rvm/scripts'
-        @config.instance_variable_get('@env_scripts').should == '/opt/rvm/scripts'
-      end
-
-      it 'returns the string if no argument given' do
-        @config.rvm_scripts '/opt/rvm/scripts'
-        @config.rvm_scripts.should == '/opt/rvm/scripts'
-      end
-
-    end
   end
 end
