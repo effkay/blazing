@@ -49,10 +49,6 @@ module Blazing
         commands.stub(:new).with({ :command => :dummy_command }).and_return(commands_instance)
         commands.run(:dummy_command)
       end
-
-      it 'raises an exception if the command does not exist' do
-        pending 'Implement after reading exceptional Ruby ;-)'
-      end
     end
 
     describe '#init' do
