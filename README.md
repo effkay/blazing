@@ -24,6 +24,8 @@ Out of the box, blazing can do the following:
 * set up a git post-receive hook, configurable by a simple DSL
 * works with rvm/rbenv/chruby(and probably others)
 * allows you to run custom rake tasks during deployment
+* Makes it easy to ssh to target directory on server with env variables
+  set
 
 Usage
 -----
