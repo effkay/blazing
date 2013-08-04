@@ -1,9 +1,10 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
+require 'blazing/version'
 
 Gem::Specification.new do |s|
   s.name        = "blazing"
-  s.version     = '0.4.0'
+  s.version     =  ::Blazing::VERSION
   s.authors     = ["Felipe Kaufmann"]
   s.email       = ["felipekaufmann@gmail.com"]
   s.homepage    = "https://github.com/effkay/blazing"
