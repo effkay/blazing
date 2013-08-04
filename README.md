@@ -35,17 +35,15 @@ the server you are deploying to.
 
 ### blazing Commands
 
-#### `blazing init`
-
-Generate a sample blazing config file
-
-#### `blazing setup <target>`
-
-Setup target repository for deployment and add git remote localy. Use 'all' as target name to update all configured targets at once.
-
-#### `blazing update <target>`
-
-Update post-receive hook according to current config. Run it after changing the blazing config. Use 'all' as target name to update all configured targets at once.
+```
+Commands:
+  blazing goto [TARGET]    # Open ssh session on target. Use -c to specify a command to be run
+  blazing help [COMMAND]   # Describe available commands or one specific command
+  blazing init             # Generate a sample blazing config file
+  blazing setup [TARGET]   # Setup local and remote repository/repositories for deployment
+  blazing update [TARGET]  # Re-Generate and uplaod hook based on current configuration
+  blazing version          # Show the blazing version
+```
 
 **Always remember to update your hooks after updating blazing**
 
