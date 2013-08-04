@@ -20,15 +20,22 @@ module Blazing
     end
 
     def rake_command
-      rake_config = @config.instance_variable_get("@rake") || {}
-      rails_env = "RAILS_ENV=#{@options[:rails_env]}" if @options[:rails_env]
-
-      if rake_config[:task]
-        "#{rake_config[:env]} #{rails_env} bundle exec rake #{rake_config[:task]}"
+      if @config.rake_task
+        "#{options_as_vars}bundle exec rake #{@config.rake_task}"
       end
     end
 
     private
+
+    def options_as_vars
+      keys = @options.keys
+      options = ""
+      keys.each do |key|
+        options << "#{key.upcase}=#{@options[key]} "
+      end
+
+      options
+    end
 
     def load_template(template_name)
       ::ERB.new(File.read(find_template(template_name))).result(binding)

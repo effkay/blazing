@@ -5,7 +5,7 @@ class Blazing::Config
   include Blazing::Logger
 
   attr_reader :file
-  attr_accessor :targets
+  attr_accessor :targets, :rake_task
 
   class << self
     def parse(configuration_file = nil)
@@ -26,9 +26,8 @@ class Blazing::Config
     targets << Blazing::Target.new(name, location, self, options)
   end
 
-  def rake(task_name, env = nil)
-    @rake = { :task => task_name }
-    @rake[:env] = env if env
+  def rake(task_name)
+    @rake_task = task_name
   end
 
   def default_target

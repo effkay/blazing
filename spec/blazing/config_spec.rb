@@ -56,17 +56,10 @@ describe Blazing::Config do
     end
 
     describe 'rake' do
-
       it 'takes the name of the rake task as argument' do
         @config.rake :post_deploy
-        @config.instance_variable_get('@rake').should == { :task => :post_deploy }
+        @config.rake_task.should == :post_deploy
       end
-
-      it 'accepts environment variables to pass along to rake' do
-        @config.rake :post_deploy, 'RAILS_ENV=production'
-        @config.instance_variable_get('@rake').should == { :task => :post_deploy, :env => 'RAILS_ENV=production' }
-      end
-
     end
   end
 end
