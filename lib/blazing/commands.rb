@@ -70,7 +70,7 @@ module Blazing
         @config.targets
       else
         targets = []
-        targets << @config.find_target(@target_name)
+        targets << @config.target(@target_name)
         targets.compact
       end
     end

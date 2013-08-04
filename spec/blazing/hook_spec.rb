@@ -9,14 +9,14 @@ module Blazing
 
     describe '#rake_command' do
       it 'prepends the RAILS_ENV specified as :rails_env option to the target call' do
-        config.rake :deploy
+        config.rake_task = :deploy
         target = Blazing::Target.new(:sometarget, '/path', config, :rails_env => 'production')
         hook = Hook.new(target)
         hook.rake_command.should == 'RAILS_ENV=production bundle exec rake deploy'
       end
 
       it 'prepends the any other option specified specified in the target call' do
-        config.rake :deploy
+        config.rake_task = :deploy
         target = Blazing::Target.new(:sometarget, '/path', config, :rails_env => 'production', :foo => 'bar')
         hook = Hook.new(target)
         hook.rake_command.should == 'RAILS_ENV=production FOO=bar bundle exec rake deploy'
@@ -70,7 +70,7 @@ module Blazing
 
       context 'env script' do
         it 'sources the specified directory when env_script is specified' do
-          config.env_script '/location/of/script'
+          config.env_script = '/location/of/script'
           hook_file.should include("source /location/of/script")
         end
       end
@@ -78,7 +78,7 @@ module Blazing
       context 'Rake Command Handling' do
         context 'when the rake_command is specified' do
           before :each do
-            config.rake :deploy
+            config.rake_task = :deploy
           end
 
           it 'runs the rake command' do

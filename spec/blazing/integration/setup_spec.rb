@@ -1,12 +1,22 @@
 require 'spec_helper'
+require 'blazing/config'
+require 'blazing/cli'
+require 'blazing/dsl'
 
 describe '$ blazing setup' do
 
     before :each do
       setup_sandbox
-      @config = Blazing::Config.new
-      @config.target :production, "#{@sandbox_directory}/target"
-      @config.target :staging, "#{@sandbox_directory}/staging"
+
+      config = Blazing::Config.new
+      dsl = Blazing::DSL.new(config)
+
+      dsl.instance_eval do
+        target :production, "#{@sandbox_directory}/target"
+        target :staging, "#{@sandbox_directory}/staging"
+      end
+      @config = dsl.instance_variable_get("@config")
+
       @cli = Blazing::CLI.new
       Blazing::Config.stub(:parse).and_return @config
     end

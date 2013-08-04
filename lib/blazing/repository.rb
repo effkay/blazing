@@ -1,4 +1,5 @@
 require 'grit'
+require 'blazing/shell'
 
 module Blazing
   class Repository
