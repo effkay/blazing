@@ -1,4 +1,5 @@
 require 'erb'
+require 'blazing/logger'
 
 module Blazing
   class Commands

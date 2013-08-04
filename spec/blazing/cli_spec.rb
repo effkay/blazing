@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'blazing/cli'
 
 module Blazing
 
