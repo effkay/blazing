@@ -49,7 +49,7 @@ Update post-receive hook according to current config. Run it after changing the 
 
 **Always remember to update your hooks after updating blazing**
 
-#### Configuration (blazing DSL)
+### Configuration (blazing DSL)
 
 Run blazing init in your project to generate a config file or look at
 [the sample config
