@@ -25,89 +25,37 @@ Out of the box, blazing can do the following:
 * works with rvm/rbenv/chruby(and probably others)
 * allows you to run custom rake tasks during deployment
 
-Overview & Background
----------------------
-
-Blazing is a deployment tool written in Ruby. It provides helpers to setup your project with a git post-receive hook, which is triggered every time you push to your production repository.
-
-I initially started working on an extension to capistrano which would cover most of my needs and the nees of my team. After a short while I noticed that bolting more functionality on top of capistrano was just going to be messy (and a PTA to maintain). We were alerady using tons of own recipes and customizations, capistrano multistage, capistrano-ext, etc.
-
-I had a look at what others were doing and after a round of trying around and not getting what I wanted, I started this.
-
-#### Design Goals
-
-When I started working on blazing, I had some design goals in mind which I think should stay relevant for this project:
-
-- it must be well tested
-- it must stay robust, simple and with small code base with as few moving parts as possible. Minimum code in the main project, extensions live outside.
-- no messy rake scripts: Define the desired behavior trough a DSL, and extensions add to this DSL in a clean and modular way
-- Deployments should be fast
-
-#### Inspiration & Alternatives
-
-I looked at [Inploy](https://github.com/dcrec1/inploy) and [Vlad](https://github.com/seattlerb/vlad) after having used [Capistrano](https://github.com/capistrano/capistrano) for several
-years. Then got inspired by defunkt's
-[blog post](https://github.com/blog/470-deployment-script-spring-cleaning) about deployment script spring cleaning. Other's doing a similar thing with git push deployments are Mislav's [git-deploy](https://github.com/mislav/git-deploy) (which was a great inspiration and resource) and [pushand](https://github.com/remi/pushand.git) by remi. If you don't like blazing, you might give them a try.
-
 Usage
 -----
 
-#### Installation
+### Installation
 
-Your machine should be setup with ruby, rubygems, bundler and git. Install blazing by adding it to your `Gemfile` or run `gem install blazing`. The basic assumption from now on will be that you are working on a project with bundler and a Gemfile. Support for other ways to handle dependencies might be added in the future but **at the moment bundler is required**.
+Make sure you have bundler available on your local machine as well as on
+the server you are deploying to.
 
-#### blazing Commands
+### blazing Commands
 
-##### `blazing init`
+#### `blazing init`
 
-Generate a blazing config file
+Generate a sample blazing config file
 
-##### `blazing setup <target>`
+#### `blazing setup <target>`
 
 Setup target repository for deployment and add git remote localy. Use 'all' as target name to update all configured targets at once.
 
-##### `blazing update <target>`
+#### `blazing update <target>`
 
 Update post-receive hook according to current config. Run it after changing the blazing config. Use 'all' as target name to update all configured targets at once.
 
+**Always remember to update your hooks after updating blazing**
+
 #### Configuration (blazing DSL)
 
-```ruby
-# Sample target definition:
-#
-#   target <target_name>, <target_location>, [options]
-#
-# The options provided in the target definition will override any
-# options provided in the recipe call.
-#
-# Options recognized by blazing core:
-#   rails_env: used when calling the rake task after deployment
+Run blazing init in your project to generate a config file or look at
+[the sample config
+template](https://github.com/effkay/blazing/blob/master/lib/blazing/templates/config.erb)
 
-target :staging, 'user@server:/var/www/someproject.com',
-       :rails_env => 'production'
-
-# Sample rvm/rbenv/chruby/other setup:
-#
-#    env_sript <your rvm setup scripts>
-#
-# Setting an env_script path makes sure it is sourced before the hook
-# does anything at all. That way you can setup any environment things
-# you need to. Most commonly this will be sourcing rvm and setting a
-# ruby, or doing something with rbenv or chruby.
-env_script '/etc/profile.d/rbenv.sh'
-
-# Sample rake file config:
-#
-#     rake <task>, [environment variables]
-#
-# The provided rake task will be run after blazing has done its stuff.
-# Note: you can only call a single rake task. If you need to run several
-# tasks just create one task that wrapps all the others.
-
-rake :post_deploy, 'RAILS_ENV=production'
-```
-
-#### Deploying
+### Deploying
 
 Just push to your remote… so if you set up a target named `production`, use `git push production master` to deploy your master branch there.
 
