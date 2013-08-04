@@ -67,23 +67,10 @@ module Blazing
         end
       end
 
-      context 'env scripts' do
-        it 'sources the specified directory when env_scripts is specified' do
-          config.env_scripts '/location/of/scripts'
-          hook_file.should include("source /location/of/scripts")
-        end
-      end
-
-      context 'source_rvmrc' do
-        it 'sources the rvmrc to load the env' do
-          config.source_rvmrc
-          hook_file.should include("source .rvmrc")
-        end
-
-        context 'when rvm is disabled' do
-          it 'does not include any rvm handling' do
-            hook_file.should_not include("Loading rvm")
-          end
+      context 'env script' do
+        it 'sources the specified directory when env_script is specified' do
+          config.env_script '/location/of/script'
+          hook_file.should include("source /location/of/script")
         end
       end
 

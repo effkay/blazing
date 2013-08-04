@@ -84,38 +84,15 @@ Update post-receive hook according to current config. Run it after changing the 
 target :staging, 'user@server:/var/www/someproject.com',
        :rails_env => 'production'
 
-
-# Sample rvm setup:
+# Sample rvm/rbenv/chruby/other setup:
 #
-#    rvm <rvm-string>
+#    env_sript <your rvm setup scripts>
 #
-# Setting the rvm string will make sure that the correct rvm ruby and
-# gemset is used before the post-receive hook does anything at all.
-# Use :rvmrc as rvm string if you want blazing to use the rvm
-# environment specified in your project's .rvmrc file.
-
-rvm 'ruby-1.9.3@some-gemset'
-
-
-# Sample config for custom rvm location:
-#
-#    rvm_scripts <path_to_rvm_scripts>
-#
-# If you have installed rvm to a custom location, use this method to
-# specify where the rvm scripts are located.
-
-rvm_scripts '/opt/rvm/scripts/rvm'
-
-
-# Sample rbenv/chruby/other setup:
-#
-#    env_scripts <path_to_version_manager_script>
-#
-# If you need to source a file for your non-rvm version manager to
-# you can do that with env_scripts. You should also remove the
-# rvm/rvm_scripts options above.
-
-env_scripts '/etc/profile.d/rbenv.sh'
+# Setting an env_script path makes sure it is sourced before the hook
+# does anything at all. That way you can setup any environment things
+# you need to. Most commonly this will be sourcing rvm and setting a
+# ruby, or doing something with rbenv or chruby.
+env_script '/etc/profile.d/rbenv.sh'
 
 # Sample rake file config:
 #

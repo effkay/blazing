@@ -43,22 +43,14 @@ class Blazing::Config
   end
 
   def rvm_scripts(value = nil)
-    warn "rvm_scripts in config has been deprecated and no longer works. Use env_scripts!"
+    warn "rvm_scripts in config has been deprecated and no longer works. Use env_script!"
   end
 
-  def env_scripts(value = nil)
+  def env_script(value = nil)
     if value
-      instance_variable_set("@env_scripts", value)
+      instance_variable_set("@env_script", value)
     else
-      instance_variable_get("@env_scripts")
+      instance_variable_get("@env_script")
     end
-  end
-
-  def source_rvmrc
-    @legacy_rvm = true
-  end
-
-  def rvm?
-    @legacy_rvm ||= false
   end
 end
