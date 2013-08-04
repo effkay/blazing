@@ -31,7 +31,7 @@ module Blazing
       keys = @options.keys
       options = ""
       keys.each do |key|
-        options << "#{key.upcase}=#{@options[key]} "
+        options << "#{key.to_s.upcase}=#{@options[key]} "
       end
 
       options
