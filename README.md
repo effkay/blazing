@@ -1,4 +1,6 @@
 [![Build Status](https://secure.travis-ci.org/effkay/blazing.png?branch=master)](http://travis-ci.org/effkay/blazing)
+[![Code Climate](https://codeclimate.com/github/effkay/blazing.png)](https://codeclimate.com/github/effkay/blazing)
+[![Gem Version](https://badge.fury.io/rb/blazing.png)](http://badge.fury.io/rb/blazing)
 
 Blazing fast and painless git push deploys
 ==========================================
