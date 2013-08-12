@@ -1,4 +1,5 @@
 require 'erb'
+require 'blazing'
 require 'blazing/logger'
 
 module Blazing
