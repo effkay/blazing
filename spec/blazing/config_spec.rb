@@ -28,6 +28,12 @@ describe Blazing::Config do
       expect(dsl_double).to receive(:instance_eval)
       Blazing::Config.parse('spec/support/empty_config.rb')
     end
+
+    it 'loads the actual data from the config file' do
+      config = Blazing::Config.parse('spec/support/dummy_config.rb')
+      expect(config.targets.size).to be 1
+      expect(config.target(:staging)).to be_a Blazing::Target
+    end
   end
 
   describe 'target' do
