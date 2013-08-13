@@ -1,3 +1,6 @@
+#
+# Handles local repository settings
+#
 require 'grit'
 require 'blazing/shell'
 
