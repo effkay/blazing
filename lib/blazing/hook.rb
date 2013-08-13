@@ -1,4 +1,5 @@
 require 'erb'
+require 'blazing/target'
 
 module Blazing
   class Hook

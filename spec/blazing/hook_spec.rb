@@ -1,11 +1,12 @@
 require 'spec_helper'
 require 'blazing/hook'
+require 'blazing/config'
 
 module Blazing
 
   describe Hook do
 
-    let(:config) { Config.new }
+    let(:config) { Blazing::Config.new }
 
     describe '#rake_command' do
       it 'prepends the RAILS_ENV specified as :rails_env option to the target call' do
