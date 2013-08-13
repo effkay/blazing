@@ -19,7 +19,9 @@ module Blazing
         config.rake_task = :deploy
         target = Blazing::Target.new(:sometarget, '/path', config, :rails_env => 'production', :foo => 'bar')
         hook = Hook.new(target)
-        hook.rake_command.should == 'RAILS_ENV=production FOO=bar bundle exec rake deploy'
+        hook.rake_command.should include('RAILS_ENV=production')
+        hook.rake_command.should include('FOO=bar')
+        hook.rake_command.should include('bundle exec rake deploy')
       end
 
       it 'returns nil when no rake task was specified in config' do
