@@ -28,7 +28,7 @@ module Blazing
       :banner  => 'Specify a configuration file'
 
     def setup(target_name = nil)
-      Blazing::Commands.run(:setup, :target_name => target_name, :options => options)
+      Blazing::Commands.run(:setup, :target_name => target_name, :cli_options => options)
     end
 
     #
@@ -42,7 +42,7 @@ module Blazing
       :banner  => 'Specify a configuration file'
 
     def update(target_name = nil)
-      Blazing::Commands.run(:update, :target_name => target_name, :options => options)
+      Blazing::Commands.run(:update, :target_name => target_name, :cli_options => options)
     end
 
     #
@@ -56,7 +56,7 @@ module Blazing
       :banner  => 'Specify a command'
 
     def goto(target_name)
-      Blazing::Commands.run(:goto, :target_name => target_name, :options => options)
+      Blazing::Commands.run(:goto, :target_name => target_name, :cli_options => options)
     end
 
     #

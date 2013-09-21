@@ -15,7 +15,7 @@ module Blazing
 
     def initialize(options = {})
       warn 'The :default Target option has been deprecated and will be ignored' if options.has_key?(:default)
-      @cli_options = options[:options] # that stinks! TODO: clean up options handling.
+      @cli_options = options[:cli_options]
       @target_name = options[:target_name]
       @config_file = options[:file]
       @command = options[:command]
