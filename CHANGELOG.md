@@ -1,11 +1,10 @@
 # CHANGELOG
 
-## make_goto_command_working_for_cronjobs
-
-* Make blazing goto command also work if stdin isn't a terminal e.g. cronjob
-  - force pseudo-tty allocation even if stdin isn't a terminal by ssh with -t -t options
-
 ## master
+
+## 0.4.1 - February 17, 2014
+
+* Make blazing goto command also work if stdin is not a terminal e.g. cronjob
 
 ## 0.4.0 - August 3, 2013
 
