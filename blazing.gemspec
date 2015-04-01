@@ -34,7 +34,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency('pimpmychangelog')
 
   s.add_dependency('grit')
-  s.add_dependency('logging')
+  s.add_dependency('logging', '~> 1.8')
   s.add_dependency('thor')
 
   # TODO: Get rid of those, just used for guessing recipe names etc in lib/recipes.rb
