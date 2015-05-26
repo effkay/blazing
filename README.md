@@ -68,6 +68,7 @@ Authors
 -------
 
 Felipe Kaufmann ([@effkay][])
+Alexander Adam ([@alexanderadam][])
 
 License
 -------
