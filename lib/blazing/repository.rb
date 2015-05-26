@@ -6,7 +6,6 @@ require 'blazing/shell'
 
 module Blazing
   class Repository
-
     include Blazing::Logger
 
     def initialize(target)

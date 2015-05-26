@@ -2,9 +2,7 @@ require 'spec_helper'
 require 'blazing/shell'
 
 module Blazing
-
   describe Shell do
-
     let(:shell) { Shell.new }
 
     describe '#run' do
@@ -17,4 +15,3 @@ module Blazing
     end
   end
 end
-

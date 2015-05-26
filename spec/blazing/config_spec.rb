@@ -2,7 +2,6 @@ require 'spec_helper'
 require 'blazing/config'
 
 describe Blazing::Config do
-
   let(:config) { Blazing::Config.new }
 
   describe '#initialize' do
@@ -38,7 +37,7 @@ describe Blazing::Config do
 
   describe 'target' do
     it 'returns a target object if the target exists in config' do
-      target = double('dummy_target', :name => 'foo')
+      target = double('dummy_target', name: 'foo')
       config.targets << target
       expect(config.target('foo')).to be target
     end

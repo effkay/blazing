@@ -1,7 +1,6 @@
 require 'blazing/dsl'
 
 class Blazing::Config
-
   include Blazing::Logger
 
   attr_reader :file
@@ -16,7 +15,7 @@ class Blazing::Config
 
   class << self
     def parse(configuration_file = nil)
-      config = self.new(configuration_file)
+      config = new(configuration_file)
       Blazing::DSL.new(config).instance_eval(File.read(config.file))
       config
     end

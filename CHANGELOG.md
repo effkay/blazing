@@ -2,6 +2,9 @@
 
 ## master
 
+* removed support for deprecated ruby versions (< 2.0)
+* integrate rubocop and made him happy :)
+
 ## 0.4.0 - August 3, 2013
 
 * Implement blazing goto command:

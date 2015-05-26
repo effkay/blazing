@@ -3,7 +3,6 @@ require 'blazing/target'
 
 module Blazing
   class Hook
-
     include Blazing::Logger
 
     attr_accessor :target
@@ -21,16 +20,14 @@ module Blazing
     end
 
     def rake_command
-      if @config.rake_task
-        "#{options_as_vars}bundle exec rake #{@config.rake_task}"
-      end
+      "#{options_as_vars}bundle exec rake #{@config.rake_task}" if @config.rake_task
     end
 
     private
 
     def options_as_vars
       keys = @options.keys
-      options = ""
+      options = ''
       keys.each do |key|
         options << "#{key.to_s.upcase}=#{@options[key]} "
       end
@@ -63,7 +60,7 @@ module Blazing
     end
 
     def write(hook)
-      File.open(Blazing::TMP_HOOK, "wb") do |f|
+      File.open(Blazing::TMP_HOOK, 'wb') do |f|
         f.puts hook
       end
     end
@@ -77,7 +74,7 @@ module Blazing
     end
 
     def copy_hook
-      debug "Making hook executable"
+      debug 'Making hook executable'
       # TODO: handle missing user?
       if @target.host
         @shell.run "scp #{Blazing::TMP_HOOK} #{@target.user}@#{@target.host}:#{@target.path}/.git/hooks/post-receive"
@@ -87,9 +84,8 @@ module Blazing
     end
 
     def make_hook_executable
-      debug "Making hook executable"
+      debug 'Making hook executable'
       "chmod +x #{@target.path}/.git/hooks/post-receive"
     end
   end
 end
-

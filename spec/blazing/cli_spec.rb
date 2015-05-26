@@ -2,9 +2,7 @@ require 'spec_helper'
 require 'blazing/cli'
 
 module Blazing
-
   describe CLI do
-
     let(:cli) { CLI.new }
     it 'has an init method' do
       cli.respond_to? :init
@@ -23,4 +21,3 @@ module Blazing
     end
   end
 end
-

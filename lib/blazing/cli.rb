@@ -5,7 +5,6 @@ require 'blazing/version'
 
 module Blazing
   class CLI < Thor
-
     default_task :help
 
     #
@@ -23,12 +22,12 @@ module Blazing
     desc 'setup [TARGET]', 'Setup local and remote repository/repositories for deployment'
 
     method_option :file,
-      :type    => :string,
-      :aliases => '-f',
-      :banner  => 'Specify a configuration file'
+                  type: :string,
+                  aliases: '-f',
+                  banner: 'Specify a configuration file'
 
     def setup(target_name = nil)
-      Blazing::Commands.run(:setup, :target_name => target_name, :cli_options => options)
+      Blazing::Commands.run(:setup, target_name: target_name, cli_options: options)
     end
 
     #
@@ -37,12 +36,12 @@ module Blazing
     desc 'update [TARGET]', 'Re-Generate and uplaod hook based on current configuration'
 
     method_option :file,
-      :type    => :string,
-      :aliases => '-f',
-      :banner  => 'Specify a configuration file'
+                  type: :string,
+                  aliases: '-f',
+                  banner: 'Specify a configuration file'
 
     def update(target_name = nil)
-      Blazing::Commands.run(:update, :target_name => target_name, :cli_options => options)
+      Blazing::Commands.run(:update, target_name: target_name, cli_options: options)
     end
 
     #
@@ -51,12 +50,12 @@ module Blazing
     desc 'goto [TARGET]', 'Open ssh session on target. Use -c to specify a command to be run'
 
     method_option :run,
-      :type    => :string,
-      :aliases => '-c',
-      :banner  => 'Specify a command'
+                  type: :string,
+                  aliases: '-c',
+                  banner: 'Specify a command'
 
     def goto(target_name)
-      Blazing::Commands.run(:goto, :target_name => target_name, :cli_options => options)
+      Blazing::Commands.run(:goto, target_name: target_name, cli_options: options)
     end
 
     #

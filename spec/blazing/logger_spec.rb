@@ -1,9 +1,7 @@
 require 'spec_helper'
 
 module Blazing
-
   describe Logger do
-
     let(:logger) { Logger.new }
     let(:dummy) { class Dummy; include Logger; end }
 
@@ -27,8 +25,6 @@ module Blazing
       it 'for fatal messages' do
         dummy.respond_to? :fatal
       end
-
     end
   end
 end
-
