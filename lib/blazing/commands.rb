@@ -1,6 +1,7 @@
 require 'erb'
 require 'blazing'
-require 'blazing/logger'
+require_relative 'config'
+require_relative 'logger'
 
 module Blazing
   class Commands
@@ -22,7 +23,7 @@ module Blazing
 
       return unless command_requires_config?
 
-      @config ||= Config.parse(@config_file)
+      @config ||= Blazing::Config.parse(@config_file)
       @targets = determine_targets
       error 'no target given or found' if @targets.empty?
     end
