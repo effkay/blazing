@@ -1,0 +1,183 @@
+# This is the default configuration file. Enabling and disabling is configured
+# in separate files. This file adds all other parameters apart from Enabled.
+
+# Common configuration.
+AllCops:
+  # Include gemspec and Rakefile
+  Include:
+    - '**/*.gemspec'
+  Exclude:
+    - Rakefile
+    - spec/spec_helper.rb
+
+# Indent private/protected/public as deep as method definitions
+AccessModifierIndentation:
+  # supported styles are "indent" and "outdent"
+  EnforcedStyle: indent
+
+# Align the elements of a hash literal if they span more than one line.
+AlignHash:
+  # Alignment of entries using hash rocket as separator. Valid values are:
+  #
+  # key - left alignment of keys
+  #   'a' => 2
+  #   'bb' => 3
+  # separator - alignment of hash rockets, keys are right aligned
+  #    'a' => 2
+  #   'bb' => 3
+  # table - left alignment of keys, hash rockets, and values
+  #   'a'  => 2
+  #   'bb' => 3
+  EnforcedHashRocketStyle: key
+  # Alignment of entries using colon as separator. Valid values are:
+  #
+  # key - left alignment of keys
+  #   a: 0
+  #   bb: 1
+  # separator - alignment of colons, keys are right aligned
+  #    a: 0
+  #   bb: 1
+  # table - left alignment of keys and values
+  #   a:  0
+  #   bb: 1
+  EnforcedColonStyle: key
+
+DeprecatedHashMethods:
+  # key? instead of has_key?
+  # value? instead of has_value?
+  Enabled: false
+
+PredicateName:
+  Enabled: false
+
+Delegate:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
+
+# don't prefer 'fail' over raise
+SignalException:
+  Description: 'Checks for proper usage of fail and raise.'
+  Enabled: false
+
+BlockNesting:
+  Max: 3
+
+BracesAroundHashParameters:
+  # Valid values are: braces, no_braces
+  EnforcedStyle: no_braces
+
+ClassLength:
+  CountComments: false  # count full line comments?
+  Max: 100
+
+# Align with the style guide.
+CollectionMethods:
+  PreferredMethods:
+    collect: 'map'
+    collect!: 'map!'
+    inject: 'reduce'
+    find_all: 'select'
+
+# Checks formatting of special comments
+CommentAnnotation:
+  Keywords:
+    - TODO
+    - FIXME
+    - OPTIMIZE
+    - HACK
+    - REVIEW
+    - NOTE
+    - NOTICE
+
+# Avoid complex methods.
+CyclomaticComplexity:
+  Max: 9
+
+PerceivedComplexity:
+  Max: 9
+
+# Multi-line method chaining should be done with leading dots.
+# DotPosition:
+#   Style: 'leading'
+
+# Use empty lines between defs.
+EmptyLineBetweenDefs:
+  # If true, this parameter means that single line method definitions don't
+  # need an empty line between them.
+  AllowAdjacentOneLineDefs: false
+
+HashSyntax:
+  # Valid values are: ruby19, hash_rockets
+  EnforcedStyle: ruby19
+
+LambdaCall:
+  # Valid values are: call, braces
+  EnforcedStyle: call
+
+ClassAndModuleChildren:
+  Enabled: false
+
+LineLength:
+  Max: 175
+
+# MethodLength:
+#   CountComments: false  # count full line comments?
+#   Max: 20
+
+# MethodName:
+#   # Valid values are: snake_case, camelCase
+#   EnforcedStyle: snake_case
+
+NumericLiterals:
+  MinDigits: 5
+
+# Output:
+#   Ignore:
+#     - '^.*\.rake$'
+#     - '^.*/script/.*$'
+#     - '^.*/tasks/.*$'
+#     - 'Rakefile$'
+
+ParameterLists:
+  Max: 4
+  CountKeywordArgs: true
+
+Alias:
+  Enabled: false
+
+# top level documentation
+Documentation:
+  Enabled: false
+
+ModuleFunction:
+  Enabled: false
+
+# TrivialAccessors doesn't require exact name matches and doesn't allow
+# predicated methods by default.
+TrivialAccessors:
+  ExactNameMatch: false
+  AllowPredicates: false
+  Whitelist:
+    - to_ary
+    - to_a
+    - to_c
+    - to_enum
+    - to_h
+    - to_hash
+    - to_i
+    - to_int
+    - to_io
+    - to_open
+    - to_path
+    - to_proc
+    - to_r
+    - to_regexp
+    - to_str
+    - to_s
+    - to_sym
+
+VariableName:
+  # Valid values are: snake_case, camelCase
+  EnforcedStyle: snake_case
