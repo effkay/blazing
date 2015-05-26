@@ -76,3 +76,4 @@ License
 See the [MIT-LICENSE file](https://github.com/effkay/blazing/blob/master/MIT-LICENCE)
 
 [@effkay]: https://github.com/effkay
+[@alexanderadam]: https://github.com/alexanderadam
