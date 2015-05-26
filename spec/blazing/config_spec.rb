@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'blazing/config'
+require_relative '../../lib/blazing/config'
 
 describe Blazing::Config do
   let(:config) { Blazing::Config.new }

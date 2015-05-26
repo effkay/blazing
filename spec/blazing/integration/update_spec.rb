@@ -9,8 +9,8 @@ describe '$ blazing update' do
     @config.targets << Blazing::Target.new(:production, "#{@sandbox_directory}/production", @config)
     @config.targets << Blazing::Target.new(:staging, "#{@sandbox_directory}/staging", @config)
     @cli = Blazing::CLI.new
-    Blazing::Config.stub(:parse).and_return @config
-    Blazing::Config.stub(:parse).and_return @config
+    allow(Blazing::Config).to receive(:parse).and_return @config
+    allow(Blazing::Config).to receive(:parse).and_return @config
   end
 
   after :each do
@@ -24,11 +24,11 @@ describe '$ blazing update' do
     end
 
     it 'generates a post-receive hook based on the current blazing config' do
-      File.exist?('/tmp/post-receive').should be true
+      expect(File.exist?('/tmp/post-receive')).to be true
     end
 
     it 'copies the generated post-receive hook to the target' do
-      File.exist?("#{@sandbox_directory}/production/.git/hooks/post-receive").should be true
+      expect(File.exist?("#{@sandbox_directory}/production/.git/hooks/post-receive")).to be true
     end
   end
 
@@ -36,8 +36,8 @@ describe '$ blazing update' do
     it 'updates all targets' do
       capture(:stdout, :stderr) { @cli.setup('all') }
       capture(:stdout, :stderr) { @cli.update('all') }
-      File.exist?("#{@sandbox_directory}/production/.git/hooks/post-receive").should be true
-      File.exist?("#{@sandbox_directory}/staging/.git/hooks/post-receive").should be true
+      expect(File.exist?("#{@sandbox_directory}/production/.git/hooks/post-receive")).to be true
+      expect(File.exist?("#{@sandbox_directory}/staging/.git/hooks/post-receive")).to be true
     end
   end
 end

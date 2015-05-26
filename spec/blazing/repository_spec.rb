@@ -11,7 +11,7 @@ module Blazing
         repository = Repository.new(target)
         repository.instance_variable_set(:@shell, shell_probe)
 
-        shell_probe.should_receive(:run).with("ssh user@host 'mkdir /some/where; cd /some/where && git init && cd /some/where && git config receive.denyCurrentBranch ignore'")
+        expect(shell_probe).to receive(:run).with("ssh user@host 'mkdir /some/where; cd /some/where && git init && cd /some/where && git config receive.denyCurrentBranch ignore'")
         repository.setup
       end
 
@@ -20,7 +20,7 @@ module Blazing
         repository = Repository.new(target)
         repository.instance_variable_set(:@shell, shell_probe)
 
-        shell_probe.should_receive(:run).with('mkdir /some/where; cd /some/where && git init && cd /some/where && git config receive.denyCurrentBranch ignore')
+        expect(shell_probe).to receive(:run).with('mkdir /some/where; cd /some/where && git init && cd /some/where && git config receive.denyCurrentBranch ignore')
         repository.setup
       end
     end
@@ -32,7 +32,7 @@ module Blazing
 
       it 'adds a git remote for the target' do
         repository.add_git_remote
-        grit_object.config["remote.#{target.name}.url"].should == target.location
+        expect(grit_object.config["remote.#{target.name}.url"]).to eq(target.location)
       end
     end
   end

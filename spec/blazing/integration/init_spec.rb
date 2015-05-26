@@ -13,10 +13,10 @@ describe '$ blazing init' do
   end
 
   it 'creates a config directory if none exists yet' do
-    File.exist?('config').should be true
+    expect(File.exist?('config')).to be true
   end
 
   it 'creates a config file in config/blazing.rb' do
-    File.exist?('config/blazing.rb').should be true
+    expect(File.exist?('config/blazing.rb')).to be true
   end
 end

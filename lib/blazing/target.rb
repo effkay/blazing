@@ -1,5 +1,5 @@
 require 'blazing/repository'
-require 'blazing/hook'
+require_relative 'hook'
 
 module Blazing
   class Target

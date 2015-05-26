@@ -10,7 +10,9 @@ ENV['PATH'] = "#{File.expand_path(File.dirname(__FILE__) + '/../../bin')}#{File:
 #
 # Stuff borrowed from carlhuda/bundler
 #
-RSpec.configure do |_config|
+RSpec.configure do |config|
+  config.warnings = false
+
   #
   # Reset Logger
   #
