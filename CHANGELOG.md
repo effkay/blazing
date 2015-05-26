@@ -5,6 +5,10 @@
 * removed support for deprecated ruby versions (< 2.0)
 * integrate rubocop and made him happy :)
 
+## 0.4.1 - February 17, 2014
+
+* Make blazing goto command also work if stdin is not a terminal e.g. cronjob
+
 ## 0.4.0 - August 3, 2013
 
 * Implement blazing goto command:
@@ -15,7 +19,7 @@
 ## 0.3.0 - January 23, 2013
 
 * target name is passed to recipe at runtime
-* Add alias for rvm_scripts (env_scripts) which enables the use of rbenv et al. 
+* Add alias for rvm_scripts (env_scripts) which enables the use of rbenv et al.
 
 ## 0.2.14 - October 23, 2012
 
@@ -33,7 +37,7 @@
 * add quick and dirty fix for [#69][] (blazing requiring itself when using
   git as source in Gemfile)
 
-## 0.2.11 - July 11, 2012 
+## 0.2.11 - July 11, 2012
 
 * add pimpmychangelog and pimp changelog
 * fix git/bundler related issue ([#60][])

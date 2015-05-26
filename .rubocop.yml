@@ -120,7 +120,7 @@ ClassAndModuleChildren:
   Enabled: false
 
 LineLength:
-  Max: 175
+  Max: 180
 
 # MethodLength:
 #   CountComments: false  # count full line comments?

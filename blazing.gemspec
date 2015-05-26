@@ -4,7 +4,12 @@ require 'blazing/version'
 
 Gem::Specification.new do |s|
   s.name        = 'blazing'
-  s.version     =  ::Blazing::VERSION
+
+  #
+  # TODO: Remove Config.repository in 0.3
+  #
+  s.version     = '0.4.1'
+
   s.authors     = ['Felipe Kaufmann', 'Alexander Adam']
   s.email       = ['felipekaufmann@gmail.com']
   s.homepage    = 'https://github.com/effkay/blazing'
