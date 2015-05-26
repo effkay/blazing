@@ -43,7 +43,7 @@ Commands:
   blazing help [COMMAND]   # Describe available commands or one specific command
   blazing init             # Generate a sample blazing config file
   blazing setup [TARGET]   # Setup local and remote repository/repositories for deployment
-  blazing update [TARGET]  # Re-Generate and uplaod hook based on current configuration
+  blazing update [TARGET]  # Re-Generate and upload hook based on current configuration
   blazing version          # Show the blazing version
 ```
 

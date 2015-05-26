@@ -33,7 +33,7 @@ module Blazing
     #
     # Update the target hook so it matches the settings in the config
     #
-    desc 'update [TARGET]', 'Re-Generate and uplaod hook based on current configuration'
+    desc 'update [TARGET]', 'Re-Generate and upload hook based on current configuration'
 
     method_option :file,
                   type: :string,
