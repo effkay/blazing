@@ -1,4 +1,5 @@
 require_relative 'dsl'
+require_relative 'logger'
 
 class Blazing::Config
   include Blazing::Logger
