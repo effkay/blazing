@@ -43,7 +43,7 @@ Commands:
   blazing help [COMMAND]   # Describe available commands or one specific command
   blazing init             # Generate a sample blazing config file
   blazing setup [TARGET]   # Setup local and remote repository/repositories for deployment
-  blazing update [TARGET]  # Re-Generate and uplaod hook based on current configuration
+  blazing update [TARGET]  # Re-Generate and upload hook based on current configuration
   blazing version          # Show the blazing version
 ```
 
@@ -68,6 +68,7 @@ Authors
 -------
 
 Felipe Kaufmann ([@effkay][])
+Alexander Adam ([@alexanderadam][])
 
 License
 -------
@@ -75,3 +76,4 @@ License
 See the [MIT-LICENSE file](https://github.com/effkay/blazing/blob/master/MIT-LICENCE)
 
 [@effkay]: https://github.com/effkay
+[@alexanderadam]: https://github.com/alexanderadam

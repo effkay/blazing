@@ -2,11 +2,11 @@
 # Handles local repository settings
 #
 require 'grit'
-require 'blazing/shell'
+require_relative './shell'
+require_relative './logger'
 
 module Blazing
   class Repository
-
     include Blazing::Logger
 
     def initialize(target)

@@ -3,12 +3,11 @@ require 'blazing/dsl'
 
 module Blazing
   describe DSL do
-
     let(:dsl) { Blazing::DSL.new(config) }
-    let(:config) { double("config") }
+    let(:config) { double('config') }
 
     describe 'target' do
-      let(:config) { double("config", :targets => []) }
+      let(:config) { double('config', targets: []) }
 
       it 'adds a target to the config object' do
         dsl.target :somename, 'someuser@somehost:/path/to/deploy/to'
@@ -18,7 +17,7 @@ module Blazing
 
       it 'does not allow the creation of two targets with the same name' do
         dsl.target :somename, 'someuser@somehost:/path/to/deploy/to'
-        expect{dsl.target :somename, 'someuser@somehost:/path/to/deploy/to'}.to raise_error
+        expect { dsl.target :somename, 'someuser@somehost:/path/to/deploy/to' }.to raise_error
         expect(config.targets.size).to be 1
       end
     end
