@@ -1,49 +1,46 @@
 require 'erb'
+require 'blazing'
+require_relative './config'
 
 module Blazing
   class Commands
-
-    include Logger
+    include Blazing::Logger
 
     class << self
       def run(command, options = {})
-        self.new(options.merge({ :command => command })).send(command)
+        new(options.merge(command: command)).send(command)
       end
     end
 
     def initialize(options = {})
-      warn 'The :default Target option has been deprecated and will be ignored' if options.has_key?(:default)
-      @cli_options = options[:options] # that stinks! TODO: clean up options handling.
+      warn 'The :default Target option has been deprecated and will be ignored' if options.key?(:default)
+      @cli_options = options[:cli_options]
       @target_name = options[:target_name]
       @config_file = options[:file]
       @command = options[:command]
       @targets = []
 
-      if command_requires_config?
-        @config ||= Config.parse(@config_file)
-        @targets = determine_targets
-        error 'no target given or found' if @targets.empty?
-      end
+      return unless command_requires_config?
+
+      @config ||= Blazing::Config.parse(@config_file)
+      @targets = determine_targets
+      error 'no target given or found' if @targets.empty?
     end
 
     def init
       info "Creating an example config file in #{Blazing::DEFAULT_CONFIG_LOCATION}"
-      info "Customize it to your needs"
+      info 'Customize it to your needs'
       create_config_directory
       write_config_file
     end
 
     def setup
-      @targets.each { |target| target.setup }
+      @targets.each(&:setup)
       update
     end
 
     def update
-      @targets.each { |target| target.update }
-    end
-
-    def recipes
-      @config.recipes.each { |recipe| recipe.run({:target_name => @target_name}) }
+      @targets.each(&:update)
     end
 
     def goto
@@ -57,19 +54,15 @@ module Blazing
       end
     end
 
-    def list
-      Blazing::Recipe.pretty_list
-    end
-
     private
 
     def create_config_directory
-      Dir.mkdir 'config' unless File.exists? 'config'
+      Dir.mkdir 'config' unless File.exist? 'config'
     end
 
     def write_config_file
       config = ERB.new(File.read("#{Blazing::TEMPLATE_ROOT}/config.erb")).result
-      File.open(Blazing::DEFAULT_CONFIG_LOCATION,"wb") { |f| f.puts config }
+      File.open(Blazing::DEFAULT_CONFIG_LOCATION, 'wb') { |f| f.puts config }
     end
 
     def determine_targets
@@ -77,14 +70,13 @@ module Blazing
         @config.targets
       else
         targets = []
-        targets << @config.find_target(@target_name)
+        targets << @config.target(@target_name)
         targets.compact
       end
     end
 
     def command_requires_config?
-      [:setup, :update, :recipes, :goto].include? @command
+      [:setup, :update, :goto].include? @command
     end
   end
 end
-

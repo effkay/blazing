@@ -1,7 +1,8 @@
+require 'blazing/repository'
+require_relative 'hook'
+
 module Blazing
-
   class Target
-
     include Blazing::Logger
 
     attr_accessor :name, :location, :options, :config
@@ -49,4 +50,3 @@ module Blazing
     end
   end
 end
-

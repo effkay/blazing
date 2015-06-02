@@ -1,5 +1,0 @@
-<% unless @config.recipes.empty? %>
-  echo "------> [blazing] Running recipes for <%= @target.name.to_s %>"
-  bundle exec blazing recipes <%= @target.name.to_s %>
-<% end %>
-

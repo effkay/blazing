@@ -1,3 +1,4 @@
-echo "------> [blazing] Bundling gems"
-bundle --deployment --quiet --without development test
-
+if [ -f "Gemfile" ] ; then
+  echo "------> [blazing] Bundling gems"
+  bundle --deployment --quiet --without development test
+fi

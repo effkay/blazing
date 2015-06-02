@@ -2,6 +2,8 @@ require 'blazing'
 require 'rspec'
 require 'stringio'
 require 'pry'
+require 'logging'
+require 'blazing/logger'
 
 ENV['PATH'] = "#{File.expand_path(File.dirname(__FILE__) + '/../../bin')}#{File::PATH_SEPARATOR}#{ENV['PATH']}"
 
@@ -9,6 +11,7 @@ ENV['PATH'] = "#{File.expand_path(File.dirname(__FILE__) + '/../../bin')}#{File:
 # Stuff borrowed from carlhuda/bundler
 #
 RSpec.configure do |config|
+  config.warnings = false
 
   #
   # Reset Logger
@@ -16,16 +19,16 @@ RSpec.configure do |config|
   Logging.appenders.reset
   Logging.appenders.string_io(
     'string_io',
-    :layout => Logging.layouts.pattern(
-      :pattern => ' ------> [blazing] %-5l: %m\n',
-      :color_scheme => 'bright'
+    layout: Logging.layouts.pattern(
+      pattern: ' ------> [blazing] %-5l: %m\n',
+      color_scheme: 'bright'
     )
   )
 
   Logging.logger.root.appenders = 'string_io'
 
   def capture(*streams)
-    streams.map! { |stream| stream.to_s }
+    streams.map!(&:to_s)
     begin
       result = StringIO.new
       streams.each { |stream| eval "$#{stream} = result" }
@@ -41,7 +44,7 @@ RSpec.configure do |config|
     @sandbox_directory = File.join('/tmp/blazing_sandbox')
 
     # Sometimes, when specs failed, the sandbox would stick around
-    FileUtils.rm_rf(@sandbox_directory) if File.exists?(@sandbox_directory)
+    FileUtils.rm_rf(@sandbox_directory) if File.exist?(@sandbox_directory)
 
     # Setup Sandbox and cd into it
     Dir.mkdir(@sandbox_directory)
@@ -68,11 +71,4 @@ RSpec.configure do |config|
   def spec_root
     File.dirname(__FILE__)
   end
-
-  #def prepare_sample_config
-    #sample_config = File.join(spec_root, 'support', 'sample_config_1.rb')
-    #Dir.mkdir(@sandbox_directory + '/config')
-    #FileUtils.cp(sample_config, @sandbox_directory + '/config/blazing.rb')
-  #end
-
 end
