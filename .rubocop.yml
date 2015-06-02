@@ -117,7 +117,7 @@ LambdaCall:
   EnforcedStyle: call
 
 ClassAndModuleChildren:
-  Enabled: false
+  Enabled: true
 
 LineLength:
   Max: 180

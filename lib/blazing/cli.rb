@@ -1,6 +1,5 @@
 require 'thor'
 require_relative 'commands'
-require_relative 'logger'
 require_relative 'version'
 
 module Blazing

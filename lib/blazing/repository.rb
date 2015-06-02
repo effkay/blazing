@@ -2,8 +2,8 @@
 # Handles local repository settings
 #
 require 'grit'
-require_relative 'shell'
-require_relative 'logger'
+require_relative './shell'
+require_relative './logger'
 
 module Blazing
   class Repository

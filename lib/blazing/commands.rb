@@ -1,11 +1,10 @@
 require 'erb'
 require 'blazing'
-require_relative 'config'
-require_relative 'logger'
+require_relative './config'
 
 module Blazing
   class Commands
-    include Logger
+    include Blazing::Logger
 
     class << self
       def run(command, options = {})
