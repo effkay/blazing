@@ -65,7 +65,7 @@ module Blazing
     map %w(-v --version) => :version
 
     def version
-      puts "blazing version #{ ::Blazing::VERSION }"
+      puts "blazing version #{::Blazing::VERSION}"
     end
   end
 end
