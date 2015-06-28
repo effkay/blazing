@@ -4,6 +4,8 @@
 
 * removed support for deprecated ruby versions (< 2.0)
 * integrate rubocop and made him happy :)
+* Remove recipe support
+* Support rbenv by default, rework env script handling
 
 ## 0.4.1 - February 17, 2014
 
