@@ -67,8 +67,8 @@ Recipes have been removed from blazing.
 Authors
 -------
 
-Felipe Kaufmann ([@effkay][])
-Alexander Adam ([@alexanderadam][])
+* Felipe Kaufmann ([@effkay][])
+* Alexander Adam ([@alexanderadam][])
 
 License
 -------
