@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   #
   # TODO: Remove Config.repository in 0.3
   #
-  s.version     = '0.4.1'
+  s.version     = '0.4.2'
 
   s.authors     = ["Felipe Kaufmann"]
   s.email       = ["felipekaufmann@gmail.com"]
@@ -34,7 +34,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency('pimpmychangelog')
 
   s.add_dependency('grit')
-  s.add_dependency('logging')
+  s.add_dependency('logging', '~> 1.8')
   s.add_dependency('thor')
 
   # TODO: Get rid of those, just used for guessing recipe names etc in lib/recipes.rb
