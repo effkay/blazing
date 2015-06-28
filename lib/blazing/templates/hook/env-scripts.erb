@@ -1,6 +1,6 @@
-<% if @config.env_scripts %>
+<% if @config.env_script %>
 
-  source <%= @config.env_scripts %>
-  echo "------> [blazing] Loading environment scripts from custom location"
+  source <%= @config.env_script %>
+  echo "------> [blazing] Sourcing environment script"
 
 <% end %>

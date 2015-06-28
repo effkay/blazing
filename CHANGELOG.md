@@ -2,6 +2,9 @@
 
 ## master
 
+* removed support for deprecated ruby versions (< 2.0)
+* integrate rubocop and made him happy :)
+
 ## 0.4.1 - February 17, 2014
 
 * Make blazing goto command also work if stdin is not a terminal e.g. cronjob

@@ -7,16 +7,15 @@ include Rake::DSL
 
 Bundler::GemHelper.install_tasks
 
-desc "Run specs"
+desc 'Run specs'
 RSpec::Core::RakeTask.new do |t|
-  # t.rspec_opts = %w(--colour --fail-fast --format nested)
-  t.rspec_opts = %w(--colour  --format nested)
+  t.rspec_opts = %w(--colour --fail-fast)
   t.ruby_opts  = %w(-w)
 end
 
 Rake::RDocTask.new do |rd|
-  rd.main = "README.rdoc"
-  rd.rdoc_files.include("README.rdoc","lib/**/*.rb","bin/**/*")
+  rd.main = 'README.rdoc'
+  rd.rdoc_files.include('README.rdoc', 'lib/**/*.rb', 'bin/**/*')
 end
 
-task :default => [:spec]
+task default: [:spec]
