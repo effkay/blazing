@@ -7,6 +7,10 @@
 * Remove recipe support
 * Support rbenv by default, rework env script handling
 
+## 0.4.2 - June 28, 2015
+
+* Pin logging gem version to ~> 1.8
+
 ## 0.4.1 - February 17, 2014
 
 * Make blazing goto command also work if stdin is not a terminal e.g. cronjob
