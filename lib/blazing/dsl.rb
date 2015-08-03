@@ -11,7 +11,7 @@ module Blazing
     def target(name, location, options = {})
       raise 'Name already taken' if config.targets.find { |t| t.name == name }
 
-      config.targets << Blazing::Target.new(name, location, self.config, options)
+      config.targets << Blazing::Target.new(name, location, config, options)
     end
 
     def rake(task_name)
