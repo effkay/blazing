@@ -1,11 +1,12 @@
 # CHANGELOG
 
-## master
+## 0.5.0 - August 3, 2015
 
 * removed support for deprecated ruby versions (< 2.0)
 * integrate rubocop and made him happy :)
 * Remove recipe support
 * Support rbenv by default, rework env script handling
+* some bugfixes
 
 ## 0.4.2 - June 28, 2015
 
