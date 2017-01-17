@@ -29,6 +29,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency('rubocop')
 
   s.add_dependency('grit')
-  s.add_dependency('logging')
+  s.add_dependency('logging', '~> 1.8')
   s.add_dependency('thor')
 end
